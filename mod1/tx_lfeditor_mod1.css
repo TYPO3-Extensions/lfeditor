@@ -155,6 +155,10 @@ fieldset.tx-lfeditor-fieldset fieldset dd {
 	float: right;
 }
 
+p input {
+	width: 360px;
+}
+
 .tx-lfeditor-label, .tx-lfeditor-input {
 	margin-bottom: 5px;
 }

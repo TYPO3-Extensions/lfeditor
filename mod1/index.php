@@ -494,8 +494,10 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			throw new LFException('failure.search.noExtension');
 
 		// create list
+		$extList = tx_lfeditor_mod1_functions::prepareExtList($tmpExtList);
+		$extList = array_merge(array(PATH_site . 'fileadmin' => 'fileadmin/', ''), $extList);
 		$this->MOD_MENU = array(
-			'extList' => tx_lfeditor_mod1_functions::prepareExtList($tmpExtList)
+			'extList' => $extList
 		);
 		parent::menuConfig();
 	}
