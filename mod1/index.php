@@ -327,8 +327,9 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// create file object
 		$className = 'tx_lfeditor_mod1_file_' . $mode . strtoupper($fileType);
-		if(!class_exists($className))
+		if (!class_exists($className, false)) {
 			throw new LFException('failure.langfile.unknownType');
+		}
 		$this->fileObj = t3lib_div::makeInstance($className);
 
 		// initialize class
