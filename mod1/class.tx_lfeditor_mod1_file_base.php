@@ -84,8 +84,9 @@ abstract class tx_lfeditor_mod1_file_base extends tx_lfeditor_mod1_file {
 		{
 			$originLang[$lang] = $this->absFile;
 			if(is_array($localLang[$lang]) || $lang == 'default') {
-				if (count($localLang[$lang]))
+				if (is_array($localLang[$lang]) && count($localLang[$lang])) {
 					ksort($localLang[$lang]);
+				}
 				continue;
 			}
 
