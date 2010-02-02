@@ -242,11 +242,11 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// regular expressions
 		$this->extConfig['searchRegex'] = '/^[a-z0-9_]*locallang[a-z0-9_-]*\.(php|xml)$/i';
-		if(!preg_match('/^\/.*\/.*$/', $this->extConfig['extIgnore']))
+		if (!preg_match('/^\/.*\/.*$/', $this->extConfig['extIgnore'])) {
 			$this->extConfig['extIgnore'] = '/^csh_.*$/';
+		}
 
 		// some integer values
-		$this->extConfig['searchPathDepth'] = intval($this->extConfig['searchPathDepth']);
 		$this->extConfig['viewStateExt'] = intval($this->extConfig['viewStateExt']);
 		$this->extConfig['numTextAreaRows'] = intval($this->extConfig['numTextAreaRows']);
 		$this->extConfig['numSiteConsts'] = intval($this->extConfig['numSiteConsts']);
@@ -517,8 +517,10 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// search and prepare files
 		try {
-			$files = sgLib::searchFiles($this->MOD_SETTINGS['extList'],
-				$this->extConfig['searchRegex'], $this->extConfig['searchPathDepth']);
+			$files = sgLib::searchFiles(
+				$this->MOD_SETTINGS['extList'],
+				$this->extConfig['searchRegex']
+			);
 		} catch(Exception $e) {
 			throw new LFException('failure.search.noLangFile', 0,
 				'(' . $e->getMessage() . ')');

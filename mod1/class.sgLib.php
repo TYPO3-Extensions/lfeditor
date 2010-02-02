@@ -271,42 +271,49 @@ class sgLib {
 	 * @throws Exception raised if the search directory cant be read
 	 * @param string search in this path
 	 * @param string optional: regular expression for files
-	 * @param integer optional: maximum search in this depth (0 is infinite)
+	 * @param integer optional: current path depth level (max 9)
 	 * @return void
 	 */
-	public static function searchFiles($path, $searchRegex='', $pathDepth=0)
-	{
-		if(!$fhd = @opendir($path))
-			throw new Exception('directory "' . $path . '" cant be read');
-
+	public static function searchFiles($path, $searchRegex='', $pathDepth=0) {
+		// endless recursion protection
 		$fileArray = array();
-		while($file = readdir($fhd))
-		{
+		if ($pathDepth >= 9) {
+			continue;
+		}
+
+		// open directory
+		if (!$fhd = @opendir($path)) {
+			throw new Exception('directory "' . $path . '" cant be read');
+		}
+
+		// iterate thru the directory entries
+		while ($file = readdir($fhd)) {
 			$filePath = $path . '/' . $file;
 
-			// ignore links and point directories
-			if(preg_match('/^\.{1,2}$/', $file) || is_link($filePath))
+			// ignore links and special directories (. and ..)
+			if (preg_match('/^\.{1,2}$/', $file) || is_link($filePath)) {
 				continue;
+			}
 
-			// save path to file or continue
-			if(is_file($filePath))
-			{
-				if(empty($searchRegex))
+			// if it's a file and not excluded by the search filter, we can add it
+			// to the file array
+			if (is_file($filePath)) {
+				if ($searchRegex == '') {
 					$fileArray[] = $filePath;
-				elseif(preg_match($searchRegex, $file))
+				} elseif(preg_match($searchRegex, $file)) {
 					$fileArray[] = $filePath;
+				}
 
 				continue;
 			}
 
-			// breakpoint, if pathDepth is reached
-			if($pathDepth <= 1 && $pathDepth != 0)
-				continue;
-
 			// next dir
-			if(is_dir($filePath))
-				$fileArray = array_merge($fileArray,
-					sgLib::searchFiles($filePath, $searchRegex, $pathDepth-1));
+			if (is_dir($filePath)) {
+				$fileArray = array_merge(
+					$fileArray,
+					sgLib::searchFiles($filePath, $searchRegex, $pathDepth + 1)
+				);
+			}
 		}
 		closedir($fhd);
 
