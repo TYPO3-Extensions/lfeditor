@@ -16,7 +16,7 @@ viewSysExt = 0
 viewStateExt = 1
 
 # cat=basic; type=string; label=ignore extensions: Please modify the regular expression to limit the extension key list.
-extIgnore = /^csh_.*$/
+extIgnore = /^(CVS|.svn|.git|csh_)/
 
 # cat=basic; type=integer; label=maximal amount of backup files: Set this value to zero if you like to keep all files else all old files will be deleted unto the given amount.
 anzBackup = 5
