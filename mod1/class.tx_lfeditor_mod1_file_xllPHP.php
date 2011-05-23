@@ -1,26 +1,26 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2005-2008 Stefan Galinski (stefan.galinski@gmail.com)
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2005-2008 Stefan Galinski (stefan.galinski@gmail.com)
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * xll workspace class (php)
@@ -47,8 +47,7 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 	 * @param string relative typo3 path to an language file (i.e. EXT:lfeditor/mod1/locallang.xml)
 	 * @return void
 	 */
-	public function init($file, $path, $typo3RelFile)
-	{
+	public function init($file, $path, $typo3RelFile) {
 		$this->setVar(array('fileType' => 'php'));
 		parent::init($file, $path, $typo3RelFile);
 	}
@@ -59,13 +58,14 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 	 * @throws LFException raised if the file dont contain a locallang array
 	 * @return array language content
 	 */
-	protected function readLLFile()
-	{
-		if(is_file($this->absFile))
+	protected function readLLFile() {
+		if (is_file($this->absFile)) {
 			include($this->absFile);
+		}
 
-		if(!is_array($LOCAL_LANG))
+		if (!is_array($LOCAL_LANG)) {
 			throw new LFException('failure.search.noFileContent', 0, '(' . $file . ')');
+		}
 
 		// set meta informations
 		$this->meta = $LFMETA;
@@ -78,13 +78,13 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 	 *
 	 * @return string meta data for writing purposes
 	 */
-	private function prepareMeta()
-	{
-		if(!is_array($this->meta))
+	private function prepareMeta() {
+		if (!is_array($this->meta)) {
 			return '';
+		}
 
-		unset($metaData);
-		foreach($this->meta as $metaIndex=>$value)
+		$metaData = '';
+		foreach ($this->meta as $metaIndex => $value)
 		{
 			$value = preg_replace('/[^\\\]\'/', '\\\'', $value);
 			$metaData .= "\t" . '\'' . $metaIndex . '\' => \'' . $value . '\',' . "\n";
@@ -98,11 +98,10 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 	 *
 	 * @return string header data
 	 */
-	private function getHeader()
-	{
+	private function getHeader() {
 		$relWithoutExt = str_replace('EXT:', '', $this->typo3RelFile);
 		$extKey = substr($relWithoutExt, 0, strpos($relWithoutExt, '/'));
-		$langFile = substr($relWithoutExt, strpos($relWithoutExt, '/')+1);
+		$langFile = substr($relWithoutExt, strpos($relWithoutExt, '/') + 1);
 
 		$header = '<?php' . "\n";
 		$header .= "/**\n * local language labels of module \"$extKey\"\n";
@@ -118,8 +117,7 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 	 *
 	 * @return string footer data
 	 */
-	private function getFooter()
-	{
+	private function getFooter() {
 		return '?>' . "\n";
 	}
 
@@ -130,13 +128,11 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 	 * @param string language shortcut
 	 * @return string language part of the main file
 	 */
-	private function getLangContent($localLang, $lang)
-	{
-		$content .= "\t'$lang' => array (\n";
-		if(is_array($localLang))
-		{
+	private function getLangContent($localLang, $lang) {
+		$content = "\t'$lang' => array (\n";
+		if (is_array($localLang)) {
 			ksort($localLang);
-			foreach($localLang as $const=>$value)
+			foreach ($localLang as $const => $value)
 			{
 				$value = preg_replace("/([^\\\])'/", "$1\'", $value);
 				$value = str_replace("\r", '', str_replace("\n", '<br />', $value));
@@ -153,12 +149,13 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 	 *
 	 * @return array absolute xll file as key and content as value
 	 */
-	protected function prepareFileContents()
-	{
-		unset($mainFileContent);
+	protected function prepareFileContents() {
+		$mainFileContent = '';
 		$languages = explode('|', TYPO3_languages);
-		foreach($languages as $langKey)
+		foreach ($languages as $langKey)
+		{
 			$mainFileContent .= $this->getLangContent($this->localLang[$langKey], $langKey);
+		}
 
 		// prepare Content for the main file
 		$languageFiles[$this->absFile] = $this->getHeader();
@@ -175,7 +172,7 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllPHP.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllPHP.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllPHP.php']);
 }
 

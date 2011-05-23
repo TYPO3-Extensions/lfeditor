@@ -1,26 +1,26 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2005-2008 Stefan Galinski (stefan.galinski@gmail.com)
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2005-2008 Stefan Galinski (stefan.galinski@gmail.com)
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * includes special typo3 methods
@@ -42,6 +42,7 @@ class typo3Lib {
 	const pathGlobalExt = 'typo3/ext/';
 	const pathSysExt = 'typo3/sysext/';
 	const pathL10n = 'typo3conf/l10n/';
+
 	/**#@-*/
 
 	/**
@@ -50,18 +51,26 @@ class typo3Lib {
 	 * @param string file
 	 * @param string location type: local, global, system or l10n (nothing if unknown)
 	 */
-	public static function checkFileLocation($file)
-	{
-		if(strpos($file, typo3Lib::pathLocalExt) !== false)
+	public static function checkFileLocation($file) {
+		if (strpos($file, typo3Lib::pathLocalExt) !== false) {
 			return 'local';
-		elseif(strpos($file, typo3Lib::pathGlobalExt) !== false)
+		}
+		elseif (strpos($file, typo3Lib::pathGlobalExt) !== false)
+		{
 			return 'global';
-		elseif(strpos($file, typo3Lib::pathSysExt) !== false)
+		}
+		elseif (strpos($file, typo3Lib::pathSysExt) !== false)
+		{
 			return 'system';
-		elseif(strpos($file, typo3Lib::pathL10n) !== false)
+		}
+		elseif (strpos($file, typo3Lib::pathL10n) !== false)
+		{
 			return 'l10n';
+		}
 		else
+		{
 			return '';
+		}
 	}
 
 	/**
@@ -72,34 +81,35 @@ class typo3Lib {
 	 * @param boolean generate to relative(false) or absolute file
 	 * @return string converted file path
 	 */
-	public static function transTypo3File($file, $mode)
-	{
+	public static function transTypo3File($file, $mode) {
 		$extType['local'] = typo3Lib::pathLocalExt;
 		$extType['global'] = typo3Lib::pathGlobalExt;
 		$extType['system'] = typo3Lib::pathSysExt;
 
 		// relative to absolute
-		if($mode)
-		{
-			if(strpos($file, 'EXT:') === false)
+		if ($mode) {
+			if (strpos($file, 'EXT:') === false) {
 				throw new Exception('no typo3 relative path "' . $file . '"');
+			}
 
 			$cleanFile = sgLib::trimPath('EXT:', $file);
-			foreach($extType as $type)
+			foreach ($extType as $type)
 			{
 				$path = typo3Lib::fixFilePath(PATH_site . '/' . $type . '/' . $cleanFile);
-				if(is_dir(dirname($path)))
+				if (is_dir(dirname($path))) {
 					return $path;
+				}
 			}
 
 			throw new Exception('cant convert typo3 relative file "' . $file . '"');
 		}
 		else // absolute to relative
 		{
-			foreach($extType as $type)
+			foreach ($extType as $type)
 			{
-				if(strpos($file, $type) === false)
+				if (strpos($file, $type) === false) {
 					continue;
+				}
 
 				return 'EXT:' . sgLib::trimPath($type, sgLib::trimPath(PATH_site, $file));
 			}
@@ -126,14 +136,14 @@ class typo3Lib {
 	 * @param string value of line
 	 * @return void
 	 */
-	public static function writeLocalconf($addLine, $value)
-	{
+	public static function writeLocalconf($addLine, $value) {
 		$localconf = PATH_typo3conf . 'localconf.php';
 
 		// get current content
 		$lines = file_get_contents($localconf);
-		if(empty($lines))
+		if (empty($lines)) {
 			throw new Exception('localconf is empty...');
+		}
 		$lines = explode("\n", str_replace('?>', '', $lines));
 		$localConfObj = t3lib_div::makeInstance('t3lib_install');
 		$localConfObj->updateIdentity = 'LFEditor';
@@ -142,8 +152,9 @@ class typo3Lib {
 		$localConfObj->setValueInLocalconfFile($lines, $addLine, $value);
 
 		// backup localconf
-		if(!copy($localconf, $localconf . '.bak'))
+		if (!copy($localconf, $localconf . '.bak')) {
 			throw new Exception('localconf couldnt be backuped...');
+		}
 
 		// write localconf
 		$localConfObj->allowUpdateLocalConf = 1;
@@ -158,32 +169,39 @@ class typo3Lib {
 	 * @param array language keys to ignore
 	 * @return array decoded or encoded language content array
 	 */
-	public static function utf8($localLang, $mode, $ignoreKeys)
-	{
+	public static function utf8($localLang, $mode, $ignoreKeys) {
 		// check
-		if(!is_array($localLang) || !count($localLang))
+		if (!is_array($localLang) || !count($localLang)) {
 			return $localLang;
+		}
 
 		// get charset object
 		$csConvObj = &$GLOBALS['LANG']->csConvObj;
 
 		// loop all possible languages
-		foreach($localLang as $langKey => $convContent)
+		foreach ($localLang as $langKey => $convContent)
 		{
-			if(!is_array($convContent) || in_array($langKey, $ignoreKeys))
+			if (!is_array($convContent) || in_array($langKey, $ignoreKeys)) {
 				continue;
+			}
 
 			$origCharset = $csConvObj->parse_charset($csConvObj->charSetArray[$langKey] ?
-				$csConvObj->charSetArray[$langKey] : 'iso-8859-1');
+					$csConvObj->charSetArray[$langKey] : 'iso-8859-1');
 
-			if($csConvObj->charSetArray[$langKey] == 'utf-8')
+			if ($csConvObj->charSetArray[$langKey] == 'utf-8') {
 				continue;
+			}
 
-			foreach($convContent as $labelKey => $value)
-				if($mode)
+			foreach ($convContent as $labelKey => $value)
+			{
+				if ($mode) {
 					$localLang[$langKey][$labelKey] = $csConvObj->utf8_encode($value, $origCharset);
+				}
 				else
+				{
 					$localLang[$langKey][$labelKey] = $csConvObj->utf8_decode($value, $origCharset);
+				}
+			}
 		}
 
 		return $localLang;
@@ -191,7 +209,7 @@ class typo3Lib {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.typo3Lib.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.typo3Lib.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.typo3Lib.php']);
 }
 

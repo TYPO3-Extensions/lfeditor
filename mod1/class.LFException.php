@@ -1,26 +1,26 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2005-2008 Stefan Galinski (stefan.galinski@gmail.com)
-*  All rights reserved
-*
-*  This script isnt part of any project. The script is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2005-2008 Stefan Galinski (stefan.galinski@gmail.com)
+ *  All rights reserved
+ *
+ *  This script isnt part of any project. The script is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * adds a new error exception
@@ -42,6 +42,7 @@ class LFException extends Exception {
 	 */
 	private static $errorWrap = '|';
 	private static $noticeWrap = '|';
+
 	/**#@-*/
 
 	/**
@@ -52,13 +53,14 @@ class LFException extends Exception {
 	 * @param string static message (appended at the localized string)
 	 * @return void
 	 */
-	public function __construct($msg, $wrapType=0, $staticMsg='')
-	{
-		if(!empty($msg))
+	public function __construct($msg, $wrapType = 0, $staticMsg = '') {
+		if (!empty($msg)) {
 			$msg = $GLOBALS['LANG']->getLL($msg);
+		}
 
-		if(empty($msg))
+		if (empty($msg)) {
 			$msg = 'LFExeption: no error message given !!!';
+		}
 
 		parent::__construct($this->prepare($msg . ' ' . $staticMsg, $wrapType));
 	}
@@ -70,8 +72,7 @@ class LFException extends Exception {
 	 * @param string notice wrap
 	 * @return void
 	 */
-	public static function setWrap($errorWrap, $noticeWrap)
-	{
+	public static function setWrap($errorWrap, $noticeWrap) {
 		self::$errorWrap = $errorWrap;
 		self::$noticeWrap = $noticeWrap;
 	}
@@ -83,12 +84,15 @@ class LFException extends Exception {
 	 * @param integer type of wrap (0 = error (default), 1 = notice)
 	 * @return string prepared message
 	 */
-	private function prepare($msg, $wrapType=0)
-	{
-		if(!$wrapType)
+	private function prepare($msg, $wrapType = 0) {
+		if (!$wrapType) {
 			return str_replace('|', $msg, self::$errorWrap);
+		}
 		else
+		{
 			return str_replace('|', $msg, self::$noticeWrap);
+		}
 	}
 }
+
 ?>

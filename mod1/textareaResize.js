@@ -8,7 +8,7 @@
  *  Modified by John Ha 2005, 2006 (ink@bur.st)
  *
  *  Modified by Peter Klein/Stefan Galinski for special needs in LFEditor
-*/
+ */
 
 function TextAreaResizer(elt) {
 	this.element = elt;
@@ -19,8 +19,7 @@ TextAreaResizer.prototype = {
 	// create hr element (+class, +title tooltip)
 	create : function() {
 		var elt = this.element;
-		if (elt.title != 'true')
-		{
+		if (elt.title != 'true') {
 			var thisRef = this; // for usage in events defintion
 			var h = this.handle = document.createElement("hr");
 			h.className = 'handle-normal';
@@ -37,32 +36,31 @@ TextAreaResizer.prototype = {
 
 			// double click resizing
 			addEvent(h, 'dblclick', function(evt) {
-					thisRef.max(1);
-				}, false);
+				thisRef.max(1);
+			}, false);
 
 			// onclick optimal resizing
 			addEvent(h, 'mousedown', function(evt) {
-					if(!checkIt('opera'))
-					{
-						if(evt.button == 2)
-							thisRef.max(2);
-						else
-							thisRef.dragStart(evt);
-					}
-				}, false);
+				if (!checkIt('opera')) {
+					if (evt.button == 2)
+						thisRef.max(2);
+					else
+						thisRef.dragStart(evt);
+				}
+			}, false);
 
 			// class changing mechanism
-			addEvent(h, 'mouseover', function(evt){
-					h.className = 'handle-highlight';
-				}, false);
-			addEvent(h, 'mouseout', this.handleHigh = function(evt){
-					h.className = 'handle-normal';
-				}, false);
+			addEvent(h, 'mouseover', function(evt) {
+				h.className = 'handle-highlight';
+			}, false);
+			addEvent(h, 'mouseout', this.handleHigh = function(evt) {
+				h.className = 'handle-normal';
+			}, false);
 
 			// deactivate context menu
-			addEvent(h, 'contextmenu', function(){
-					return false;
-				}, false);
+			addEvent(h, 'contextmenu', function() {
+				return false;
+			}, false);
 
 			// insert now into document
 			elt.parentNode.insertBefore(h, elt.nextSibling);
@@ -93,22 +91,26 @@ TextAreaResizer.prototype = {
 		this.dragStartY = evt.clientY + 8;
 		this.dragStartH = this.element.offsetHeight;
 
-		addEvent(document, 'mousemove', this.dragMoveHdlr = function(evt){ thisRef.dragMove(evt); }, false);
-		addEvent(document, 'mouseup', this.dragStopHdlr = function(evt){
-				thisRef.dragStop(evt);
+		addEvent(document, 'mousemove', this.dragMoveHdlr = function(evt) {
+			thisRef.dragMove(evt);
+		}, false);
+		addEvent(document, 'mouseup', this.dragStopHdlr = function(evt) {
+			thisRef.dragStop(evt);
 
-				// restore default cursor shape
-				document.getElementsByTagName('body')[0].style.cursor = 'default';
+			// restore default cursor shape
+			document.getElementsByTagName('body')[0].style.cursor = 'default';
 
-				// restore mouseover for tooltips after drag stop
-				if (typeof(thisRef.mouseoverHandler) == 'function')
-					addEvent(thisRef.handle, 'mouseover', thisRef.mouseoverHandler, false);
+			// restore mouseover for tooltips after drag stop
+			if (typeof(thisRef.mouseoverHandler) == 'function')
+				addEvent(thisRef.handle, 'mouseover', thisRef.mouseoverHandler, false);
 
-				// restore highlight handler
-				thisRef.handle.className = 'handle-normal';
-				addEvent(thisRef.handle, 'mouseout', thisRef.handleHigh =
-					function(evt){ thisRef.handle.className = 'handle-normal'; }, false);
-			}, false);
+			// restore highlight handler
+			thisRef.handle.className = 'handle-normal';
+			addEvent(thisRef.handle, 'mouseout', thisRef.handleHigh =
+				function(evt) {
+					thisRef.handle.className = 'handle-normal';
+				}, false);
+		}, false);
 	},
 
 	dragMove : function(evt) {
@@ -132,13 +134,12 @@ TextAreaResizer.prototype = {
 		if (!this.defHeight) this.defHeight = this.element.offsetHeight;
 		if (!this.defWidth) this.defWidth = this.handle.offsetWidth;
 
-		if(this.element.style.height == '1px')
+		if (this.element.style.height == '1px')
 			this.element.style.height = this.defHeight + 'px';
 		else
 			this.element.style.height = '1px';
 
-		if(mode == 2)
-		{
+		if (mode == 2) {
 			str = '';
 			for (i = 0; i < parseInt(this.element.scrollWidth / 10); i++) str += '		';
 			this.element.value += str;
@@ -149,7 +150,7 @@ TextAreaResizer.prototype = {
 				wrap = 1;
 			else
 				wrap = 0;
-			this.element.value = this.element.value.replace(str,'');
+			this.element.value = this.element.value.replace(str, '');
 
 			// IE Bug? Need to retrieve scrollHeight first to init it!
 			var dummy = this.element.scrollHeight;
@@ -157,13 +158,13 @@ TextAreaResizer.prototype = {
 				(checkIt('msie') ?
 					wrap ?
 						-6
-					:	9
-				: 	wrap ?
-						0
-					:	this.element.scrollWidth > this.element.clientWidth ?
-							20
-						:	0
-				);
+						: 9
+					: wrap ?
+					0
+					: this.element.scrollWidth > this.element.clientWidth ?
+					20
+					: 0
+					);
 
 			if (maxHeight > winSize()[1]) maxHeight = winSize()[1] - (checkIt('msie') ? 60 : 90);
 			// For some reason Netscape won't accept style.height greater than 10000px
@@ -176,15 +177,15 @@ TextAreaResizer.prototype = {
 
 function winSize() {
 	var myWidth = 0, myHeight = 0;
-	if( typeof( window.innerWidth ) == 'number' ) {
+	if (typeof( window.innerWidth ) == 'number') {
 		//Non-IE
 		myWidth = window.innerWidth - 16;
 		myHeight = window.innerHeight - 16;
-	} else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+	} else if (document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight )) {
 		//IE 6+ in 'standards compliant mode'
 		myWidth = document.documentElement.clientWidth - 20;
 		myHeight = document.documentElement.clientHeight - 20;
-	} else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+	} else if (document.body && ( document.body.clientWidth || document.body.clientHeight )) {
 		//IE 4 compatible
 		myWidth = document.body.clientWidth - 20;
 		myHeight = document.body.clientHeight - 20;
@@ -218,18 +219,18 @@ if (typeof schedule != 'function') {
 			obj.addEventListener(evType, fn, useCapture);
 			return true;
 		} else if (obj.attachEvent) {
-			var r = obj.attachEvent("on"+evType, fn);
+			var r = obj.attachEvent("on" + evType, fn);
 			return r;
 		} else {
 			alert('Handler could not be attached');
 		}
 	}
 
-	function removeEvent(obj, evType, fn, useCapture){
-		if (obj.removeEventListener){
+	function removeEvent(obj, evType, fn, useCapture) {
+		if (obj.removeEventListener) {
 			obj.removeEventListener(evType, fn, useCapture);
 			return true;
-		} else if (obj.detachEvent){
+		} else if (obj.detachEvent) {
 			var r = obj.detachEvent('on' + evType, fn);
 			return r;
 		} else {
@@ -237,5 +238,7 @@ if (typeof schedule != 'function') {
 		}
 	}
 
-	addEvent(window, 'load', function() { LFEtextarea_init(); }, false);
+	addEvent(window, 'load', function() {
+		LFEtextarea_init();
+	}, false);
 } else schedule('textarea_init()');

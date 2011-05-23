@@ -1,11 +1,10 @@
-function myCustomCleanup(type, value)
-{
-	switch(type) {
+function myCustomCleanup(type, value) {
+	switch (type) {
 		case 'get_from_editor':
-			while(value.substring(value.length-6, value.length) == '<br />')
-				value = value.substring(0, value.length-6);
+			while (value.substring(value.length - 6, value.length) == '<br />')
+				value = value.substring(0, value.length - 6);
 			break;
-		}
+	}
 	return value;
 }
 

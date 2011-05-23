@@ -20,7 +20,7 @@ function submitSessionLangFileEdit(buttonType, session) {
 }
 
 function metaTypeCheck() {
-	if(document.mainForm.elements['metaType'].value == 'CSH') {
+	if (document.mainForm.elements['metaType'].value == 'CSH') {
 		document.mainForm.elements['metaCSHTable'].disabled = 0;
 		document.mainForm.elements['metaCSHTable'].focus();
 	} else {
@@ -42,11 +42,10 @@ function openCloseTreeEntry(autoHide, args) {
 	}
 	curTreeHide = treeHide;
 
-	for(var i = 1; i < length; i += 3)
-	{
+	for (var i = 1; i < length; i += 3) {
 		if (autoHide) {
 			curTreeHide = 0;
-			if(!document.getElementById(arguments[i]).style.display)
+			if (!document.getElementById(arguments[i]).style.display)
 				curTreeHide = 1;
 		}
 
@@ -58,10 +57,10 @@ function openCloseTreeEntry(autoHide, args) {
 			pic = 'Minus';
 		}
 
-		if (arguments[i+2])
+		if (arguments[i + 2])
 			pic = pic + 'Bottom';
 
-		document.getElementById(arguments[i+1]).src = '../res/images/tree' + pic + '.gif';
-		document.getElementById(arguments[i+1]).alt = 'tree' + pic;
+		document.getElementById(arguments[i + 1]).src = '../res/images/tree' + pic + '.gif';
+		document.getElementById(arguments[i + 1]).alt = 'tree' + pic;
 	}
 }
