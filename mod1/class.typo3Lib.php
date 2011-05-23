@@ -152,7 +152,7 @@ class typo3Lib {
 		$localConfObj->setValueInLocalconfFile($lines, $addLine, $value);
 
 		// backup localconf
-		if (!copy($localconf, $localconf . '.bak')) {
+		if (!copy($localconf, $localconf . '.bak.php')) {
 			throw new Exception('localconf couldnt be backuped...');
 		}
 
