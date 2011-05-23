@@ -278,7 +278,7 @@ class sgLib {
 		// endless recursion protection
 		$fileArray = array();
 		if ($pathDepth >= 9) {
-			continue;
+			return;
 		}
 
 		// open directory
@@ -311,7 +311,7 @@ class sgLib {
 			if (is_dir($filePath)) {
 				$fileArray = array_merge(
 					$fileArray,
-					sgLib::searchFiles($filePath, $searchRegex, $pathDepth + 1)
+					(array)sgLib::searchFiles($filePath, $searchRegex, $pathDepth + 1)
 				);
 			}
 		}

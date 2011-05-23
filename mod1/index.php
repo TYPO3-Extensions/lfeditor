@@ -132,17 +132,17 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 */
 	public function main()
 	{
-		// generate doc object
-		$this->doc = t3lib_div::makeInstance('bigDoc');
+        $this->doc = t3lib_div::makeInstance('template');
+        $this->doc->backPath = $GLOBALS['BACK_PATH'];
+        $this->doc->setModuleTemplate(t3lib_extMgm::extRelPath('lfeditor') . 'templates/main_mod1.html');
 		$this->doc->docType = 'xhtml_trans';
-		$this->doc->backPath = $GLOBALS['BACK_PATH'];
 		$this->doc->form = '<form action="" method="post" name="mainForm">';
 
 		// generate main menus
 		// this stuff must be done before we set the header code, because the switchInsertType
 		// variable will be set at the init process (DON'T MOVE THE CODE AWAY!)
-		$funcMenu = '<p style="margin-bottom: 5px;">' . $this->getFuncMenu('function') . '</p>';
-		$this->menuInsertMode();
+//		$funcMenu = '<p style="margin-bottom: 5px;">' . $this->getFuncMenu('function') . '</p>';
+//		$this->menuInsertMode();
 
 		// include WYSIWIG, pmktextarea or normal textareas (with resize bar)
 		$this->doc->JScode = '<script type="text/javascript" src="textareaResize.js"></script>';
@@ -151,8 +151,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			$tinyMCE = new tinyMCE($this->extConfig['pathTinyMCEConfig']);
 			if($tinyMCE->checkBrowser())
 				$this->doc->JScode = $tinyMCE->getJS();
-		}
-		elseif($this->MOD_SETTINGS['insertMode'] == 'pmktextarea') {
+
+		} elseif($this->MOD_SETTINGS['insertMode'] == 'pmktextarea') {
 			$GLOBALS['PMKTEXTAREA'] = true;
 			$this->doc->JScode = '
 				<script type="text/javascript">
@@ -170,7 +170,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				function jumpToUrl(URL) {
 					document.location = URL;
 				}
-				var treeHide = ' . $this->extConfig['treeHide'] . ';
+				var treeHide = ' . intval($this->extConfig['treeHide']) . ';
 				' . file_get_contents('tx_lfeditor_mod1.js') . '
 			</script>';
 
@@ -184,16 +184,16 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		$this->doc->JScode .=
 			'<link rel="stylesheet" type="text/css" href="' . $this->extConfig['pathCSS'] . '" />';
 
-		// draw the header
-		$this->content = $this->doc->startPage($GLOBALS['LANG']->getLL('title'));
-		$this->content .= $this->doc->header($GLOBALS['LANG']->getLL('title'));
-		$this->content .= $this->doc->spacer(5);
-
 		// The page will show only if there is a valid page and if this page may be viewed by the user
 		$this->pageinfo = t3lib_BEfunc::readPageAccess($this->id, $this->perms_clause);
 		$access = is_array($this->pageinfo) ? 1 : 0;
 		if((!$this->id || !$access) && (!$GLOBALS['BE_USER']->user['uid'] || $this->id))
 			throw new LFException('failure.access.denied');
+
+		// draw the header
+/*		$this->content = $this->doc->startPage($GLOBALS['LANG']->getLL('title'));
+		$this->content .= $this->doc->header($GLOBALS['LANG']->getLL('title'));
+		$this->content .= $this->doc->spacer(5);
 
 		// draw the header
 		$funcMenu .= $this->getFuncMenu('insertMode');
@@ -209,19 +209,49 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			$this->content .= $this->doc->section('', $this->doc->spacer(20) . $icon);
 		}
 		$this->content .= $this->doc->spacer(10);
+*/
+			// setting up the buttons and markers
+		$docHeaderButtons = $this->getButtons();        
+		$markers = array(
+            'FUNC_MENU' => $this->getFuncMenu('function'),
+            'CONTENT' => $this->moduleContent(),
+        );
+		$this->menuInsertMode();
+		$markers['INSERT_MODE'] = $this->getFuncMenu('insertMode');
+
+        // build the <body> for the module
+        $this->content = $this->doc->startPage($GLOBALS['LANG']->getLL('title'));
+        $this->content .= $this->doc->moduleBody($this->pageinfo, $docHeaderButtons, $markers);
 	}
 
 	/**
-	 * adds some possible stuff to the content and print it out
+	 * Prints the final content...
 	 *
-	 * @param string extra content (appended at the string)
+	 * @param string $extraContent extra content (appended at the string)
 	 * @return void
 	 */
-	public function printContent($content='')
-	{
-		$this->content .= $content;
-		$this->content .= $this->doc->endPage();
-		echo $this->content;
+	public function printContent($extraContent='') {
+		$this->content = $this->doc->insertStylesAndJS($this->content);
+		echo $this->content . $extraContent . $this->doc->endPage();
+	}
+
+	/**
+	 * Create the panel of buttons for submitting the form or otherwise perform operations.
+	 *
+	 * @return array all available buttons as an associative array
+	 */
+	protected function getButtons() {
+		$buttons = array(
+			'shortcut' => ''
+		);
+
+		if ($GLOBALS['BE_USER']->mayMakeShortcut()) {
+			$selKeys = implode(',', array_keys($this->MOD_MENU));
+			$icon =  $this->doc->makeShortcutIcon('id', $selKeys, $this->MCONF['name']);
+			$buttons['shortcut'] = $icon;
+		}
+
+		return $buttons;
 	}
 
 	#######################################
@@ -1745,29 +1775,29 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * generates the module content
 	 *
 	 * @throws LFException raised if any output failure occured
-	 * @return void at failure
+	 * @return string
 	 */
-	private function moduleContent()
-	{
+	private function moduleContent() {
+		$moduleContent = '';
+
 		// generate menus
 		try {
 			// generate extension and workspace list
 			$name = 'select.extensionAndWorkspace';
 			$name = tx_lfeditor_mod1_functions::prepareSectionName($name);
-			$this->content .= $this->doc->section($name, '', 0, 1);
+			$moduleContent .= $this->doc->section($name, '', 0, 1);
 			$this->menuExtList();
 			$extList = $this->getFuncMenu('extList');
 			$this->menuWorkspaceList();
-			$this->content .= $this->doc->funcMenu($extList,
-				$this->getFuncMenu('wsList'));
+			$moduleContent .= $this->doc->funcMenu($extList . $this->getFuncMenu('wsList'), '');
 
 			// generate language file list
 			if($this->MOD_SETTINGS['function'] != 'backupMgr')
 			{
 				$name = tx_lfeditor_mod1_functions::prepareSectionName('select.langfile');
-				$this->content .= $this->doc->section($name, '', 0, 1);
+				$moduleContent .= $this->doc->section($name, '', 0, 1);
 				$this->menuLangFileList();
-				$this->content .= $this->doc->funcMenu($this->getFuncMenu('langFileList'), '');
+				$moduleContent .= $this->doc->funcMenu($this->getFuncMenu('langFileList'), '');
 			}
 		} catch(LFException $e) {
 			throw $e;
@@ -1827,7 +1857,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$refMenu = $this->doc->funcMenu($this->getFuncMenu('patternList'), '');
 				$sectName = 'select.referenceLanguage';
 				$name = tx_lfeditor_mod1_functions::prepareSectionName($sectName);
-				$this->content .= $this->doc->section($name, $refMenu, 0, 1);
+				$moduleContent .= $this->doc->section($name, $refMenu, 0, 1);
 
 				// get main content
 				$content = $this->outputFuncGeneral();
@@ -1864,10 +1894,10 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 					$GLOBALS['LANG']->getLL('select.nothing'));
 				$patternList = $this->getFuncMenu('langfileEditPatternList');
 
-				$languageMenu = $this->doc->funcMenu($langList, $patternList);
+				$languageMenu = $this->doc->funcMenu($langList . $patternList, '');
 				$name = 'select.languageAndPattern';
 				$name = tx_lfeditor_mod1_functions::prepareSectionName($name);
-				$this->content .= $this->doc->section($name, $languageMenu, 0, 1);
+				$moduleContent .= $this->doc->section($name, $languageMenu, 0, 1);
 
 				// draw type selector
 				$this->menuConstantType();
@@ -1876,7 +1906,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$typeMenu = $this->doc->funcMenu($typeList, '');
 				$name = 'select.constantType';
 				$name = tx_lfeditor_mod1_functions::prepareSectionName($name);
-				$this->content .= $this->doc->section($name, $typeMenu, 0, 1);
+				$moduleContent .= $this->doc->section($name, $typeMenu, 0, 1);
 
 				// get main content
 				try {
@@ -1908,7 +1938,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$this->menuConstList($langData, $GLOBALS['LANG']->getLL('select.nothing'));
 				$constList = $this->doc->funcMenu($this->getFuncMenu('constList'), '');
 				$name = tx_lfeditor_mod1_functions::prepareSectionName('select.constant');
-				$this->content .= $this->doc->section($name, $constList, 0, 1);
+				$moduleContent .= $this->doc->section($name, $constList, 0, 1);
 
 				// get main content
 				try {
@@ -1967,7 +1997,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$this->menuConstList($langData, $GLOBALS['LANG']->getLL('select.nothing'));
 				$constList = $this->doc->funcMenu($this->getFuncMenu('constList'), '')	;
 				$name = tx_lfeditor_mod1_functions::prepareSectionName('select.constant');
-				$this->content .= $this->doc->section($name, $constList, 0, 1);
+				$moduleContent .= $this->doc->section($name, $constList, 0, 1);
 
 				// get main content
 				try {
@@ -2000,7 +2030,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$this->menuConstList($langData, $GLOBALS['LANG']->getLL('select.nothing'));
 				$constList = $this->doc->funcMenu($this->getFuncMenu('constList'), '')	;
 				$name = tx_lfeditor_mod1_functions::prepareSectionName('select.constant');
-				$this->content .= $this->doc->section($name, $constList, 0, 1);
+				$moduleContent .= $this->doc->section($name, $constList, 0, 1);
 
 				// get main content
 				try {
@@ -2051,8 +2081,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 				$name = 'select.languageAndPattern';
 				$name = tx_lfeditor_mod1_functions::prepareSectionName($name);
-				$langMenu = $this->doc->funcMenu($langList, $refList);
-				$this->content .= $this->doc->section($name, $langMenu, 0, 1);
+				$langMenu = $this->doc->funcMenu($langList . $refList, '');
+				$moduleContent .= $this->doc->section($name, $langMenu, 0, 1);
 
 				// draw explode token menu
 				$curToken = tx_lfeditor_mod1_functions::getExplodeToken($curToken,
@@ -2061,7 +2091,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$treeMenu = $this->doc->funcMenu($selToken, '');
 				$name = 'select.explodeToken';
 				$name = tx_lfeditor_mod1_functions::prepareSectionName($name);
-				$this->content .= $this->doc->section($name, $treeMenu, 0, 1);
+				$moduleContent .= $this->doc->section($name, $treeMenu, 0, 1);
 
 				// get main content
 				try {
@@ -2100,7 +2130,9 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		}
 
 		// save generated content
-		$this->content .= $this->doc->section($sectName, $preContent . $content, 0, 1);
+		$moduleContent .= $this->doc->section($sectName, $preContent . $content, 0, 1);
+
+		return $moduleContent;
 	}
 }
 

@@ -1,3 +1,7 @@
+#typo3-inner-docbody {
+	max-width: 900px;
+}
+
 /* fieldset class (box) */
 fieldset.tx-lfeditor-fieldset, fieldset.tx-lfeditor-fieldset fieldset {
 	padding: 5px;
