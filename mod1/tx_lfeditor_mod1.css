@@ -6,7 +6,6 @@ fieldset.tx-lfeditor-fieldset, fieldset.tx-lfeditor-fieldset fieldset {
 	margin-top: 5px;
 	margin-bottom: 10px;
 	border: 1px solid #AAA;
-	position: relative; /* needed for IE fieldset hack */
 }
 
 fieldset.tx-lfeditor-fleft, fieldset.tx-lfeditor-fright {
@@ -28,11 +27,6 @@ fieldset.tx-lfeditor-fieldset legend {
 	padding-right: 5px;
 	font-weight: bold;
 	border: 1px solid #AAA;
-
-	/* IE fieldset hack */
-	position: absolute;
-	top: -11px;
-	_top: -6px;
 }
 
 fieldset.tx-lfeditor-fieldset fieldset dt {
@@ -121,6 +115,10 @@ fieldset.tx-lfeditor-fieldset fieldset dd {
 }
 
 /* some special classes/ids */
+.tx-lfeditor-buttons {
+	clear: both;
+}
+
 #tx-lfeditor-caseSensitiveBox {
 	margin-bottom: 5px;
 }
@@ -153,10 +151,6 @@ fieldset.tx-lfeditor-fieldset fieldset dd {
 .tx-lfeditor-input {
 	width: 250px;
 	float: right;
-}
-
-p input {
-	width: 360px;
 }
 
 .tx-lfeditor-label, .tx-lfeditor-input {

@@ -499,8 +499,8 @@ class tx_lfeditor_mod1_template {
 		$langName, $patternName, $parallelEdit, $buttonBack, $buttonNext, $textAreaRows)
 	{
 		// informations
-		$content .= '<span id="tx-lfeditor-numberCur">' . $curConsts . '</span> / ' .
-			'<span id="tx-lfeditor-numberOf">' . $totalConsts . '</span>';
+		$content .= '<p><span id="tx-lfeditor-numberCur">' . $curConsts . '</span> / ' .
+			'<span id="tx-lfeditor-numberOf">' . $totalConsts . '</span></p>';
 
 		// additional hidden form values
 		$content .= '<input type="hidden" name="session" value="0" />';
