@@ -42,8 +42,27 @@ class LFException extends Exception {
 	 */
 	private static $errorWrap = '|';
 	private static $noticeWrap = '|';
-
 	/**#@-*/
+
+	/**
+	 * @var string
+	 */
+	protected $generatedContent = '';
+
+	/**
+	 * @param string $content
+	 * @return void
+	 */
+	public function setGeneratedContent($content) {
+		$this->generatedContent = $content;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getGeneratedContent() {
+		return $this->generatedContent;
+	}
 
 	/**
 	 * Constructor

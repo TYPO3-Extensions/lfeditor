@@ -186,14 +186,23 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			throw new LFException('failure.access.denied');
 		}
 
+		$functionMenu = $this->getFuncMenu('function');
+		$this->menuInsertMode();
+		$insertModeMenu = $this->getFuncMenu('insertMode');
+
+		try {
+			$moduleContent = $this->moduleContent();
+		} catch (LFException $e) {
+			$moduleContent = $e->getGeneratedContent() . $e->getMessage();
+		}
+
 		// setting up the buttons and markers
 		$docHeaderButtons = $this->getButtons();
 		$markers = array(
-			'FUNC_MENU' => $this->getFuncMenu('function'),
-			'CONTENT' => $this->moduleContent(),
+			'FUNC_MENU' => $functionMenu,
+			'INSERT_MODE' => $insertModeMenu,
+			'CONTENT' => $moduleContent,
 		);
-		$this->menuInsertMode();
-		$markers['INSERT_MODE'] = $this->getFuncMenu('insertMode');
 
 		// build the <body> for the module
 		$this->content = $this->doc->startPage($GLOBALS['LANG']->getLL('title'));
@@ -1878,6 +1887,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$moduleContent .= $this->doc->funcMenu($this->getFuncMenu('langFileList'), '');
 			}
 		} catch (LFException $e) {
+			$e->setGeneratedContent($moduleContent);
 			throw $e;
 		}
 
@@ -1888,6 +1898,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 					$this->MOD_SETTINGS['extList'], $this->MOD_SETTINGS['wsList']);
 			}
 		} catch (LFException $e) {
+			$e->setGeneratedContent($moduleContent);
 			throw $e;
 		}
 
@@ -1901,6 +1912,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$this->initBackupObject($this->MOD_SETTINGS['wsList'], $informations);
 			}
 		} catch (LFException $e) {
+			$e->setGeneratedContent($moduleContent);
 			throw $e;
 		}
 
@@ -2227,12 +2239,8 @@ if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfedito
 }
 
 // make and call instance
-try {
-	$SOBE = t3lib_div::makeInstance('tx_lfeditor_module1');
-	$SOBE->main();
-	$SOBE->printContent();
-} catch (LFException $e) {
-	$SOBE->printContent($e->getMessage());
-}
+$SOBE = t3lib_div::makeInstance('tx_lfeditor_module1');
+$SOBE->main();
+$SOBE->printContent();
 
 ?>
