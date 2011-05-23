@@ -28,6 +28,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'category' => 'module',
 	'shy' => 0,
 	'version' => '2.6.2',
+	'doNotLoadInFE' => 1,
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
