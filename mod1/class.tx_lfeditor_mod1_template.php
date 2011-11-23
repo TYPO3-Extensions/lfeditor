@@ -402,7 +402,7 @@ class tx_lfeditor_mod1_template {
 			$content .= '<textarea class="tx-lfeditor-textarea ' .
 				(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
 				'rows="' . $textAreaRows . '" cols="80" ' .
-				'name="newLang[' . $lang . '][' . $constant . ']">';
+				'name="newLang[' . $lang . '][' . $constant . ']" lang="'. $lang .'" x:lang="'. $lang .'">';
 			$content .= preg_replace('/<br.*>/U', "\n", $localLang[$lang][$constant]);
 			$content .= '</textarea> </fieldset>';
 		}
@@ -458,7 +458,7 @@ class tx_lfeditor_mod1_template {
 			$content .= '<textarea class="tx-lfeditor-textarea ' .
 				(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
 				'rows="' . $textAreaRows . '" cols="80" id="' . $lang . '" ' .
-				'name="newLang[' . $lang . ']">' . $defValues[$lang] . '</textarea> </fieldset>';
+				'name="newLang[' . $lang . ']" lang="'. $lang .'" x:lang="'. $lang .'">' . $defValues[$lang] . '</textarea> </fieldset>';
 		}
 
 		// button definition
@@ -538,7 +538,7 @@ class tx_lfeditor_mod1_template {
 			$content .= '<textarea class="tx-lfeditor-textarea ' .
 				(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
 				'rows="' . $textAreaRows . '" cols="80" ' .
-				'name="newLang[' . $langName . '][' . $constant . ']">' .
+				'name="newLang[' . $langName . '][' . $constant . ']" lang="'. $langName .'" x:lang="'. $langName .'">' .
 				preg_replace('/<br.*>/U', "\n", $values['edit']) . '</textarea>';
 
 			// add default value
@@ -558,7 +558,7 @@ class tx_lfeditor_mod1_template {
 				$content .= '<textarea class="tx-lfeditor-textarea ' .
 					(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
 					'rows="' . $textAreaRows . '" cols="80" ' .
-					'name="newLang[' . $patternName . '][' . $constant . ']">' .
+					'name="newLang[' . $patternName . '][' . $constant . ']" lang="'. $langName .'" x:lang="'. $langName .'">' .
 					preg_replace('/<br.*>/U', "\n", $values['pattern']) . '</textarea>';
 
 				// add default value
