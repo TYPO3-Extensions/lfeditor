@@ -16,9 +16,9 @@ $EM_CONF[$_EXTKEY] = array(
 					  Translators, extension authors and simple users are supported with
 					  special functions for each of them.
 					  Following functions are implemented in this module:
-					  * Formats: PHP and XML
+					  * Formats: PHP, XML and XLF
 					  * enhanced insert types (textarea, enhanced textarea, wysiwig)
-					  * conversion from PHP to XML and vice versa
+					  * conversion of formats into the other supported oned
 					  * splitting and merging of language files
 					  * workspaces (local (only for backend modules) and global)
 					  * simple editing of constants and languages
