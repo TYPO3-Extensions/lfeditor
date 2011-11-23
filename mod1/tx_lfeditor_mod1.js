@@ -14,7 +14,7 @@ function submitRedirectForm(label, value) {
 }
 
 function submitSessionLangFileEdit(buttonType, session) {
-	var session = (session == null) ? 1 : session;
+	session = session || 1;
 	document.mainForm.elements['session'].value = session;
 	document.mainForm.elements['buttonType'].value = buttonType;
 }

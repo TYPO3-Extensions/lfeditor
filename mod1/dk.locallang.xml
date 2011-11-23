@@ -30,7 +30,7 @@
 			<label index="failure.backup.notDeleted">Backupfilen kunne ikke slettes.</label>
 			<label index="failure.backup.notRead">Backupfilen kunne ikke læses.</label>
 			<label index="failure.failure">Fejl!</label>
-			<label index="failure.file.badPermissions">Nogle sprogfiler har ikke de nødvendige rettigheder! (f.eks. skrive rettigheder)  </label>
+			<label index="failure.file.badPermissions">Nogle sprogfiler har ikke de nødvendige rettigheder! (f.eks. skrive rettigheder)</label>
 			<label index="failure.file.notWritten">Filen kunne ikke gemmes.</label>
 			<label index="failure.langfile.constExists">Konstanten eksisterer allerede!</label>
 			<label index="failure.langfile.notDeleted">Sprogfilen kunne ikke slettes.</label>

@@ -219,10 +219,7 @@ if (typeof schedule != 'function') {
 			obj.addEventListener(evType, fn, useCapture);
 			return true;
 		} else if (obj.attachEvent) {
-			var r = obj.attachEvent("on" + evType, fn);
-			return r;
-		} else {
-			alert('Handler could not be attached');
+			return obj.attachEvent("on" + evType, fn);
 		}
 	}
 
@@ -231,10 +228,7 @@ if (typeof schedule != 'function') {
 			obj.removeEventListener(evType, fn, useCapture);
 			return true;
 		} else if (obj.detachEvent) {
-			var r = obj.detachEvent('on' + evType, fn);
-			return r;
-		} else {
-			alert('Handler could not be removed');
+			return obj.detachEvent('on' + evType, fn);
 		}
 	}
 

@@ -15,7 +15,7 @@
 			<label index="const.type.all">alle</label>
 			<label index="const.type.translated">übersetzt</label>
 			<label index="const.type.unknown">unbekannt</label>
-			<label index="const.type.untranslated">nicht übersetzt </label>
+			<label index="const.type.untranslated">nicht übersetzt</label>
 			<label index="ext.global">Global</label>
 			<label index="ext.loaded">geladen</label>
 			<label index="ext.local">Lokal</label>

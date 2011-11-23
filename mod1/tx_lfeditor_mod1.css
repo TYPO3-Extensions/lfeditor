@@ -4,8 +4,7 @@
 
 /* fieldset class (box) */
 fieldset.tx-lfeditor-fieldset, fieldset.tx-lfeditor-fieldset fieldset {
-	padding: 5px;
-	padding-top: 10px;
+	padding: 10px 5px 5px;
 	_padding-top: 20px;
 	margin-top: 5px;
 	margin-bottom: 10px;

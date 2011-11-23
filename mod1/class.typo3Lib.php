@@ -48,8 +48,8 @@ class typo3Lib {
 	/**
 	 * checks the file location type
 	 *
-	 * @param string file
-	 * @param string location type: local, global, system or l10n (nothing if unknown)
+	 * @param string $file
+	 * @return string
 	 */
 	public static function checkFileLocation($file) {
 		if (strpos($file, typo3Lib::pathLocalExt) !== false) {
