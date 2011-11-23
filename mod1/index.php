@@ -1129,19 +1129,19 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			$languages, $this->fileObj);
 
 		// get output
+		$email = '';
 		if (is_array($mailIt) && !$sendMail) {
 			// add mailIt pre selection
-			foreach ($infoArray as $langKey => $info)
-			{
-				$infoArray[$langKey]['email'] = isset($mailIt[$langKey]) ? true : false;
+			foreach ($infoArray as $langKey => $info) {
+				$infoArray[$langKey]['email'] = (isset($mailIt[$langKey]) ? true : false);
 			}
 
-			$email = tx_lfeditor_mod1_template::outputGeneralEmail($infoArray['default']['meta'],
-				$numTextAreaRows);
+			$email = tx_lfeditor_mod1_template::outputGeneralEmail($infoArray['default']['meta'], $numTextAreaRows);
 		}
 
+		$fileType = $this->fileObj->getVar('fileType');
 		$content = $email . tx_lfeditor_mod1_template::outputGeneral($infoArray, $patternList,
-			$numTextAreaRows, ($this->fileObj->getVar('workspace') == 'base') ? true : false);
+			$numTextAreaRows, ($this->fileObj->getVar('workspace') !== 'base' || $fileType === 'xlf' ? false : true));
 
 		return $content;
 	}

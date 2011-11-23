@@ -74,7 +74,7 @@ class tx_lfeditor_mod1_template {
 	 */
 	public static function outputDeleteConst($constant) {
 		// generate hidden field
-		$content .= '<input type="hidden" name="submit" value="1" />';
+		$content = '<input type="hidden" name="submit" value="1" />';
 
 		// del-question
 		$content .= $GLOBALS['LANG']->getLL('function.const.delete.question');
@@ -107,7 +107,7 @@ class tx_lfeditor_mod1_template {
 	 */
 	public static function outputRenameConst($constant) {
 		// generate hidden field
-		$content .= '<input type="hidden" name="submit" value="1" />';
+		$content = '<input type="hidden" name="submit" value="1" />';
 
 		// del-question
 		$content .= '<p>' . $GLOBALS['LANG']->getLL('function.const.rename.hint') . '</p> <br />';
@@ -140,7 +140,7 @@ class tx_lfeditor_mod1_template {
 	public static function outputSearchConst($searchStr, $resultArray, $preMsg, $checked) {
 		// input dialog
 		$checked = $checked ? 'checked="checked"' : '';
-		$content .= '<p id="tx-lfeditor-caseSensitiveBox"style="margin-bottom: 5px;">' .
+		$content = '<p id="tx-lfeditor-caseSensitiveBox"style="margin-bottom: 5px;">' .
 			'<input type="checkbox" name="caseSensitive" value="1" ' .
 			'onchange="lfe_processFormData(xajax.getFormValues(\'mainForm\'))" ' .
 			'name="caseSensitive" value="1" ' . $checked . '/> ' .
@@ -233,6 +233,7 @@ class tx_lfeditor_mod1_template {
 
 			// get lines and blanks (visual issues)
 			unset($cont);
+			$cont = '';
 			for ($tmp = 0, $lineSpace = 0; $tmp < $curDim; ++$tmp)
 			{
 				if ($numBranches[$tmp] > 1 && !$last[$tmp]) {
@@ -249,6 +250,7 @@ class tx_lfeditor_mod1_template {
 			// bottom element
 			$bottom = 0;
 			$last[$curDim] = 0;
+			$picAdd = '';
 			if (++$numDisplayed >=
 				$tree[$curDim - 1][$tree[$curDim][$branches[$curBranch]]['parent']]['childs']
 			) {
@@ -274,6 +276,7 @@ class tx_lfeditor_mod1_template {
 
 				// add tree branch
 				$pic = 'Minus';
+				$style = '';
 				if ($treeHide && $curDim) {
 					$pic = 'Plus';
 					$style = 'style="display: none;"';
@@ -326,7 +329,7 @@ class tx_lfeditor_mod1_template {
 	 */
 	public static function outputTreeView($tree, $treeHide = true) {
 		// display result array
-		$content .= '<fieldset class="tx-lfeditor-fieldset bgColor5">';
+		$content = '<fieldset class="tx-lfeditor-fieldset bgColor5">';
 		$content .= '<legend class="bgColor3">' .
 			$GLOBALS['LANG']->getLL('function.const.treeview.treeview') . '</legend>';
 
@@ -344,6 +347,7 @@ class tx_lfeditor_mod1_template {
 		tx_lfeditor_mod1_template::genTree($tree, $treeContent, $myIDs, $treeHide);
 
 		// get unhide/hide all feature
+		$JSArgs = array();
 		foreach ($myIDs as $myID => $bottom)
 		{
 			$JSArgs[] = '\'' . $myID . '\',\'pic' . $myID . '\',' . $bottom;
@@ -374,7 +378,7 @@ class tx_lfeditor_mod1_template {
 	 */
 	public static function outputEditConst($langArray, $constant, $localLang, $textAreaRows) {
 		// additional hidden form values
-		$content .= '<input type="hidden" name="submit" value="1" />';
+		$content = '<input type="hidden" name="submit" value="1" />';
 
 		// generate form
 		$k = 0;
@@ -422,7 +426,7 @@ class tx_lfeditor_mod1_template {
 	 */
 	public static function outputAddConst($langArray, $constant, $defValues, $textAreaRows) {
 		// constant name field
-		$content .= '<p><input type="text" name="nameOfConst" value="' . $constant . '" /> ';
+		$content = '<p><input type="text" name="nameOfConst" value="' . $constant . '" /> ';
 		$content .= '<strong>' . $GLOBALS['LANG']->getLL('function.const.add.name') . '</strong></p>';
 
 		// additional hidden form values
@@ -599,7 +603,7 @@ class tx_lfeditor_mod1_template {
 	 */
 	public static function outputGeneralEmail($metaArray, $textAreaRows) {
 		$header = $GLOBALS['LANG']->getLL('function.general.mail.form');
-		$content .= '<fieldset class="tx-lfeditor-fieldset bgColor5 tx-lfeditor-fleft">';
+		$content = '<fieldset class="tx-lfeditor-fieldset bgColor5 tx-lfeditor-fleft">';
 		$content .= '<legend class="bgColor3">' . $header . '</legend>';
 
 		// to email address
@@ -651,9 +655,10 @@ class tx_lfeditor_mod1_template {
 	 * @param string reference language
 	 * @param integer amount of rows in textarea
 	 * @param boolean set to true if you want some special options (splitting dialog, meta edit)
+	 * @param string $fileType
 	 * @return string output (HTML code)
 	 */
-	public static function outputGeneral($infos, $refLang, $textAreaRows, $flagSpecial = false) {
+	public static function outputGeneral($infos, $refLang, $textAreaRows, $flagSpecial = false, $fileType = '') {
 		$summary = $GLOBALS['LANG']->getLL('table.fileInfo');
 		$content = '<table id="tx-lfeditor-table" summary="' . $summary . '">';
 
@@ -915,7 +920,7 @@ class tx_lfeditor_mod1_template {
 					$state = $GLOBALS['LANG']->getLL('lang.splitted') . ' -- ';
 					$state .= typo3Lib::transTypo3File($backupOriginLang[$langKey], false);
 				} catch (Exception $e) {
-					$state .= $backupOriginLang[$langKey];
+					$state = $backupOriginLang[$langKey];
 				}
 			}
 			else
@@ -959,7 +964,7 @@ class tx_lfeditor_mod1_template {
 	 */
 	public static function outputManageBackups($metaArray, $extPath) {
 		// generate form
-		$content .= '<input type="hidden" name="submitted" value="1" />';
+		$content = '<input type="hidden" name="submitted" value="1" />';
 		$content .= '<input type="hidden" name="delete" value="0" />';
 		$content .= '<input type="hidden" name="restore" value="0" />';
 		$content .= '<input type="hidden" name="origDiff" value="0" />';
