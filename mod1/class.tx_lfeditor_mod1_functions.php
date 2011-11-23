@@ -149,7 +149,7 @@ class tx_lfeditor_mod1_functions {
 	 */
 	public static function buildLangArray($languages = null) {
 		if (!is_array($languages) || !count($languages)) {
-			return explode('|', TYPO3_languages);
+			return sgLib::getSystemLanguages();
 		}
 		else
 		{

@@ -240,7 +240,7 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 
 		// prepare Content
 		$mainFileContent = '';
-		$languages = explode('|', TYPO3_languages);
+		$languages = sgLib::getSystemLanguages();
 		$languageFiles = array();
 		foreach ($languages as $lang) {
 			// get content of localized and main file
@@ -261,7 +261,7 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 		}
 
 		// only a localized file?
-		if ($this->checkLocalizedFile(basename($this->absFile), TYPO3_languages)) {
+		if ($this->checkLocalizedFile(basename($this->absFile), implode('|', sgLib::getSystemLanguages()))) {
 			return $languageFiles;
 		}
 

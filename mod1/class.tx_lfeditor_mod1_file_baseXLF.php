@@ -131,7 +131,7 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 
 		// loop all languages
 		$originLang = array();
-		$languages = explode('|', TYPO3_languages);
+		$languages = sgLib::getSystemLanguages();
 		foreach ($languages as $lang) {
 			$originLang[$lang] = $this->absFile;
 			if ($lang === 'default') {
@@ -322,7 +322,7 @@ $xmlString = $this->getXMLHeader() . '<xliff version="1.0">
 
 		// prepare Content
 		$metaData = $this->prepareMeta();
-		$languages = explode('|', TYPO3_languages);
+		$languages = sgLib::getSystemLanguages();
 		$languageFiles = array();
 		$defaultLanguage = $this->getLangContent($this->localLang['default']);
 		foreach ($languages as $lang) {
@@ -341,7 +341,7 @@ $xmlString = $this->getXMLHeader() . '<xliff version="1.0">
 		}
 
 		// only a localized file?
-		if ($this->checkLocalizedFile(basename($this->absFile), TYPO3_languages)) {
+		if ($this->checkLocalizedFile(basename($this->absFile), implode('|', sgLib::getSystemLanguages()))) {
 			return $languageFiles;
 		}
 

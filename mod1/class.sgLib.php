@@ -25,12 +25,6 @@
  * personal library with lots of useful methods
  *
  * @author Stefan Galinski <stefan.galinski@gmail.com>
- */
-
-/**
- * personal library with lots of useful methods
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
  * @package sgLib
  */
 class sgLib {
@@ -56,7 +50,7 @@ class sgLib {
 		}
 
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header("Pragma: public"); // needed for IE
+		header('Pragma: public'); // needed for IE
 		header('Content-Type: ' . $type);
 		header('Content-Length: ' . strlen($content));
 		header('Content-Disposition: attachment; filename="' . $filename . '"');
@@ -271,7 +265,7 @@ class sgLib {
 			}
 			elseif (is_dir($myFile))
 			{
-				deldir($myFile);
+				sgLib::deleteDir($myFile);
 			}
 		}
 		closedir($dh);
@@ -288,7 +282,7 @@ class sgLib {
 	 * @param string search in this path
 	 * @param string optional: regular expression for files
 	 * @param integer optional: current path depth level (max 9)
-	 * @return void
+	 * @return array
 	 */
 	public static function searchFiles($path, $searchRegex = '', $pathDepth = 0) {
 		// endless recursion protection
@@ -334,6 +328,23 @@ class sgLib {
 		closedir($fhd);
 
 		return $fileArray;
+	}
+
+	/**
+	 * Returns all available system languages defined in TYPO3
+	 *
+	 * @return array
+	 */
+	public static function getSystemLanguages() {
+		/** @var $instance t3lib_l10n_Locales */
+		if (t3lib_div::int_from_ver(TYPO3_version) >= 4006000) {
+			$instance = t3lib_div::makeInstance('t3lib_l10n_Locales');
+			$languages = $instance->getLocales();
+		} else {
+			$languages = explode('|', TYPO3_languages);
+		}
+
+		return $languages;
 	}
 }
 

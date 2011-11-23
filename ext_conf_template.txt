@@ -1,6 +1,6 @@
 ######################### general informations ####################
 
-# cat=basic; type=string; label=view languages: Please enter a list of languages do you like to edit (only the short name). Let this field empty if you want to view all languages (Warning: very long list!). Please note that the default language is always included.
+# cat=basic; type=string; label=view languages: Please enter a list of languages that you want to edit (only the short name). Let this field empty if you want to view all languages (Warning: very long list!). Please note that the default language is always included.
 viewLanguages =
 
 # cat=basic; type=boolean; label=view local extensions: view local extensions

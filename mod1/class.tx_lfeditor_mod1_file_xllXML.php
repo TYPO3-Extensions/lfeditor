@@ -173,7 +173,7 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 		}
 
 		$mainFileContent = array('meta' => $this->prepareMeta());
-		$languages = explode('|', TYPO3_languages);
+		$languages = sgLib::getSystemLanguages();
 		foreach ($languages as $langKey)
 		{
 			$mainFileContent = array_merge_recursive($mainFileContent,

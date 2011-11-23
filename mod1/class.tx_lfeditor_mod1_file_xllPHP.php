@@ -151,7 +151,7 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 	 */
 	protected function prepareFileContents() {
 		$mainFileContent = '';
-		$languages = explode('|', TYPO3_languages);
+		$languages = sgLib::getSystemLanguages();
 		foreach ($languages as $langKey)
 		{
 			$mainFileContent .= $this->getLangContent($this->localLang[$langKey], $langKey);

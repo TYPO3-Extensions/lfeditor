@@ -82,7 +82,7 @@ abstract class tx_lfeditor_mod1_file_base extends tx_lfeditor_mod1_file {
 		}
 
 		// loop all languages
-		$languages = explode('|', TYPO3_languages);
+		$languages = sgLib::getSystemLanguages();
 		foreach ($languages as $lang)
 		{
 			$originLang[$lang] = $this->absFile;

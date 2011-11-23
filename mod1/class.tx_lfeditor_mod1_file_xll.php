@@ -107,7 +107,7 @@ abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
 		}
 
 		// set origin array and sort language contents
-		$languages = explode('|', TYPO3_languages);
+		$languages = sgLib::getSystemLanguages();
 		foreach ($languages as $lang)
 		{
 			$originLang[$lang] = $this->absFile;
