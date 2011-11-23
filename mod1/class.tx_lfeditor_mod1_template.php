@@ -93,11 +93,6 @@ class tx_lfeditor_mod1_template {
 				'value' => $GLOBALS['LANG']->getLL('button.delete'),
 				'type' => 'submit'
 			),
-			'reset' => array(
-				'css' => 'tx-lfeditor-buttonReset',
-				'value' => $GLOBALS['LANG']->getLL('button.reset'),
-				'type' => 'reset'
-			),
 		);
 		$content .= tx_lfeditor_mod1_template::outputAddButtons($buttons);
 
@@ -126,11 +121,6 @@ class tx_lfeditor_mod1_template {
 				'css' => 'tx-lfeditor-buttonSubmit',
 				'value' => $GLOBALS['LANG']->getLL('button.rename'),
 				'type' => 'submit'
-			),
-			'reset' => array(
-				'css' => 'tx-lfeditor-buttonReset',
-				'value' => $GLOBALS['LANG']->getLL('button.reset'),
-				'type' => 'reset'
 			),
 		);
 		$content .= tx_lfeditor_mod1_template::outputAddButtons($buttons);
@@ -415,11 +405,6 @@ class tx_lfeditor_mod1_template {
 				'value' => $GLOBALS['LANG']->getLL('button.save'),
 				'type' => 'submit'
 			),
-			'reset' => array(
-				'css' => 'tx-lfeditor-buttonReset',
-				'value' => $GLOBALS['LANG']->getLL('button.reset'),
-				'type' => 'reset'
-			),
 		);
 		$content .= tx_lfeditor_mod1_template::outputAddButtons($buttons);
 
@@ -471,11 +456,6 @@ class tx_lfeditor_mod1_template {
 				'value' => $GLOBALS['LANG']->getLL('button.save'),
 				'type' => 'submit'
 			),
-			'reset' => array(
-				'css' => 'tx-lfeditor-buttonReset',
-				'value' => $GLOBALS['LANG']->getLL('button.reset'),
-				'type' => 'reset'
-			),
 		);
 		$content .= tx_lfeditor_mod1_template::outputAddButtons($buttons);
 
@@ -505,7 +485,7 @@ class tx_lfeditor_mod1_template {
 	public static function outputEditLangfile($constValues, $curConsts, $siteConsts, $totalConsts,
 		$langName, $patternName, $parallelEdit, $buttonBack, $buttonNext, $textAreaRows) {
 		// informations
-		$content .= '<p><span id="tx-lfeditor-numberCur">' . $curConsts . '</span> / ' .
+		$content = '<p><span id="tx-lfeditor-numberCur">' . $curConsts . '</span> / ' .
 			'<span id="tx-lfeditor-numberOf">' . $totalConsts . '</span></p>';
 
 		// additional hidden form values
@@ -603,11 +583,6 @@ class tx_lfeditor_mod1_template {
 			'css' => 'tx-lfeditor-buttonCancel',
 			'value' => $GLOBALS['LANG']->getLL('button.cancel'),
 			'onClick' => 'submitSessionLangFileEdit(-1);',
-			'type' => 'submit',
-		);
-		$buttons['reset'] = array(
-			'css' => 'tx-lfeditor-buttonReset',
-			'value' => $GLOBALS['LANG']->getLL('button.reset'),
 			'type' => 'submit',
 		);
 		$content .= tx_lfeditor_mod1_template::outputAddButtons($buttons);
