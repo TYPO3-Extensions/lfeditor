@@ -38,11 +38,11 @@ require_once(PATH_t3lib . 'class.t3lib_scbase.php');
 $GLOBALS['BE_USER']->modAccess($MCONF, 1);
 
 // include language file
-if (is_file(t3lib_extMgm::extPath('lfeditor') . 'mod1/locallang.xml')) {
+if (is_file(t3lib_extMgm::extPath('lfeditor') . 'mod1/locallang.xlf')) {
+	$GLOBALS['LANG']->includeLLFile('EXT:lfeditor/mod1/locallang.xlf');
+} elseif (is_file(t3lib_extMgm::extPath('lfeditor') . 'mod1/locallang.xml')) {
 	$GLOBALS['LANG']->includeLLFile('EXT:lfeditor/mod1/locallang.xml');
-}
-else
-{
+} else {
 	$GLOBALS['LANG']->includeLLFile('EXT:lfeditor/mod1/locallang.php');
 }
 
@@ -73,10 +73,6 @@ $PMKTEXTAREA = false;
 
 /**
  * Module 'LFEditor' for the 'lfeditor' extension
- *
- * TODO check IE browser compatibility
- * TODO repair ugly styles
- * TODO check configuration and documentation
  *
  * @author Stefan Galinski <stefan.galinski@gmail.com>
  * @package Typo3
@@ -255,7 +251,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		$this->extConfig = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['lfeditor']);
 
 		// regular expressions
-		$this->extConfig['searchRegex'] = '/^[a-z0-9_]*locallang[a-z0-9_-]*\.(php|xml)$/i';
+		$this->extConfig['searchRegex'] = '/^[a-z0-9_]*locallang[a-z0-9_-]*\.(php|xml|xlf)$/i';
 		if (!preg_match('/^\/.*\/.*$/', $this->extConfig['extIgnore'])) {
 			$this->extConfig['extIgnore'] = '/^csh_.*$/';
 		}

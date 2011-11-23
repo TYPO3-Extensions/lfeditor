@@ -844,6 +844,8 @@ class tx_lfeditor_mod1_template {
 		// transform options
 		$header = $GLOBALS['LANG']->getLL('function.general.transform.transform');
 		$content .= '<fieldset class="bgColor4"><legend class="bgColor3">' . $header . '</legend>';
+		$content .= '<p> <input type="radio" name="transFile" id="xlf" value="xlf" /> ' .
+			'<label for="xlf">XLF</label></p>';
 		$value = $GLOBALS['LANG']->getLL('function.general.transform.xml');
 		$content .= '<p> <input type="radio" name="transFile" id="xml" value="xml" /> ' .
 			'<label for="xml">' . $value . '</label></p>';

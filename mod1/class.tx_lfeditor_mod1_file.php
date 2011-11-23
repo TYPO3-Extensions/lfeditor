@@ -68,8 +68,8 @@ abstract class tx_lfeditor_mod1_file {
 	/**
 	 * sets some variables
 	 *
-	 * @param string filename or relative path from second param to the language file
-	 * @param string absolute path to the extension or language file
+	 * @param string $file filename or relative path from second param to the language file
+	 * @param string $path absolute path to the extension or language file
 	 * @return void
 	 */
 	public function init($file, $path) {
@@ -88,7 +88,7 @@ abstract class tx_lfeditor_mod1_file {
 	 * $infos["originLang"] = origin language array
 	 * $infos["meta"] = meta data
 	 *
-	 * @param array informations (see above)
+	 * @param array $informations
 	 * @return void
 	 */
 	public function setVar($informations) {
@@ -124,35 +124,33 @@ abstract class tx_lfeditor_mod1_file {
 	/**
 	 * returns requested information
 	 *
-	 * @param string
-	 * @return void
+	 * @param $info string
+	 * @return string
 	 */
 	public function getVar($info) {
+		$value = '';
 		if ($info == 'relFile') {
-			return $this->relFile;
+			$value = $this->relFile;
+		} elseif ($info == 'absPath') {
+			$value = $this->absPath;
 		}
-		elseif ($info == 'absPath')
-		{
-			return $this->absPath;
+		elseif ($info == 'absFile') {
+			$value = $this->absFile;
 		}
-		elseif ($info == 'absFile')
-		{
-			return $this->absFile;
+		elseif ($info == 'fileType') {
+			$value = $this->fileType;
 		}
-		elseif ($info == 'fileType')
-		{
-			return $this->fileType;
+		elseif ($info == 'workspace') {
+			$value = $this->workspace;
 		}
-		elseif ($info == 'workspace')
-		{
-			return $this->workspace;
-		}
+
+		return $value;
 	}
 
 	/**
 	 * returns language data
 	 *
-	 * @param string valid language key
+	 * @param string $langKey valid language key
 	 * @return array language data
 	 */
 	public function getLocalLangData($langKey = '') {
@@ -172,10 +170,10 @@ abstract class tx_lfeditor_mod1_file {
 	/**
 	 * deletes or sets constants in local language data
 	 *
-	 * @param string constant name (if empty an index number will be used)
-	 * @param string new value (if empty the constant will be deleted)
-	 * @param string language shortcut
-	 * @param boolean set to true, if you want delete default values too
+	 * @param string $constant constant name (if empty an index number will be used)
+	 * @param string $value new value (if empty the constant will be deleted)
+	 * @param string $langKey language shortcut
+	 * @param boolean $forceDel set to true, if you want delete default values too
 	 * @return void
 	 */
 	public function setLocalLangData($constant, $value, $langKey, $forceDel = false) {
@@ -191,7 +189,7 @@ abstract class tx_lfeditor_mod1_file {
 	/**
 	 * returns origin
 	 *
-	 * @param string valid language key
+	 * @param string $langKey valid language key
 	 * @return mixed an origin or full array
 	 */
 	public function getOriginLangData($langKey = '') {
@@ -207,8 +205,8 @@ abstract class tx_lfeditor_mod1_file {
 	/**
 	 * sets new origin of a given language
 	 *
-	 * @param string new origin
-	 * @param string language shortcut
+	 * @param string $origin new origin
+	 * @param string $langKey language shortcut
 	 * @return void
 	 */
 	public function setOriginLangData($origin, $langKey) {
@@ -220,7 +218,7 @@ abstract class tx_lfeditor_mod1_file {
 	/**
 	 * returns meta data
 	 *
-	 * @param string special meta index
+	 * @param string $metaIndex special meta index
 	 * @return mixed meta data
 	 */
 	public function getMetaData($metaIndex = '') {
@@ -236,8 +234,8 @@ abstract class tx_lfeditor_mod1_file {
 	/**
 	 * deletes or sets constants in meta data
 	 *
-	 * @param string special meta index
-	 * @param string new value (if empty the meta index will be deleted)
+	 * @param string $metaIndex
+	 * @param string $value new value (if empty the meta index will be deleted)
 	 * @return void
 	 */
 	public function setMetaData($metaIndex, $value) {

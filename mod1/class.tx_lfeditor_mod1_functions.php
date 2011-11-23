@@ -373,7 +373,7 @@ class tx_lfeditor_mod1_functions {
 				}
 				else
 				{
-					$curAbsName .= $expToken . $branches[$i];
+					$curAbsName = $expToken . $branches[$i];
 				}
 
 				if (isset($tree[$curDim][$curAbsName]['name'])) {
@@ -427,18 +427,16 @@ class tx_lfeditor_mod1_functions {
 		$defKeys = array_keys($langData);
 		$numKeys = count($defKeys);
 		$maxTestCount = ($numKeys >= 10) ? 10 : $numKeys;
-		for ($i = 0; $i < $maxTestCount; ++$i)
-		{
+		$counts = array();
+		for ($i = 0; $i < $maxTestCount; ++$i) {
 			$curCounts = count_chars($defKeys[$i], 1);
-			foreach ($ascii as $sign)
-			{
+			foreach ($ascii as $sign) {
 				$counts[$sign] += $curCounts[$sign];
 			}
 		}
 
 		// get curToken
-		foreach ($counts as $sign => $curCounts)
-		{
+		foreach ($counts as $sign => $curCounts) {
 			if ($curCounts > $counts[$curToken]) {
 				$curToken = $sign;
 			}

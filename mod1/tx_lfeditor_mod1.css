@@ -13,6 +13,11 @@
 	width: 230px;
 }
 
+#typo3-inner-docbody label {
+	vertical-align: top;
+	cursor: pointer;
+}
+
 /* fieldset class (box) */
 fieldset.tx-lfeditor-fieldset, fieldset.tx-lfeditor-fieldset fieldset {
 	padding: 10px 5px 5px;
@@ -88,6 +93,7 @@ fieldset.tx-lfeditor-fieldset fieldset dd {
 .tx-lfeditor-error, .tx-lfeditor-notice,
 .tx-lfeditor-success, .tx-lfeditor-delConst {
 	margin-bottom: 10px;
+	margin-top: 10px;
 }
 
 .tx-lfeditor-goodMarkup, .tx-lfeditor-success {
