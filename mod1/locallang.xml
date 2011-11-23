@@ -135,7 +135,7 @@
 			<label index="workspace.base">global</label>
 			<label index="workspace.xll">local (only BE modules)</label>
 		</languageKey>
-		<languageKey index="dk">EXT:lfeditor/mod1/dk.locallang.xml</languageKey>
+		<languageKey index="da">EXT:lfeditor/mod1/da.locallang.xml</languageKey>
 		<languageKey index="de">EXT:lfeditor/mod1/de.locallang.xml</languageKey>
 		<languageKey index="no">EXT:lfeditor/mod1/no.locallang.xml</languageKey>
 		<languageKey index="it">EXT:lfeditor/mod1/it.locallang.xml</languageKey>
