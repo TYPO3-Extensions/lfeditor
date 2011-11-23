@@ -232,27 +232,28 @@ class tx_lfeditor_mod1_file_baseXML extends tx_lfeditor_mod1_file_base {
 		// prepare Content
 		$mainFileContent = array('meta' => $this->prepareMeta());
 		$languages = explode('|', TYPO3_languages);
-		foreach ($languages as $lang)
-		{
+		$languageFiles = array();
+		foreach ($languages as $lang) {
 			// get content of localized and main file
 			if ($this->checkLocalizedFile(basename($this->originLang[$lang]), $lang)) {
 				if (is_array($this->localLang[$lang]) && count($this->localLang[$lang])) {
 					$languageFiles[$this->originLang[$lang]] .=
 						$this->array2xml($this->getLangContent($this->localLang[$lang], $lang),
 							'T3locallangExt');
+
+					try {
+						$mainFileContent['data'][$lang] =
+							typo3Lib::transTypo3File($this->originLang[$lang], false);
+					} catch (Exception $e) {
+						if (!typo3Lib::checkFileLocation($this->originLang[$lang]) == 'l10n') {
+							$mainFileContent['data'][$lang] = $this->originLang[$lang];
+						}
+					}
+				} else {
+					$mainFileContent['data'][$lang] = '';
 				}
 
-				try {
-					$mainFileContent['data'][$lang] =
-						typo3Lib::transTypo3File($this->originLang[$lang], false);
-				} catch (Exception $e) {
-					if (!typo3Lib::checkFileLocation($this->originLang[$lang]) == 'l10n') {
-						$mainFileContent['data'][$lang] = $this->originLang[$lang];
-					}
-				}
-			}
-			else
-			{
+			} else {
 				$mainFileContent = array_merge_recursive($mainFileContent,
 					$this->getLangContent($this->localLang[$lang], $lang));
 			}

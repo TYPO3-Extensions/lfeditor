@@ -241,6 +241,7 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 		// prepare Content
 		$mainFileContent = '';
 		$languages = explode('|', TYPO3_languages);
+		$languageFiles = array();
 		foreach ($languages as $lang) {
 			// get content of localized and main file
 			if ($this->checkLocalizedFile(basename($this->originLang[$lang]), $lang)) {
@@ -249,11 +250,12 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 					$languageFiles[$this->originLang[$lang]] .=
 						$this->getLangContentLoc($this->localLang[$lang], $lang);
 					$languageFiles[$this->originLang[$lang]] .= $this->getFooter();
+					$mainFileContent .= "\t'$lang' => 'EXT',\n";
+				} else {
+					$mainFileContent .= "\t'$lang' => '',\n";
 				}
-				$mainFileContent .= "\t'$lang' => 'EXT',\n";
 			}
-			else
-			{
+			else {
 				$mainFileContent .= $this->getLangContent($this->localLang[$lang], $lang);
 			}
 		}
