@@ -13,7 +13,7 @@
 			<label index="mlang_labels_tablabel">Editing of Language Files</label>
 			<label index="mlang_tabs_tab">LFEditor</label>
 		</languageKey>
-		<languageKey index="dk">EXT:lfeditor/mod1/dk.locallang_mod.xml</languageKey>
+		<languageKey index="da">EXT:lfeditor/mod1/da.locallang_mod.xml</languageKey>
 		<languageKey index="de">EXT:lfeditor/mod1/de.locallang_mod.xml</languageKey>
 		<languageKey index="no">EXT:lfeditor/mod1/no.locallang_mod.xml</languageKey>
 		<languageKey index="it">EXT:lfeditor/mod1/it.locallang_mod.xml</languageKey>
