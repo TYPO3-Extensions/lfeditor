@@ -399,10 +399,11 @@ class tx_lfeditor_mod1_template {
 			$content .= '<fieldset class="tx-lfeditor-fieldset bgColor5 ' . $cssClass . '">';
 			$content .= '<legend class="bgColor3">' . $lang . '</legend>';
 
+			$textareaLanguage = ($lang === 'default' ? 'en' : $lang);
 			$content .= '<textarea class="tx-lfeditor-textarea ' .
 				(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
 				'rows="' . $textAreaRows . '" cols="80" ' .
-				'name="newLang[' . $lang . '][' . $constant . ']" lang="'. $lang .'" x:lang="'. $lang .'">';
+				'name="newLang[' . $lang . '][' . $constant . ']" lang="'. $textareaLanguage .'" x:lang="'. $textareaLanguage .'">';
 			$content .= preg_replace('/<br.*>/U', "\n", $localLang[$lang][$constant]);
 			$content .= '</textarea> </fieldset>';
 		}
@@ -455,10 +456,12 @@ class tx_lfeditor_mod1_template {
 			$content .= '<fieldset class="tx-lfeditor-fieldset bgColor5 ' . $cssClass . '">';
 			$content .= '<legend class="bgColor3">' . $lang . '</legend>';
 
+			$textareaLanguage = ($lang === 'default' ? 'en' : $lang);
 			$content .= '<textarea class="tx-lfeditor-textarea ' .
 				(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
 				'rows="' . $textAreaRows . '" cols="80" id="' . $lang . '" ' .
-				'name="newLang[' . $lang . ']" lang="'. $lang .'" x:lang="'. $lang .'">' . $defValues[$lang] . '</textarea> </fieldset>';
+				'name="newLang[' . $lang . ']" lang="'. $textareaLanguage .'" x:lang="'. $textareaLanguage .'">' .
+				$defValues[$lang] . '</textarea> </fieldset>';
 		}
 
 		// button definition
@@ -535,10 +538,11 @@ class tx_lfeditor_mod1_template {
 			$content .= '<legend class="bgColor3">' . $langName . ': ' . $lconstant . '</legend>';
 
 			// add textarea with default value
+			$textareaLanguage = ($langName === 'default' ? 'en' : $langName);
 			$content .= '<textarea class="tx-lfeditor-textarea ' .
 				(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
 				'rows="' . $textAreaRows . '" cols="80" ' .
-				'name="newLang[' . $langName . '][' . $constant . ']" lang="'. $langName .'" x:lang="'. $langName .'">' .
+				'name="newLang[' . $langName . '][' . $constant . ']" lang="'. $textareaLanguage .'" x:lang="'. $textareaLanguage .'">' .
 				preg_replace('/<br.*>/U', "\n", $values['edit']) . '</textarea>';
 
 			// add default value
@@ -555,10 +559,11 @@ class tx_lfeditor_mod1_template {
 					': ' . $lconstant . '</legend>';
 
 				// add textarea with default value
+				$textareaLanguage = ($langName === 'default' ? 'en' : $langName);
 				$content .= '<textarea class="tx-lfeditor-textarea ' .
 					(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
 					'rows="' . $textAreaRows . '" cols="80" ' .
-					'name="newLang[' . $patternName . '][' . $constant . ']" lang="'. $langName .'" x:lang="'. $langName .'">' .
+					'name="newLang[' . $patternName . '][' . $constant . ']" lang="'. $textareaLanguage .'" x:lang="'. $textareaLanguage .'">' .
 					preg_replace('/<br.*>/U', "\n", $values['pattern']) . '</textarea>';
 
 				// add default value
@@ -769,7 +774,7 @@ class tx_lfeditor_mod1_template {
 		// type and csh table
 		$header = $GLOBALS['LANG']->getLL('function.general.metaInfo.type');
 		$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' . $header . '</legend>';
-		$content .= '<select id="metaType" name="meta[type]" onchange="metaTypeCheck();">';
+		$content .= '<div><select id="metaType" name="meta[type]" onchange="metaTypeCheck();">';
 
 		$options = array('', 'module', 'database', 'CSH');
 		foreach ($options as $option) {
@@ -785,8 +790,8 @@ class tx_lfeditor_mod1_template {
 
 		$content .= $GLOBALS['LANG']->getLL('function.general.metaInfo.cshTable') . '&nbsp;';
 		$disabled = $infos['default']['meta']['type'] == 'CSH' ? '' : 'disabled="disabled"';
-		$content .= '<input type="text" ' . $disabled . ' id="metaCSHTable" name="meta[csh_table]"' .
-			'value="' . $infos['default']['meta']['csh_table'] . '" />';
+		$content .= '<input type="text" class="tx-lfeditor-input" ' . $disabled . ' id="metaCSHTable" name="meta[csh_table]"' .
+			'value="' . $infos['default']['meta']['csh_table'] . '" /></div>';
 		$content .= '</fieldset>';
 
 		// author
@@ -794,15 +799,15 @@ class tx_lfeditor_mod1_template {
 		$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' . $header . '</legend>';
 		$label = $GLOBALS['LANG']->getLL('function.general.metaInfo.author.name');
 		$value = $infos['default']['meta']['authorName'];
-		$content .= '<label for="name" class="tx-lfeditor-label">' . $label . '</label>';
+		$content .= '<div><label for="name" class="tx-lfeditor-label">' . $label . '</label>';
 		$content .= '<input type="text" id="name" class="tx-lfeditor-input" ' .
-			'name="meta[authorName]" value="' . $value . '" />';
+			'name="meta[authorName]" value="' . $value . '" /></div>';
 
 		$label = $GLOBALS['LANG']->getLL('function.general.metaInfo.author.email');
 		$value = $infos['default']['meta']['authorEmail'];
-		$content .= '<label for="email" class="tx-lfeditor-label">' . $label . '</label>';
+		$content .= '<div><label for="email" class="tx-lfeditor-label">' . $label . '</label>';
 		$content .= '<input type="text" id="email" class="tx-lfeditor-input" ' .
-			'name="meta[authorEmail]" value="' . $value . '" />';
+			'name="meta[authorEmail]" value="' . $value . '" /></div>';
 		$content .= '</fieldset>';
 
 		// description

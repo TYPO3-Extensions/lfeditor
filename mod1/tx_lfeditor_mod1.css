@@ -2,6 +2,17 @@
 	max-width: 900px;
 }
 
+#typo3-inner-docbody input[type=text] {
+	margin: 0 5px 5px 0;
+	width: 433px;
+	border: 1px solid #9B9B9B;
+}
+
+#typo3-inner-docbody .tx-lfeditor-fieldset input[type=text] {
+	margin-left: 10px;
+	width: 230px;
+}
+
 /* fieldset class (box) */
 fieldset.tx-lfeditor-fieldset, fieldset.tx-lfeditor-fieldset fieldset {
 	padding: 10px 5px 5px;
@@ -146,18 +157,19 @@ fieldset.tx-lfeditor-fieldset fieldset dd {
 }
 
 .tx-lfeditor-label {
+	padding-top: 1px;
 	font-weight: bold;
-	float: left;
 	clear: both;
 }
 
 .tx-lfeditor-input {
-	width: 250px;
-	float: right;
+	width: 230px;
 }
 
 .tx-lfeditor-label, .tx-lfeditor-input {
-	margin-bottom: 5px;
+	/*margin-bottom: 11px;*/
+	display: inline-block;
+	vertical-align: top;
 }
 
 /* tree view */
