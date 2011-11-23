@@ -1172,8 +1172,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// redirect
 		if (!empty($language)) {
-			header("Location: " . t3lib_div::getIndpEnv('scheme') . "://" . $_SERVER['HTTP_HOST'] .
-					rtrim($_SERVER['PHP_SELF'], '/\\') .
+			header('Location: ' . t3lib_div::getIndpEnv('TYPO3_REQUEST_SCRIPT') .
 					'?SET[langList]=' . $language . '&SET[function]=const.treeview');
 		}
 
@@ -1250,8 +1249,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$newFile = sgLib::setFileExtension($transFile, $this->fileObj->getVar('relFile'));
 				$this->execTransform($transFile, $newFile);
 				if ($this->MOD_SETTINGS['wsList'] != 'xll') {
-					header("Location: " . t3lib_div::getIndpEnv('scheme') . "://" . $_SERVER['HTTP_HOST'] .
-							rtrim($_SERVER['PHP_SELF'], '/\\') . '?SET[langFileList]=' . $newFile);
+					header('Location: ' . t3lib_div::getIndpEnv('TYPO3_REQUEST_SCRIPT') .
+						'?SET[langFileList]=' . $newFile);
 				}
 			}
 		} catch (LFException $e) {
@@ -1686,9 +1685,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// redirect
 		if (!empty($constant)) {
-			header("Location: " . t3lib_div::getIndpEnv('scheme') . "://" . $_SERVER['HTTP_HOST'] .
-					rtrim($_SERVER['PHP_SELF'], '/\\') .
-					'?SET[constList]=' . $constant . '&SET[function]=const.edit');
+			header('Location: ' . t3lib_div::getIndpEnv('TYPO3_REQUEST_SCRIPT') .
+				'?SET[constList]=' . $constant . '&SET[function]=const.edit');
 		}
 	}
 
@@ -1729,9 +1727,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// redirect
 		if (!empty($constant)) {
-			header("Location: " . t3lib_div::getIndpEnv('scheme') . "://" . $_SERVER['HTTP_HOST'] .
-					rtrim($_SERVER['PHP_SELF'], '/\\') .
-					'?SET[constList]=' . $constant . '&SET[function]=const.edit');
+			header('Location: ' . t3lib_div::getIndpEnv('TYPO3_REQUEST_SCRIPT') .
+				'?SET[constList]=' . $constant . '&SET[function]=const.edit');
 		}
 	}
 
