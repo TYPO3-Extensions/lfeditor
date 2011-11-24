@@ -82,7 +82,7 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 		$xmlContent = json_decode(json_encode($xmlContent), TRUE);
 
 		// check data
-		if (!is_array($xmlContent['file']['body']) || !count($xmlContent['file']['body'])) {
+		if (!is_array($xmlContent['file']['body'])) {
 			throw new LFException('failure.search.noFileContent', 0, '(' . $file . ')');
 		}
 
@@ -149,11 +149,6 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 			// read the content
 			$llang = $this->readLLFile($lFile, $lang);
 			$localLang[$lang] = $this->resolveTranslationUnitsArrayIntoFlatArray($llang);
-		}
-
-		// check
-		if (!is_array($localLang)) {
-			throw new LFException('failure.search.noFileContent');
 		}
 
 		// copy all to object variables, if everything was ok
