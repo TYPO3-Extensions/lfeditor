@@ -331,7 +331,7 @@ $xmlString = $this->getXMLHeader() . '<xliff version="1.0">
 			}
 
 			if (is_array($this->localLang[$lang]) && count($this->localLang[$lang])) {
-				$file = $this->nameLocalizedFile($lang);
+				$file = dirname($this->absFile) . '/' . $this->nameLocalizedFile($lang);
 				$data = array(
 					'header' => $metaData,
 					'data' => $this->getLangContent($this->localLang[$lang]),
