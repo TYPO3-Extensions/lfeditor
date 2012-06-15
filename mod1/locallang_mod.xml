@@ -13,6 +13,7 @@
 			<label index="mlang_labels_tablabel">Editing of Language Files</label>
 			<label index="mlang_tabs_tab">LFEditor</label>
 		</languageKey>
+		<languageKey index="af"></languageKey>
 		<languageKey index="ar"></languageKey>
 		<languageKey index="bs"></languageKey>
 		<languageKey index="bg"></languageKey>
