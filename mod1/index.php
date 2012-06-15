@@ -1412,8 +1412,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		// get output
 		$languages = tx_lfeditor_mod1_functions::buildLangArray($this->extConfig['viewLanguages']);
 		$langArray = array_merge(array('default'), $languages);
-		$content = tx_lfeditor_mod1_template::outputEditConst($langArray, $constant,
-			$langData, $numTextAreaRows);
+		$content = tx_lfeditor_mod1_template::outputEditConst($langArray, $constant, $langData, $numTextAreaRows);
 
 		return $content;
 	}
@@ -1421,7 +1420,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	/**
 	 * code for all actions of function "const.edit"
 	 *
-	 * @throws LFException raised if language file couldnt be written
+	 * @throws LFException raised if language file could not be written
 	 * @return void
 	 */
 	private function actionFuncConstEdit() {
@@ -1432,7 +1431,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		try {
 			$this->execWrite($newLang);
 		} catch (LFException $e) {
-			$content = $e->getMessage();
+			throw new $e;
 		}
 	}
 
