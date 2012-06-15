@@ -52,23 +52,18 @@ class typo3Lib {
 	 * @return string
 	 */
 	public static function checkFileLocation($file) {
-		if (strpos($file, typo3Lib::pathLocalExt) !== false) {
+		if (strpos($file, typo3Lib::pathLocalExt) !== FALSE) {
 			return 'local';
-		}
-		elseif (strpos($file, typo3Lib::pathGlobalExt) !== false)
-		{
+		} elseif (strpos($file, typo3Lib::pathGlobalExt) !== FALSE) {
 			return 'global';
 		}
-		elseif (strpos($file, typo3Lib::pathSysExt) !== false)
-		{
+		elseif (strpos($file, typo3Lib::pathSysExt) !== FALSE) {
 			return 'system';
 		}
-		elseif (strpos($file, typo3Lib::pathL10n) !== false)
-		{
+		elseif (strpos($file, typo3Lib::pathL10n) !== FALSE) {
 			return 'l10n';
 		}
-		else
-		{
+		else {
 			return '';
 		}
 	}
@@ -88,13 +83,12 @@ class typo3Lib {
 
 		// relative to absolute
 		if ($mode) {
-			if (strpos($file, 'EXT:') === false) {
+			if (strpos($file, 'EXT:') === FALSE) {
 				throw new Exception('no typo3 relative path "' . $file . '"');
 			}
 
 			$cleanFile = sgLib::trimPath('EXT:', $file);
-			foreach ($extType as $type)
-			{
+			foreach ($extType as $type) {
 				$path = typo3Lib::fixFilePath(PATH_site . '/' . $type . '/' . $cleanFile);
 				if (is_dir(dirname($path))) {
 					return $path;
@@ -102,12 +96,10 @@ class typo3Lib {
 			}
 
 			throw new Exception('cant convert typo3 relative file "' . $file . '"');
-		}
-		else // absolute to relative
+		} else // absolute to relative
 		{
-			foreach ($extType as $type)
-			{
-				if (strpos($file, $type) === false) {
+			foreach ($extType as $type) {
+				if (strpos($file, $type) === FALSE) {
 					continue;
 				}
 
@@ -179,26 +171,22 @@ class typo3Lib {
 		$csConvObj = &$GLOBALS['LANG']->csConvObj;
 
 		// loop all possible languages
-		foreach ($localLang as $langKey => $convContent)
-		{
+		foreach ($localLang as $langKey => $convContent) {
 			if (!is_array($convContent) || in_array($langKey, $ignoreKeys)) {
 				continue;
 			}
 
 			$origCharset = $csConvObj->parse_charset($csConvObj->charSetArray[$langKey] ?
-					$csConvObj->charSetArray[$langKey] : 'iso-8859-1');
+				$csConvObj->charSetArray[$langKey] : 'iso-8859-1');
 
 			if ($csConvObj->charSetArray[$langKey] == 'utf-8') {
 				continue;
 			}
 
-			foreach ($convContent as $labelKey => $value)
-			{
+			foreach ($convContent as $labelKey => $value) {
 				if ($mode) {
 					$localLang[$langKey][$labelKey] = $csConvObj->utf8_encode($value, $origCharset);
-				}
-				else
-				{
+				} else {
 					$localLang[$langKey][$labelKey] = $csConvObj->utf8_decode($value, $origCharset);
 				}
 			}

@@ -17,7 +17,7 @@ function TextAreaResizer(elt) {
 
 TextAreaResizer.prototype = {
 	// create hr element (+class, +title tooltip)
-	create : function() {
+	create: function() {
 		var elt = this.element;
 		if (elt.title != 'true') {
 			var thisRef = this; // for usage in events defintion
@@ -25,14 +25,17 @@ TextAreaResizer.prototype = {
 			h.className = 'handle-normal';
 
 			// tooltip dont work in every browser correct (eg. firefox no pagebreak)
-			if (typeof tooltip != 'undefined')
+			if (typeof tooltip != 'undefined') {
 				h.title = '<ul><li>Click & drag to resize</li><li>Double-left-click to' +
 					'minimize/maximize</li><li>Right-click best-fit to window</li></ul>';
-			else if (checkIt('opera'))
+			}
+			else if (checkIt('opera')) {
 				h.title = '- Click & drag to resize \n- Double-left-click to minimize/maximize \n';
-			else
+			}
+			else {
 				h.title = '- Click & drag to resize \n- Double-left-click to minimize/maximize \n' +
 					'- Right-click best-fit to window';
+			}
 
 			// double click resizing
 			addEvent(h, 'dblclick', function(evt) {
@@ -42,10 +45,12 @@ TextAreaResizer.prototype = {
 			// onclick optimal resizing
 			addEvent(h, 'mousedown', function(evt) {
 				if (!checkIt('opera')) {
-					if (evt.button == 2)
+					if (evt.button == 2) {
 						thisRef.max(2);
-					else
+					}
+					else {
 						thisRef.dragStart(evt);
+					}
 				}
 			}, false);
 
@@ -67,7 +72,7 @@ TextAreaResizer.prototype = {
 		}
 	},
 
-	dragStart : function(evt) {
+	dragStart: function(evt) {
 		var thisRef = this;
 
 		// lock cursor shape
@@ -101,8 +106,9 @@ TextAreaResizer.prototype = {
 			document.getElementsByTagName('body')[0].style.cursor = 'default';
 
 			// restore mouseover for tooltips after drag stop
-			if (typeof(thisRef.mouseoverHandler) == 'function')
+			if (typeof(thisRef.mouseoverHandler) == 'function') {
 				addEvent(thisRef.handle, 'mouseover', thisRef.mouseoverHandler, false);
+			}
 
 			// restore highlight handler
 			thisRef.handle.className = 'handle-normal';
@@ -113,43 +119,53 @@ TextAreaResizer.prototype = {
 		}, false);
 	},
 
-	dragMove : function(evt) {
+	dragMove: function(evt) {
 		var height = this.dragStartH + evt.clientY - this.dragStartY;
 		this.element.style.height = (height > 0 ? height : 0) + 'px';
 	},
 
-	dragStop : function(evt) {
+	dragStop: function(evt) {
 		//this.element.style.borderStyle = 'solid';
 		removeEvent(document, 'mousemove', this.dragMoveHdlr, false);
 		removeEvent(document, 'mouseup', this.dragStopHdlr, false);
 	},
 
-	destroy : function() {
+	destroy: function() {
 		var elt = this.element;
 		elt.parentNode.removeChild(this.handle);
 		elt.style.height = '';
 	},
 
-	max : function(mode) {
-		if (!this.defHeight) this.defHeight = this.element.offsetHeight;
-		if (!this.defWidth) this.defWidth = this.handle.offsetWidth;
+	max: function(mode) {
+		if (!this.defHeight) {
+			this.defHeight = this.element.offsetHeight;
+		}
+		if (!this.defWidth) {
+			this.defWidth = this.handle.offsetWidth;
+		}
 
-		if (this.element.style.height == '1px')
+		if (this.element.style.height == '1px') {
 			this.element.style.height = this.defHeight + 'px';
-		else
+		}
+		else {
 			this.element.style.height = '1px';
+		}
 
 		if (mode == 2) {
 			str = '';
-			for (i = 0; i < parseInt(this.element.scrollWidth / 10); i++) str += '		';
+			for (i = 0; i < parseInt(this.element.scrollWidth / 10); i++) {
+				str += '		';
+			}
 			this.element.value += str;
 
 			// IE Bug? Need to retrieve scrollWidth first to init it!
 			var dummy = this.element.scrollWidth;
-			if (this.element.scrollWidth == this.element.clientWidth)
+			if (this.element.scrollWidth == this.element.clientWidth) {
 				wrap = 1;
-			else
+			}
+			else {
 				wrap = 0;
+			}
 			this.element.value = this.element.value.replace(str, '');
 
 			// IE Bug? Need to retrieve scrollHeight first to init it!
@@ -166,7 +182,9 @@ TextAreaResizer.prototype = {
 					: 0
 					);
 
-			if (maxHeight > winSize()[1]) maxHeight = winSize()[1] - (checkIt('msie') ? 60 : 90);
+			if (maxHeight > winSize()[1]) {
+				maxHeight = winSize()[1] - (checkIt('msie') ? 60 : 90);
+			}
 			// For some reason Netscape won't accept style.height greater than 10000px
 			this.element.style.height = maxHeight - (checkIt('msie') ? 8 : 0) + 'px';
 		}
@@ -235,4 +253,6 @@ if (typeof schedule != 'function') {
 	addEvent(window, 'load', function() {
 		LFEtextarea_init();
 	}, false);
-} else schedule('textarea_init()');
+} else {
+	schedule('textarea_init()');
+}

@@ -118,21 +118,16 @@ class tx_lfeditor_mod1_file_backup extends tx_lfeditor_mod1_file {
 	public function getVar($info) {
 		if ($info == 'metaFile') {
 			return $this->metaFile;
-		}
-		elseif ($info == 'extName')
-		{
+		} elseif ($info == 'extName') {
 			return $this->extName;
 		}
-		elseif ($info == 'extPath')
-		{
+		elseif ($info == 'extPath') {
 			return $this->extPath;
 		}
-		elseif ($info == 'langFile')
-		{
+		elseif ($info == 'langFile') {
 			return $this->langFile;
 		}
-		else
-		{
+		else {
 			return parent::getVar($info);
 		}
 	}
@@ -160,21 +155,16 @@ class tx_lfeditor_mod1_file_backup extends tx_lfeditor_mod1_file {
 		// build return value
 		if (!$mode) {
 			return $this->metaArray;
-		}
-		elseif ($mode == 1)
-		{
+		} elseif ($mode == 1) {
 			return $this->metaArray[$extName];
 		}
-		elseif ($mode == 2)
-		{
+		elseif ($mode == 2) {
 			return $this->metaArray[$extName][$workspace];
 		}
-		elseif ($mode == 3)
-		{
+		elseif ($mode == 3) {
 			return $this->metaArray[$extName][$workspace][$langFile];
 		}
-		else
-		{
+		else {
 			return array();
 		}
 	}
@@ -204,35 +194,25 @@ class tx_lfeditor_mod1_file_backup extends tx_lfeditor_mod1_file {
 		if (is_array($metaArray)) {
 			if (!$mode) {
 				$this->metaArray = $metaArray;
-			}
-			elseif ($mode == 1)
-			{
+			} elseif ($mode == 1) {
 				$this->metaArray[$extName] = $metaArray;
 			}
-			elseif ($mode == 2)
-			{
+			elseif ($mode == 2) {
 				$this->metaArray[$extName][$workspace] = $metaArray;
 			}
-			elseif ($mode == 3)
-			{
+			elseif ($mode == 3) {
 				$this->metaArray[$extName][$workspace][$langFile] = $metaArray;
 			}
-		}
-		else
-		{
+		} else {
 			if (!$mode) {
 				unset($this->metaArray);
-			}
-			elseif ($mode == 1)
-			{
+			} elseif ($mode == 1) {
 				unset($this->metaArray[$extName]);
 			}
-			elseif ($mode == 2)
-			{
+			elseif ($mode == 2) {
 				unset($this->metaArray[$extName][$workspace]);
 			}
-			elseif ($mode == 3)
-			{
+			elseif ($mode == 3) {
 				unset($this->metaArray[$extName][$workspace][$langFile]);
 			}
 		}
@@ -389,19 +369,17 @@ class tx_lfeditor_mod1_file_backup extends tx_lfeditor_mod1_file {
 		}
 
 		// read array
-		foreach ($phpArray['data'] as $langKey => $informations)
-		{
+		foreach ($phpArray['data'] as $langKey => $informations) {
 			// read origin
 			try {
-				$originLang[$langKey] = typo3Lib::transTypo3File($informations['meta']['origin'], true);
+				$originLang[$langKey] = typo3Lib::transTypo3File($informations['meta']['origin'], TRUE);
 			} catch (Exception $e) {
 				$originLang[$langKey] = PATH_site . $informations['meta']['origin'];
 			}
 
 			// read data
 			if (is_array($informations['langData'])) {
-				foreach ($informations['langData'] as $const => $value)
-				{
+				foreach ($informations['langData'] as $const => $value) {
 					$localLang[$langKey][$const] = $value;
 				}
 			}
@@ -414,10 +392,8 @@ class tx_lfeditor_mod1_file_backup extends tx_lfeditor_mod1_file {
 
 		// convert all values back to their original charsets
 		if ($GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] != 'utf-8') {
-			$this->localLang = typo3Lib::utf8($localLang, false, array('default'));
-		}
-		else
-		{
+			$this->localLang = typo3Lib::utf8($localLang, FALSE, array('default'));
+		} else {
 			$this->localLang = $localLang;
 		}
 
@@ -433,10 +409,8 @@ class tx_lfeditor_mod1_file_backup extends tx_lfeditor_mod1_file {
 	private function prepareBackupContent() {
 		// convert all values to utf-8
 		if ($GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] != 'utf-8') {
-			$localLang = typo3Lib::utf8($this->localLang, true, array('default'));
-		}
-		else
-		{
+			$localLang = typo3Lib::utf8($this->localLang, TRUE, array('default'));
+		} else {
 			$localLang = $this->localLang;
 		}
 
@@ -444,19 +418,17 @@ class tx_lfeditor_mod1_file_backup extends tx_lfeditor_mod1_file {
 		$phpArray['meta'] = $this->meta;
 
 		// set array
-		foreach ($this->originLang as $lang => $origin)
-		{
+		foreach ($this->originLang as $lang => $origin) {
 			// set origin
 			try {
-				$phpArray['data'][$lang]['meta']['origin'] = typo3Lib::transTypo3File($origin, false);
+				$phpArray['data'][$lang]['meta']['origin'] = typo3Lib::transTypo3File($origin, FALSE);
 			} catch (Exception $e) {
 				$phpArray['data'][$lang]['meta']['origin'] = substr($origin, strlen(PATH_site));
 			}
 
 			// set data
 			if (is_array($localLang[$lang])) {
-				foreach ($localLang[$lang] as $labelKey => $labelVal)
-				{
+				foreach ($localLang[$lang] as $labelKey => $labelVal) {
 					$phpArray['data'][$lang]['langData'][$labelKey] = $labelVal;
 				}
 			}

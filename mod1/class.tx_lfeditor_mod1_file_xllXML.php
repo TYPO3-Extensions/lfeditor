@@ -87,7 +87,7 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 
 		// convert all language values from utf-8 to the original charset
 		if ($GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] != 'utf-8') {
-			$this->localLang = typo3Lib::utf8($this->localLang, false, array('default'));
+			$this->localLang = typo3Lib::utf8($this->localLang, FALSE, array('default'));
 		}
 	}
 
@@ -133,8 +133,7 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 		}
 
 		ksort($localLang);
-		foreach ($localLang as $const => $value)
-		{
+		foreach ($localLang as $const => $value) {
 			$content['data'][$lang][$const] =
 			$value = str_replace("\r", '', str_replace("\n", '<br />', $value));
 		}
@@ -149,8 +148,7 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 	 */
 	private function prepareMeta() {
 		if (is_array($this->meta)) {
-			foreach ($this->meta as $label => $value)
-			{
+			foreach ($this->meta as $label => $value) {
 				$this->meta[$label] = str_replace("\r", '', str_replace("\n", '<br />', $value));
 			}
 		}
@@ -169,13 +167,12 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 	protected function prepareFileContents() {
 		// convert all language values to utf-8
 		if ($GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] != 'utf-8') {
-			$this->localLang = typo3Lib::utf8($this->localLang, true, array('default'));
+			$this->localLang = typo3Lib::utf8($this->localLang, TRUE, array('default'));
 		}
 
 		$mainFileContent = array('meta' => $this->prepareMeta());
 		$languages = sgLib::getSystemLanguages();
-		foreach ($languages as $langKey)
-		{
+		foreach ($languages as $langKey) {
 			$mainFileContent = array_merge_recursive($mainFileContent,
 				$this->getLangContent($this->localLang[$langKey], $langKey));
 		}

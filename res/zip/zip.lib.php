@@ -25,14 +25,14 @@ class zipfile {
 	/**
 	 * Array to store compressed data
 	 *
-	 * @var  array	$datasec
+	 * @var  array    $datasec
 	 */
 	var $datasec = array();
 
 	/**
 	 * Central directory
 	 *
-	 * @var  array	$ctrl_dir
+	 * @var  array    $ctrl_dir
 	 */
 	var $ctrl_dir = array();
 

@@ -60,7 +60,7 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 
 		// convert all language values from utf-8 to the original charset
 		if ($GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] != 'utf-8') {
-			$this->localLang = typo3Lib::utf8($this->localLang, false, array('default'));
+			$this->localLang = typo3Lib::utf8($this->localLang, FALSE, array('default'));
 		}
 	}
 
@@ -166,7 +166,7 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 	 */
 	protected function getLocalizedFile($content, $langKey) {
 		try {
-			$file = typo3Lib::transTypo3File($content, true);
+			$file = typo3Lib::transTypo3File($content, TRUE);
 		} catch (Exception $e) {
 			if (!$file = t3lib_div::llXmlAutoFileName($this->absFile, $langKey)) {
 				return $content;
@@ -189,10 +189,10 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 	 */
 	public function checkLocalizedFile($filename, $langKey) {
 		if (!preg_match('/^(' . $langKey . ')\..*\.xlf$/', $filename)) {
-			return false;
+			return FALSE;
 		}
 
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -224,10 +224,10 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 	 * @return string xml content
 	 */
 	private function array2xml($phpArray, $targetLanguage, $defaultLanguage) {
-$targetLanguage = htmlspecialchars($targetLanguage);
-$targetLanguageAttribute = ($targetLanguage !== 'default' ? ' target-language="' . $targetLanguage . '"' : '');
-$date = gmdate('Y-m-d\TH:i:s\Z');
-$xmlString = $this->getXMLHeader() . '<xliff version="1.0">
+		$targetLanguage = htmlspecialchars($targetLanguage);
+		$targetLanguageAttribute = ($targetLanguage !== 'default' ? ' target-language="' . $targetLanguage . '"' : '');
+		$date = gmdate('Y-m-d\TH:i:s\Z');
+		$xmlString = $this->getXMLHeader() . '<xliff version="1.0">
 	<file source-language="en"' . $targetLanguageAttribute . ' datatype="plaintext" original="messages" date="' . $date . '">
 		###HEADER###
 		###BODY###
@@ -312,7 +312,7 @@ $xmlString = $this->getXMLHeader() . '<xliff version="1.0">
 	protected function prepareFileContents() {
 		// convert all language values to utf-8
 		if ($GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] != 'utf-8') {
-			$this->localLang = typo3Lib::utf8($this->localLang, true, array('default'));
+			$this->localLang = typo3Lib::utf8($this->localLang, TRUE, array('default'));
 		}
 
 		// prepare Content

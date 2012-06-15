@@ -84,8 +84,7 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 		}
 
 		$metaData = '';
-		foreach ($this->meta as $metaIndex => $value)
-		{
+		foreach ($this->meta as $metaIndex => $value) {
 			$value = preg_replace('/[^\\\]\'/', '\\\'', $value);
 			$metaData .= "\t" . '\'' . $metaIndex . '\' => \'' . $value . '\',' . "\n";
 		}
@@ -132,8 +131,7 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 		$content = "\t'$lang' => array (\n";
 		if (is_array($localLang)) {
 			ksort($localLang);
-			foreach ($localLang as $const => $value)
-			{
+			foreach ($localLang as $const => $value) {
 				$value = preg_replace("/([^\\\])'/", "$1\'", $value);
 				$value = str_replace("\r", '', str_replace("\n", '<br />', $value));
 				$content .= "\t\t'$const' => '$value',\n";
@@ -152,8 +150,7 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 	protected function prepareFileContents() {
 		$mainFileContent = '';
 		$languages = sgLib::getSystemLanguages();
-		foreach ($languages as $langKey)
-		{
+		foreach ($languages as $langKey) {
 			$mainFileContent .= $this->getLangContent($this->localLang[$langKey], $langKey);
 		}
 

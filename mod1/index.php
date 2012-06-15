@@ -238,11 +238,11 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// paths and files (dont need to exist)
 		$this->extConfig['pathBackup'] = typo3Lib::fixFilePath(PATH_site . '/' .
-				$this->extConfig['pathBackup']) . '/';
+			$this->extConfig['pathBackup']) . '/';
 		$this->extConfig['metaFile'] = typo3Lib::fixFilePath(PATH_site . '/' .
-				$this->extConfig['metaFile']);
+			$this->extConfig['metaFile']);
 		$this->extConfig['pathXLLFiles'] = typo3Lib::fixFilePath(PATH_site . '/' .
-				$this->extConfig['pathXLLFiles']) . '/';
+			$this->extConfig['pathXLLFiles']) . '/';
 
 		// files
 		$this->extConfig['pathCSS'] = 'tx_lfeditor_mod1.css';
@@ -253,8 +253,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		if (!empty($this->extConfig['viewLanguages'])) {
 			$langs = explode(',', $this->extConfig['viewLanguages']);
 			unset($this->extConfig['viewLanguages']);
-			foreach ($langs as $lang)
-			{
+			foreach ($langs as $lang) {
 				if ($lang != 'default') {
 					$this->extConfig['viewLanguages'][] = $lang;
 				}
@@ -290,13 +289,11 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 					$typo3RelFile = '';
 				}
 				$xllFile = typo3Lib::fixFilePath(PATH_site . '/' .
-						$GLOBALS['TYPO3_CONF_VARS']['BE']['XLLfile'][$typo3RelFile]);
+					$GLOBALS['TYPO3_CONF_VARS']['BE']['XLLfile'][$typo3RelFile]);
 				if (is_file($xllFile)) {
 					$langFile = basename($xllFile);
 					$extPath = dirname($xllFile);
-				}
-				else
-				{
+				} else {
 					$langFile = t3lib_div::shortMD5(md5(microtime())) . '.' .
 						sgLib::getFileExtension($langFile);
 					$extPath = $this->extConfig['pathXLLFiles'];
@@ -318,9 +315,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		try {
 			if ($mode == 'xll') {
 				$this->fileObj->init($langFile, $extPath, $typo3RelFile);
-			}
-			else
-			{
+			} else {
 				$this->fileObj->init($langFile, $extPath);
 			}
 
@@ -368,10 +363,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$langFile = substr($langFile, strpos($langFile, '/') + 1);
 
 				$extPath = sgLib::trimPath($langFile, sgLib::trimPath(PATH_site,
-						$typo3AbsFile), '/');
-			}
-			else
-			{
+					$typo3AbsFile), '/');
+			} else {
 				$extPath = sgLib::trimPath(PATH_site, $this->fileObj->getVar('absPath'), '/');
 				$langFile = $this->fileObj->getVar('relFile');
 			}
@@ -451,8 +444,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			// local extensions
 			if ($this->extConfig['viewLocalExt']) {
 				if (is_array($content = tx_lfeditor_mod1_functions::searchExtensions(
-						PATH_site . typo3Lib::pathLocalExt, $this->extConfig['viewStateExt'],
-						$this->extConfig['extIgnore']))
+					PATH_site . typo3Lib::pathLocalExt, $this->extConfig['viewStateExt'],
+					$this->extConfig['extIgnore']))
 				) {
 					$tmpExtList[$GLOBALS['LANG']->getLL('ext.local')] = $content;
 				}
@@ -461,8 +454,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			// global extensions
 			if ($this->extConfig['viewGlobalExt']) {
 				if (is_array($content = tx_lfeditor_mod1_functions::searchExtensions(
-						PATH_site . typo3Lib::pathGlobalExt, $this->extConfig['viewStateExt'],
-						$this->extConfig['extIgnore']))
+					PATH_site . typo3Lib::pathGlobalExt, $this->extConfig['viewStateExt'],
+					$this->extConfig['extIgnore']))
 				) {
 					$tmpExtList[$GLOBALS['LANG']->getLL('ext.global')] = $content;
 				}
@@ -471,8 +464,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			// system extensions
 			if ($this->extConfig['viewSysExt']) {
 				if (is_array($content = tx_lfeditor_mod1_functions::searchExtensions(
-						PATH_site . typo3Lib::pathSysExt, $this->extConfig['viewStateExt'],
-						$this->extConfig['extIgnore']))
+					PATH_site . typo3Lib::pathSysExt, $this->extConfig['viewStateExt'],
+					$this->extConfig['extIgnore']))
 				) {
 					$tmpExtList[$GLOBALS['LANG']->getLL('ext.system')] = $content;
 				}
@@ -523,8 +516,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$filename = substr($file, strlen($this->MOD_SETTINGS['extList']) + 1);
 				$fileArray[$filename] = $filename;
 			}
-		} else
-		{
+		} else {
 			throw new LFException('failure.search.noLangFile');
 		}
 
@@ -591,8 +583,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		// build languages
 		$languages = tx_lfeditor_mod1_functions::buildLangArray($this->extConfig['viewLanguages']);
 		$langArray = array_merge(array('default'), $languages);
-		foreach ($langArray as $lang)
-		{
+		foreach ($langArray as $lang) {
 			$anzConsts = 0;
 			if (is_array($langData[$lang])) {
 				$anzConsts = count($langData[$lang]);
@@ -623,15 +614,13 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		// generate constant list
 		$constList = array();
 		$languages = tx_lfeditor_mod1_functions::buildLangArray();
-		foreach ($languages as $language)
-		{
+		foreach ($languages as $language) {
 			if (!is_array($langData[$language])) {
 				continue;
 			}
 
 			$constants = array_keys($langData[$language]);
-			foreach ($constants as $constant)
-			{
+			foreach ($constants as $constant) {
 				$constList[str_replace('#', '$*-*$', $constant)] = $constant;
 			}
 		}
@@ -663,8 +652,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// rewrite originLang array
 		$delLangFiles = array();
-		foreach ($langModes as $langKey => $mode)
-		{
+		foreach ($langModes as $langKey => $mode) {
 			if ($langKey == 'default') {
 				continue;
 			}
@@ -687,10 +675,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				}
 
 				$origin = typo3Lib::fixFilePath(dirname($this->fileObj->getVar('absFile')) .
-						'/' . $this->fileObj->nameLocalizedFile($langKey));
-			}
-			elseif ($mode == 2)
-			{
+					'/' . $this->fileObj->nameLocalizedFile($langKey));
+			} elseif ($mode == 2) {
 				// nothing to do if the file is already a l10n file
 				if (typo3lib::checkFileLocation($origin) == 'l10n') {
 					continue;
@@ -716,15 +702,13 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 					}
 				}
 			}
-			elseif ($mode == 3)
-			{
+			elseif ($mode == 3) {
 				if ($this->fileObj->checkLocalizedFile(basename($origin), $langKey)) {
 					$delLangFiles[] = $origin;
 				}
 				$origin = $this->fileObj->getVar('absFile');
 			}
-			else
-			{
+			else {
 				continue;
 			}
 			$this->fileObj->setOriginLangData($origin, $langKey);
@@ -772,8 +756,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		// recreate originLang
 		$dirNameOfAbsFile = dirname($this->fileObj->getVar('absFile'));
 		$origins = $this->convObj->getOriginLangData();
-		foreach ($origins as $langKey => $file)
-		{
+		foreach ($origins as $langKey => $file) {
 			// localized or merged language origin
 			$newFile = sgLib::setFileExtension($type, $file);
 			if ($this->convObj->getVar('workspace') == 'base') {
@@ -786,8 +769,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// recreate meta data
 		$meta = $this->convObj->getMetaData();
-		foreach ($meta as $metaIndex => $metaValue)
-		{
+		foreach ($meta as $metaIndex => $metaValue) {
 			$this->fileObj->setMetaData($metaIndex, $metaValue);
 		}
 
@@ -826,8 +808,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	public function execBackupDelete($delFiles) {
 		// delete files
 		try {
-			foreach ($delFiles as $filename => $langFile)
-			{
+			foreach ($delFiles as $filename => $langFile) {
 				$this->backupObj->deleteSpecFile($filename, '', $langFile);
 			}
 		} catch (LFException $e) {
@@ -856,15 +837,11 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		$backupDiff = tx_lfeditor_mod1_functions::getBackupDiff(2, $origLang, $backupLocalLang);
 
 		if (is_array($origDiff)) {
-			foreach ($origDiff as $langKey => $data)
-			{
-				foreach ($data as $label => $value)
-				{
+			foreach ($origDiff as $langKey => $data) {
+				foreach ($data as $label => $value) {
 					if (isset($backupLocalLang[$langKey][$label])) {
 						$localLang[$langKey][$label] = $value;
-					}
-					else
-					{
+					} else {
 						$localLang[$langKey][$label] = '';
 					}
 				}
@@ -872,10 +849,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		}
 
 		if (is_array($backupDiff)) {
-			foreach ($backupDiff as $langKey => $data)
-			{
-				foreach ($data as $label => $value)
-				{
+			foreach ($backupDiff as $langKey => $data) {
+				foreach ($data as $label => $value) {
 					$localLang[$langKey][$label] = $value;
 				}
 			}
@@ -886,28 +861,23 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		$backupDiff = tx_lfeditor_mod1_functions::getMetaDiff(2, $origMeta, $backupMeta);
 
 		if (is_array($origDiff)) {
-			foreach ($origDiff as $label => $value)
-			{
+			foreach ($origDiff as $label => $value) {
 				if (isset($backupMeta[$label])) {
 					$meta[$label] = $value;
-				}
-				else
-				{
+				} else {
 					$meta[$label] = '';
 				}
 			}
 		}
 
 		if (is_array($backupDiff)) {
-			foreach ($backupDiff as $label => $value)
-			{
+			foreach ($backupDiff as $label => $value) {
 				$meta[$label] = $value;
 			}
 		}
 
 		// restore origins of languages
-		foreach ($backupOriginLang as $langKey => $file)
-		{
+		foreach ($backupOriginLang as $langKey => $file) {
 			$curFile = $this->fileObj->getOriginLangData($langKey);
 			if ($curFile != $file && $curFile != $this->fileObj->getVar('absFile')) {
 				$deleteFiles[] = $curFile;
@@ -970,8 +940,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		}
 
 		// sort metaArray
-		foreach ($metaArray as $key => $row)
-		{
+		foreach ($metaArray as $key => $row) {
 			$createdAt[$key] = $row['createdAt'];
 		}
 		array_multisort($createdAt, SORT_DESC, $metaArray);
@@ -982,8 +951,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// delete files
 		try {
-			for (; $dif > 0; --$dif, --$numberFiles)
-			{
+			for (; $dif > 0; --$dif, --$numberFiles) {
 				$this->backupObj->deleteSpecFile($files[$numberFiles - 1]);
 			}
 		} catch (LFException $e) {
@@ -1021,19 +989,16 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		}
 
 		// set new language data
-		foreach ($modArray as $langKey => $data)
-		{
+		foreach ($modArray as $langKey => $data) {
 			if (is_array($data)) {
-				foreach ($data as $const => $value)
-				{
+				foreach ($data as $const => $value) {
 					$this->fileObj->setLocalLangData($const, $value, $langKey, $forceDel);
 				}
 			}
 		}
 
 		// set changed meta data
-		foreach ($modMetaArray as $metaIndex => $metaValue)
-		{
+		foreach ($modMetaArray as $metaIndex => $metaValue) {
 			$this->fileObj->setMetaData($metaIndex, $metaValue);
 		}
 
@@ -1048,8 +1013,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		$absFile = $this->fileObj->getVar('absFile');
 		$originLang = $this->fileObj->getOriginLangData();
 		unset($emptyFiles);
-		foreach ($originLang as $lang => $origin)
-		{
+		foreach ($originLang as $lang => $origin) {
 			if ($origin == $absFile || !is_file($origin)) {
 				continue;
 			}
@@ -1142,7 +1106,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		// redirect
 		if (!empty($language)) {
 			header('Location: ' . t3lib_div::getIndpEnv('TYPO3_REQUEST_SCRIPT') .
-					'?SET[langList]=' . $language . '&SET[function]=const.treeview');
+				'?SET[langList]=' . $language . '&SET[function]=const.treeview');
 		}
 
 		// zip and mail selected languages
@@ -1189,8 +1153,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			$langKeys = tx_lfeditor_mod1_functions::buildLangArray();
 
 			// generate langModes
-			foreach ($langKeys as $langKey)
-			{
+			foreach ($langKeys as $langKey) {
 				if (!isset($langModes[$langKey])) {
 					$langModes[$langKey] = $splitFile;
 				}
@@ -1264,8 +1227,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$constTypeList == 'unknown' || $buttonType <= 0
 			) {
 				$numSessionConsts = 0;
-			}
-			elseif (!$session) // session written to file
+			} elseif (!$session) // session written to file
 			{
 				$numSessionConsts -= $numLastPageConsts;
 			}
@@ -1277,22 +1239,17 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			// get language data
 			if ($constTypeList == 'untranslated') {
 				$myLangData = array_diff_key($langDefault, $langEdit);
-			}
-			elseif ($constTypeList == 'unknown')
-			{
+			} elseif ($constTypeList == 'unknown') {
 				$myLangData = array_diff_key($langEdit, $langDefault);
 			}
-			elseif ($constTypeList == 'translated')
-			{
+			elseif ($constTypeList == 'translated') {
 				$myLangData = array_intersect_key($langDefault, $langEdit);
 			}
-			else
-			{
+			else {
 				$myLangData = $langDefault;
 			}
 			$_SESSION[$sessID]['langfileEditConstantsList'] = array_keys($myLangData);
-		}
-		elseif ($buttonType == 1) // back button
+		} elseif ($buttonType == 1) // back button
 		{
 			$numSessionConsts -= ($maxSiteConsts + $numLastPageConsts);
 		}
@@ -1306,8 +1263,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// prepare constant list for this page
 		$numLastPageConsts = 0;
-		do
-		{
+		do {
 			// check number of session constants
 			if ($numSessionConsts >= $numConsts) {
 				break;
@@ -1319,9 +1275,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			$editLangVal = $langEdit[$constant];
 			if (!isset($_SESSION[$sessID]['langfileEditNewLangData'][$langList][$constant])) {
 				$_SESSION[$sessID]['langfileEditNewLangData'][$langList][$constant] = $editLangVal;
-			}
-			else
-			{
+			} else {
 				$editLangVal = $_SESSION[$sessID]['langfileEditNewLangData'][$langList][$constant];
 			}
 
@@ -1329,9 +1283,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			$editPatternVal = $langPattern[$constant];
 			if (!isset($_SESSION[$sessID]['langfileEditNewLangData'][$patternList][$constant])) {
 				$_SESSION[$sessID]['langfileEditNewLangData'][$patternList][$constant] = $editLangVal;
-			}
-			else
-			{
+			} else {
 				$editPatternVal =
 					$_SESSION[$sessID]['langfileEditNewLangData'][$patternList][$constant];
 			}
@@ -1476,8 +1428,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// writing
 		try {
-			foreach ($newLang as $lang => $value)
-			{
+			foreach ($newLang as $lang => $value) {
 				$add[$lang][$constant] = $value;
 			}
 
@@ -1527,17 +1478,14 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			if ($delAllLang) {
 				$languages = tx_lfeditor_mod1_functions::buildLangArray();
 				$langArray = array_merge(array('default'), $languages);
-			}
-			else
-			{
+			} else {
 				$langArray =
 					tx_lfeditor_mod1_functions::buildLangArray($this->extConfig['viewLanguages']);
 			}
 
 			// build modArray
 			unset($newLang);
-			foreach ($langArray as $lang)
-			{
+			foreach ($langArray as $lang) {
 				$newLang[$lang][$constant] = '';
 			}
 
@@ -1587,8 +1535,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 			// build modArray
 			unset($newLang);
-			foreach ($langArray as $lang)
-			{
+			foreach ($langArray as $lang) {
 				$newLang[$lang][$newConst] = $langData[$lang][$oldConst];
 				$newLang[$lang][$oldConst] = '';
 			}
@@ -1615,11 +1562,9 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		// search
 		$resultArray = array();
 		if (!preg_match('/^\/.*\/.*$/', $searchStr) && !empty($searchStr)) {
-			foreach ($langData as $langKey => $data)
-			{
+			foreach ($langData as $langKey => $data) {
 				if (is_array($data)) {
-					foreach ($data as $labelKey => $labelValue)
-					{
+					foreach ($data as $labelKey => $labelValue) {
 						if (preg_match('/' . $searchStr . '/' . $searchOptions, $labelValue)) {
 							$resultArray[$langKey][$labelKey] = $labelValue;
 						}
@@ -1629,9 +1574,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			if (!count($resultArray)) {
 				$preMsg = new LFException('failure.search.noConstants', 1);
 			}
-		}
-		else
-		{
+		} else {
 			$preMsg = new LFException('function.const.search.enterSearchStr', 1);
 		}
 
@@ -1724,7 +1667,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			$metaArray = $this->backupObj->getMetaInfos(3);
 			$informations = array(
 				'absPath' => typo3Lib::fixFilePath(PATH_site . '/' .
-						$metaArray[$filename]['pathBackup']),
+					$metaArray[$filename]['pathBackup']),
 				'relFile' => $filename,
 			);
 			$this->backupObj->setVar($informations);
@@ -1798,22 +1741,16 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 				// restore
 				$this->execBackupRestore();
-			}
-			elseif ($deleteAll || $delete)
-			{
+			} elseif ($deleteAll || $delete) {
 				if ($deleteAll) {
 					$metaArray = $this->backupObj->getMetaInfos(2);
-					foreach ($metaArray as $langFile => $metaPiece)
-					{
+					foreach ($metaArray as $langFile => $metaPiece) {
 						$files = array_keys($metaPiece);
-						foreach ($files as $filename)
-						{
+						foreach ($files as $filename) {
 							$delFiles[$filename] = $langFile;
 						}
 					}
-				}
-				else
-				{
+				} else {
 					$delFiles[$filename] = '';
 				}
 
@@ -1882,8 +1819,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		}
 
 		// generate general output
-		switch ($this->MOD_SETTINGS['function'])
-		{
+		switch ($this->MOD_SETTINGS['function']) {
 			case 'general':
 				// exec action specific part of function
 				try {
@@ -1894,9 +1830,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 							if (!$sendMail) {
 								$preContent = '<p class="tx-lfeditor-success">' .
 									$GLOBALS['LANG']->getLL('lang.file.write.success') . '</p>';
-							}
-							else
-							{
+							} else {
 								$preContent = '<p class="tx-lfeditor-success">' .
 									$GLOBALS['LANG']->getLL('function.general.mail.success') .
 									'</p>';

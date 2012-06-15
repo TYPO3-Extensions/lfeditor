@@ -44,8 +44,7 @@ class tx_lfeditor_mod1_template {
 	 */
 	public static function outputAddButtons($buttons) {
 		$content = '<div class="tx-lfeditor-buttons">';
-		foreach ($buttons as $button)
-		{
+		foreach ($buttons as $button) {
 			$onClick = '';
 			if (!empty($button['onClick'])) {
 				$onClick = 'onclick="' . $button['onClick'] . '"';
@@ -158,8 +157,7 @@ class tx_lfeditor_mod1_template {
 		foreach ($resultArray as $langKey => $data) {
 			$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' .
 				$langKey . '</legend> <dl>';
-			foreach ($data as $label => $value)
-			{
+			foreach ($data as $label => $value) {
 				$content .= '<dt>';
 				$content .= '<a href="#" title="' . $label . '" ' .
 					'onclick="submitRedirectForm(\'constant\',\'' . $label . '\');">' .
@@ -205,10 +203,10 @@ class tx_lfeditor_mod1_template {
 	 * @return boolean always true
 	 */
 	public static function genTree($tree, &$content, &$myIDs, $treeHide, $parentBranch = '',
-		$numBranches = array(), $last = array(), $curDim = 0, $maxDim = 9999) {
+								   $numBranches = array(), $last = array(), $curDim = 0, $maxDim = 9999) {
 		// prevent endless loops
 		if ($curDim >= $maxDim) {
-			return true;
+			return TRUE;
 		}
 
 		// initial definition list
@@ -219,8 +217,7 @@ class tx_lfeditor_mod1_template {
 		// recursive loop
 		$branches = array_keys($tree[$curDim]);
 		$numBranches[$curDim] = count($tree[$curDim]);
-		for ($curBranch = 0, $numDisplayed = 0; $curBranch < $numBranches[$curDim]; ++$curBranch)
-		{
+		for ($curBranch = 0, $numDisplayed = 0; $curBranch < $numBranches[$curDim]; ++$curBranch) {
 			if ($tree[$curDim][$branches[$curBranch]]['parent'] != $parentBranch) {
 				continue;
 			}
@@ -228,15 +225,12 @@ class tx_lfeditor_mod1_template {
 			// get lines and blanks (visual issues)
 			unset($cont);
 			$cont = '';
-			for ($tmp = 0, $lineSpace = 0; $tmp < $curDim; ++$tmp)
-			{
+			for ($tmp = 0, $lineSpace = 0; $tmp < $curDim; ++$tmp) {
 				if ($numBranches[$tmp] > 1 && !$last[$tmp]) {
 					$cont .= '<img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/line.gif" alt="line" ' .
 						'style="margin-left: ' . $lineSpace . 'px;" />';
 					$lineSpace = 0;
-				}
-				else
-				{
+				} else {
 					$lineSpace += 18;
 				}
 			}
@@ -257,9 +251,7 @@ class tx_lfeditor_mod1_template {
 			$name = $tree[$curDim][$branches[$curBranch]]['name'];
 			if ($tree[$curDim][$branches[$curBranch]]['type'] == 1) {
 				$name = '<span class="tx-lfeditor-badMarkup">' . $name . '</span>';
-			}
-			elseif ($tree[$curDim][$branches[$curBranch]]['type'] == 2)
-			{
+			} elseif ($tree[$curDim][$branches[$curBranch]]['type'] == 2) {
 				$name = '<span class="tx-lfeditor-specialMarkup">' . $name . '</span>';
 			}
 
@@ -287,12 +279,10 @@ class tx_lfeditor_mod1_template {
 				$content .= '<dt>' . $cont . '</dt>';
 				$content .= '<dd><dl class="tx-lfeditor-treeview" ' . $style . ' id="' . $myID . '">';
 
-				tx_lfeditor_mod1_template::genTree($tree, $content, $myIDs, true,
+				tx_lfeditor_mod1_template::genTree($tree, $content, $myIDs, TRUE,
 					$branches[$curBranch], $numBranches, $last, $curDim + 1);
 				$content .= '</dl></dd>';
-			}
-			else
-			{
+			} else {
 				if ($name == $tree[$curDim][$branches[$curBranch]]['name']) {
 					$name = '<span class="tx-lfeditor-goodMarkup">' . $name . '</span>';
 				}
@@ -311,7 +301,7 @@ class tx_lfeditor_mod1_template {
 			$content .= '</dl>';
 		}
 
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -321,7 +311,7 @@ class tx_lfeditor_mod1_template {
 	 * @param boolean should the tree entries hidden or visible at startup (default is true)
 	 * @return string output (HTML code)
 	 */
-	public static function outputTreeView($tree, $treeHide = true) {
+	public static function outputTreeView($tree, $treeHide = TRUE) {
 		// display result array
 		$content = '<fieldset class="tx-lfeditor-fieldset bgColor5">';
 		$content .= '<legend class="bgColor3">' .
@@ -342,8 +332,7 @@ class tx_lfeditor_mod1_template {
 
 		// get unhide/hide all feature
 		$JSArgs = array();
-		foreach ($myIDs as $myID => $bottom)
-		{
+		foreach ($myIDs as $myID => $bottom) {
 			$JSArgs[] = '\'' . $myID . '\',\'pic' . $myID . '\',' . $bottom;
 		}
 		$JSArgs = implode(',', $JSArgs);
@@ -376,8 +365,7 @@ class tx_lfeditor_mod1_template {
 
 		// generate form
 		$k = 0;
-		foreach ($langArray as $lang)
-		{
+		foreach ($langArray as $lang) {
 			$cssClass = 'tx-lfeditor-fleft';
 			if ($k++ % 2) {
 				$cssClass = 'tx-lfeditor-fright';
@@ -391,7 +379,7 @@ class tx_lfeditor_mod1_template {
 			$content .= '<textarea class="tx-lfeditor-textarea ' .
 				(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
 				'rows="' . $textAreaRows . '" cols="80" ' .
-				'name="newLang[' . $lang . '][' . $constant . ']" lang="'. $textareaLanguage .'" x:lang="'. $textareaLanguage .'">';
+				'name="newLang[' . $lang . '][' . $constant . ']" lang="' . $textareaLanguage . '" x:lang="' . $textareaLanguage . '">';
 			$content .= preg_replace('/<br.*>/U', "\n", $localLang[$lang][$constant]);
 			$content .= '</textarea> </fieldset>';
 		}
@@ -428,8 +416,7 @@ class tx_lfeditor_mod1_template {
 
 		// generate form
 		$k = 0;
-		foreach ($langArray as $lang)
-		{
+		foreach ($langArray as $lang) {
 			$cssClass = 'tx-lfeditor-fleft';
 			if ($k++ % 2) {
 				$cssClass = 'tx-lfeditor-fright';
@@ -443,7 +430,7 @@ class tx_lfeditor_mod1_template {
 			$content .= '<textarea class="tx-lfeditor-textarea ' .
 				(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
 				'rows="' . $textAreaRows . '" cols="80" id="' . $lang . '" ' .
-				'name="newLang[' . $lang . ']" lang="'. $textareaLanguage .'" x:lang="'. $textareaLanguage .'">' .
+				'name="newLang[' . $lang . ']" lang="' . $textareaLanguage . '" x:lang="' . $textareaLanguage . '">' .
 				$defValues[$lang] . '</textarea> </fieldset>';
 		}
 
@@ -481,7 +468,7 @@ class tx_lfeditor_mod1_template {
 	 * @return string output (HTML code)
 	 */
 	public static function outputEditLangfile($constValues, $curConsts, $siteConsts, $totalConsts,
-		$langName, $patternName, $parallelEdit, $buttonBack, $buttonNext, $textAreaRows) {
+											  $langName, $patternName, $parallelEdit, $buttonBack, $buttonNext, $textAreaRows) {
 		// informations
 		$content = '<p><span id="tx-lfeditor-numberCur">' . $curConsts . '</span> / ' .
 			'<span id="tx-lfeditor-numberOf">' . $totalConsts . '</span></p>';
@@ -495,8 +482,7 @@ class tx_lfeditor_mod1_template {
 
 		// loop constants
 		$k = 0;
-		foreach ($constValues as $constant => $values)
-		{
+		foreach ($constValues as $constant => $values) {
 			$cssClass = 'tx-lfeditor-fleft';
 			if (($k++ % 2) && !$parallelEdit) {
 				$cssClass = 'tx-lfeditor-fright';
@@ -505,9 +491,7 @@ class tx_lfeditor_mod1_template {
 			// generate legend
 			if (strlen($constant) >= 40) {
 				$lconstant = substr($constant, 0, 40) . '...';
-			}
-			else
-			{
+			} else {
 				$lconstant = $constant;
 			}
 
@@ -520,7 +504,7 @@ class tx_lfeditor_mod1_template {
 			$content .= '<textarea class="tx-lfeditor-textarea ' .
 				(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
 				'rows="' . $textAreaRows . '" cols="80" ' .
-				'name="newLang[' . $langName . '][' . $constant . ']" lang="'. $textareaLanguage .'" x:lang="'. $textareaLanguage .'">' .
+				'name="newLang[' . $langName . '][' . $constant . ']" lang="' . $textareaLanguage . '" x:lang="' . $textareaLanguage . '">' .
 				preg_replace('/<br.*>/U', "\n", $values['edit']) . '</textarea>';
 
 			// add default value
@@ -541,7 +525,7 @@ class tx_lfeditor_mod1_template {
 				$content .= '<textarea class="tx-lfeditor-textarea ' .
 					(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
 					'rows="' . $textAreaRows . '" cols="80" ' .
-					'name="newLang[' . $patternName . '][' . $constant . ']" lang="'. $textareaLanguage .'" x:lang="'. $textareaLanguage .'">' .
+					'name="newLang[' . $patternName . '][' . $constant . ']" lang="' . $textareaLanguage . '" x:lang="' . $textareaLanguage . '">' .
 					preg_replace('/<br.*>/U', "\n", $values['pattern']) . '</textarea>';
 
 				// add default value
@@ -652,7 +636,7 @@ class tx_lfeditor_mod1_template {
 	 * @param string $fileType
 	 * @return string output (HTML code)
 	 */
-	public static function outputGeneral($infos, $refLang, $textAreaRows, $flagSpecial = false, $fileType = '') {
+	public static function outputGeneral($infos, $refLang, $textAreaRows, $flagSpecial = FALSE, $fileType = '') {
 		$summary = $GLOBALS['LANG']->getLL('table.fileInfo');
 		$content = '<table id="tx-lfeditor-table" summary="' . $summary . '">';
 
@@ -676,8 +660,7 @@ class tx_lfeditor_mod1_template {
 
 		// table data
 		$content .= '<tbody>';
-		foreach ($infos as $langKey => $info)
-		{
+		foreach ($infos as $langKey => $info) {
 			// language shortcut
 			$content .= '<tr><td class="bgColor4"><a href="#" title="' . $langKey . '" ' .
 				'onclick="submitRedirectForm(\'language\',\'' . $langKey . '\');">' .
@@ -692,9 +675,7 @@ class tx_lfeditor_mod1_template {
 			if ($info['numTranslated'] >= $infos[$refLang]['numTranslated']) {
 				$content .= '<td class="bgColor4"><span class="tx-lfeditor-goodMarkup">' .
 					$GLOBALS['LANG']->getLL('lang.complete') . '</span><br />' . $constInfo . '</td>';
-			}
-			else
-			{
+			} else {
 				$content .= '<td class="bgColor4"><span class="tx-lfeditor-badMarkup">' .
 					$GLOBALS['LANG']->getLL('lang.incomplete') . '</span><br />' . $constInfo . '</td>';
 			}
@@ -864,7 +845,7 @@ class tx_lfeditor_mod1_template {
 	 * @return string output (html code)
 	 */
 	public static function outputManageBackupsDiff($diff, $metaDiff, $origLang,
-		$backupLang, $origOriginLang, $backupOriginLang, $origMeta, $backupMeta) {
+												   $backupLang, $origOriginLang, $backupOriginLang, $origMeta, $backupMeta) {
 		// begin fieldset
 		$content = '<fieldset class="tx-lfeditor-fieldset bgColor5">';
 		$content .= '<legend class="bgColor3">' .
@@ -880,15 +861,13 @@ class tx_lfeditor_mod1_template {
 		if (count($metaDiff)) {
 			$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' .
 				$GLOBALS['LANG']->getLL('function.backupMgr.diff.meta') . '</legend> <dl>';
-			foreach ($metaDiff as $label => $value)
-			{
+			foreach ($metaDiff as $label => $value) {
 				$value = htmlspecialchars($value);
 
 				if (!isset($backupMeta[$label])) // constant added
 				{
 					$content .= '<dt class="tx-lfeditor-goodMarkup">' . $label . '</dt>';
-				}
-				elseif (!isset($origMeta[$label])) // constant lost
+				} elseif (!isset($origMeta[$label])) // constant lost
 				{
 					$content .= '<dt class="tx-lfeditor-badMarkup">' . $label . '</dt>';
 				}
@@ -902,8 +881,7 @@ class tx_lfeditor_mod1_template {
 		}
 
 		// loop each language entry
-		foreach ($diff as $langKey => $data)
-		{
+		foreach ($diff as $langKey => $data) {
 			if (!count($data) && ($origOriginLang[$langKey] == $backupOriginLang[$langKey])) {
 				continue;
 			}
@@ -912,27 +890,23 @@ class tx_lfeditor_mod1_template {
 			if ($backupOriginLang[$langKey] != $backupOriginLang['default']) {
 				try {
 					$state = $GLOBALS['LANG']->getLL('lang.splitted') . ' -- ';
-					$state .= typo3Lib::transTypo3File($backupOriginLang[$langKey], false);
+					$state .= typo3Lib::transTypo3File($backupOriginLang[$langKey], FALSE);
 				} catch (Exception $e) {
 					$state = $backupOriginLang[$langKey];
 				}
-			}
-			else
-			{
+			} else {
 				$state = $GLOBALS['LANG']->getLL('lang.merged');
 			}
 
 			$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' .
 				$langKey . ' (' . $state . ')</legend> <dl>';
-			foreach ($data as $label => $value)
-			{
+			foreach ($data as $label => $value) {
 				$value = htmlspecialchars($value);
 
 				if (!isset($backupLang[$langKey][$label])) // constant added
 				{
 					$content .= '<dt class="tx-lfeditor-goodMarkup">' . $label . '</dt>';
-				}
-				elseif (!isset($origLang[$langKey][$label])) // constant lost
+				} elseif (!isset($origLang[$langKey][$label])) // constant lost
 				{
 					$content .= '<dt class="tx-lfeditor-badMarkup">' . $label . '</dt>';
 				}
@@ -993,10 +967,8 @@ class tx_lfeditor_mod1_template {
 		$content .= '<tbody>';
 		$i = 0;
 		$keys = array_keys($metaArray);
-		foreach ($keys as $langFile)
-		{
-			foreach ($metaArray[$langFile] as $filename => $informations)
-			{
+		foreach ($keys as $langFile) {
+			foreach ($metaArray[$langFile] as $filename => $informations) {
 				// get path to filename
 				$backupPath = $informations['pathBackup'];
 				$file = typo3Lib::fixFilePath(PATH_site . '/' . $backupPath . '/' . $filename);
@@ -1004,18 +976,16 @@ class tx_lfeditor_mod1_template {
 
 				// check state
 				$content .= '<tr>';
-				$stateBool = false;
+				$stateBool = FALSE;
 				if (!is_file($file)) {
 					$state = '<td class="tx-lfeditor-badMarkup bgColor4">' .
 						$GLOBALS['LANG']->getLL('function.backupMgr.missing') . '</td>';
-				}
-				elseif (!is_file($origFile))
-				{
+				} elseif (!is_file($origFile)) {
 					$state = '<td class="tx-lfeditor-badMarkup bgColor4">' .
 						$GLOBALS['LANG']->getLL('lang.file.missing') . '</td>';
 				}
 				else {
-					$stateBool = true;
+					$stateBool = TRUE;
 					$state = '<td class="tx-lfeditor-goodMarkup bgColor4">' .
 						$GLOBALS['LANG']->getLL('function.backupMgr.ok') . '</td>';
 				}
@@ -1047,9 +1017,7 @@ class tx_lfeditor_mod1_template {
 						'0, 0, 0, 1);"> <img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/diff.gif" title="' . $name . '" ' .
 						'alt="' . $name . '" /> </a> </td>';
 					$content .= '</tr>';
-				}
-				else
-				{
+				} else {
 					$content .= '<td class="bgColor4">[-]</td><td class="bgColor4">[-]</td>';
 				}
 			}

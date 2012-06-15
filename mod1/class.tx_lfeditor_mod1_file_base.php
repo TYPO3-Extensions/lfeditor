@@ -83,8 +83,7 @@ abstract class tx_lfeditor_mod1_file_base extends tx_lfeditor_mod1_file {
 
 		// loop all languages
 		$languages = sgLib::getSystemLanguages();
-		foreach ($languages as $lang)
-		{
+		foreach ($languages as $lang) {
 			$originLang[$lang] = $this->absFile;
 			if (is_array($localLang[$lang]) || $lang == 'default') {
 				if (is_array($localLang[$lang]) && count($localLang[$lang])) {

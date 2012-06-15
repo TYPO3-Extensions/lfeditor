@@ -35,18 +35,21 @@ function openCloseTreeEntry(autoHide, args) {
 	var pic, curTreeHide;
 
 	if (!autoHide) {
-		if (!treeHide)
+		if (!treeHide) {
 			treeHide = 1;
-		else
+		}
+		else {
 			treeHide = 0;
+		}
 	}
 	curTreeHide = treeHide;
 
 	for (var i = 1; i < length; i += 3) {
 		if (autoHide) {
 			curTreeHide = 0;
-			if (!document.getElementById(arguments[i]).style.display)
+			if (!document.getElementById(arguments[i]).style.display) {
 				curTreeHide = 1;
+			}
 		}
 
 		if (curTreeHide) {
@@ -57,8 +60,9 @@ function openCloseTreeEntry(autoHide, args) {
 			pic = 'Minus';
 		}
 
-		if (arguments[i + 2])
+		if (arguments[i + 2]) {
 			pic = pic + 'Bottom';
+		}
 
 		document.getElementById(arguments[i + 1]).src = '../res/images/tree' + pic + '.gif';
 		document.getElementById(arguments[i + 1]).alt = 'tree' + pic;

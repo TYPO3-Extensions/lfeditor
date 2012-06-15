@@ -106,9 +106,7 @@ class LFException extends Exception {
 	private function prepare($msg, $wrapType = 0) {
 		if (!$wrapType) {
 			return str_replace('|', $msg, self::$errorWrap);
-		}
-		else
-		{
+		} else {
 			return str_replace('|', $msg, self::$noticeWrap);
 		}
 	}

@@ -85,9 +85,7 @@ abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
 	public function getVar($info) {
 		if ($info == 'typo3RelFile') {
 			return $this->typo3RelFile;
-		}
-		else
-		{
+		} else {
 			return parent::getVar($info);
 		}
 	}
@@ -108,8 +106,7 @@ abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
 
 		// set origin array and sort language contents
 		$languages = sgLib::getSystemLanguages();
-		foreach ($languages as $lang)
-		{
+		foreach ($languages as $lang) {
 			$originLang[$lang] = $this->absFile;
 			if (is_array($localLang[$lang])) {
 				ksort($localLang[$lang]);
@@ -145,7 +142,7 @@ abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
 		// set only new values in localconf if something changed
 		$relXLLFile = sgLib::trimPath(PATH_site, $this->absFile);
 		if ($GLOBALS['TYPO3_CONF_VARS']['BE']['XLLfile'][$this->typo3RelFile] == $relXLLFile) {
-			return true;
+			return TRUE;
 		}
 
 		try {
@@ -163,7 +160,7 @@ abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
 			throw new LFException('failure.failure', 0, '(' . $e->getMessage() . ')');
 		}
 
-		return true;
+		return TRUE;
 	}
 }
 

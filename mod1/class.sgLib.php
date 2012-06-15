@@ -43,9 +43,7 @@ class sgLib {
 	public static function download($file, $filename, $type = 'x-type/octtype') {
 		if (is_file($file)) {
 			$content = readfile($file);
-		}
-		else
-		{
+		} else {
 			$content = $file;
 		}
 
@@ -71,7 +69,7 @@ class sgLib {
 	 * @return void
 	 */
 	public static function sendMail($subject, $text, $fromAddress, $toAddress,
-		$attachement = '', $sendFileName = '', $mbLanguage = 'uni') {
+									$attachement = '', $sendFileName = '', $mbLanguage = 'uni') {
 		// checks
 		if (!preg_match('/(@.*@)|(\.\.)|(@\.)|(\.@)|(^\.)/', $toAddress) &&
 			!preg_match('/^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3}|[0-9]{1,3})(\]?)$/',
@@ -92,9 +90,7 @@ class sgLib {
 		$subject = htmlspecialchars($subject);
 		if (is_file($attachement)) {
 			$fileContent = readfile($attachement);
-		}
-		else
-		{
+		} else {
 			$fileContent = $attachement;
 		}
 
@@ -181,10 +177,10 @@ class sgLib {
 		}
 
 		if (!is_writable($file)) {
-			return false;
+			return FALSE;
 		}
 
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -197,8 +193,7 @@ class sgLib {
 	public static function deleteFiles($files) {
 		// delete all old files
 		$error = array();
-		foreach ($files as $file)
-		{
+		foreach ($files as $file) {
 			if (is_file($file)) {
 				if (!unlink($file)) {
 					$error[] = $file;
@@ -223,8 +218,7 @@ class sgLib {
 		if (!is_dir($path)) {
 			$path = explode('/', sgLib::trimPath($protectArea, $path));
 			$tmp = '';
-			foreach ($path as $dir)
-			{
+			foreach ($path as $dir) {
 				$tmp .= $dir . '/';
 				if (is_dir($protectArea . $tmp)) {
 					continue;
@@ -249,8 +243,7 @@ class sgLib {
 			throw new Exception('directory "' . $path . '" cant be readed');
 		}
 
-		while ($file = readdir($dh))
-		{
+		while ($file = readdir($dh)) {
 			$myFile = $path . '/' . $file;
 
 			// ignore links and point directories
@@ -262,9 +255,7 @@ class sgLib {
 				if (!unlink($myFile)) {
 					throw new Exception('file "' . $myFile . '" cant be deleted');
 				}
-			}
-			elseif (is_dir($myFile))
-			{
+			} elseif (is_dir($myFile)) {
 				sgLib::deleteDir($myFile);
 			}
 		}

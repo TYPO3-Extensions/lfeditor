@@ -54,15 +54,13 @@ class tx_lfeditor_mod1_functions {
 
 		// prepareExtensions
 		$numHeader = count($fileArray);
-		foreach ($fileArray as $header => $extPaths)
-		{
+		foreach ($fileArray as $header => $extPaths) {
 			if (!is_array($extPaths) && count($extPaths)) {
 				continue;
 			}
 
 			unset($prepArray);
-			foreach ($extPaths as $extPath)
-			{
+			foreach ($extPaths as $extPath) {
 				intval(t3lib_extmgm::isLoaded(basename($extPath))) ?
 					$state = $GLOBALS['LANG']->getLL('ext.loaded') :
 					$state = $GLOBALS['LANG']->getLL('ext.notLoaded');
@@ -102,8 +100,7 @@ class tx_lfeditor_mod1_functions {
 			throw new Exception('cant open "' . $path . '"');
 		}
 
-		while ($extDir = readdir($fhd))
-		{
+		while ($extDir = readdir($fhd)) {
 			$extDirPath = $path . '/' . $extDir;
 
 			// ignore all unless the file is a directory and no point dir
@@ -147,12 +144,10 @@ class tx_lfeditor_mod1_functions {
 	 * @param array optional: some language shortcuts
 	 * @return array language list
 	 */
-	public static function buildLangArray($languages = null) {
+	public static function buildLangArray($languages = NULL) {
 		if (!is_array($languages) || !count($languages)) {
 			return sgLib::getSystemLanguages();
-		}
-		else
-		{
+		} else {
 			return $languages;
 		}
 	}
@@ -176,8 +171,7 @@ class tx_lfeditor_mod1_functions {
 	public static function getBackupDiff($diffType, $origLang, $backupLocalLang) {
 		// get all languages and generate the diff
 		$langKeys = array_merge(array_keys($origLang), array_keys($backupLocalLang));
-		foreach ($langKeys as $langKey)
-		{
+		foreach ($langKeys as $langKey) {
 			// prevent warnings
 			if (!is_array($origLang[$langKey])) {
 				$origLang[$langKey] = array();
@@ -230,13 +224,10 @@ class tx_lfeditor_mod1_functions {
 
 		if ($diffType == 1) {
 			return $origDiff;
-		}
-		elseif ($diffType == 2)
-		{
+		} elseif ($diffType == 2) {
 			return $backupDiff;
 		}
-		else
-		{
+		else {
 			return array_merge($origDiff, $backupDiff);
 		}
 	}
@@ -255,8 +246,7 @@ class tx_lfeditor_mod1_functions {
 		$localRefLangData = $fileObj->getLocalLangData($refLang);
 
 		// generate needed data
-		foreach ($languages as $langKey)
-		{
+		foreach ($languages as $langKey) {
 			// get origin data and meta informations
 			$origin = $fileObj->getOriginLangData($langKey);
 			$infos['default']['meta'] = $fileObj->getMetaData();
@@ -277,35 +267,28 @@ class tx_lfeditor_mod1_functions {
 				$locType = typo3Lib::checkFileLocation($origin);
 				if ($locType == 'local') {
 					$infos[$langKey]['type'] = $GLOBALS['LANG']->getLL('ext.local');
-				}
-				elseif ($locType == 'global')
-				{
+				} elseif ($locType == 'global') {
 					$infos[$langKey]['type'] = $GLOBALS['LANG']->getLL('ext.global');
 				}
-				elseif ($locType == 'system')
-				{
+				elseif ($locType == 'system') {
 					$infos[$langKey]['type'] = $GLOBALS['LANG']->getLL('ext.system');
 				}
 				elseif ($locType == 'l10n') {
 					$infos[$langKey]['type'] = $GLOBALS['LANG']->getLL('lang.file.l10n');
 					$infos[$langKey]['type2'] = 'l10n';
 				}
-				else
-				{
+				else {
 					$infos[$langKey]['type'] = $GLOBALS['LANG']->getLL('ext.unknown');
 				}
 
 				if ($infos[$langKey]['type2'] != 'l10n') {
 					if ($fileObj->checkLocalizedFile(basename($origin), $langKey)) {
 						$infos[$langKey]['type2'] = 'splitted';
-					}
-					else
-					{
+					} else {
 						$infos[$langKey]['type2'] = 'merged';
 					}
 				}
-			}
-			else {
+			} else {
 				$infos[$langKey]['type'] = 'xll';
 				$infos[$langKey]['type2'] = 'merged';
 			}
@@ -314,7 +297,7 @@ class tx_lfeditor_mod1_functions {
 			try {
 				$infos[$langKey]['origin'] = '[-]';
 				if (!empty($origin)) {
-					$infos[$langKey]['origin'] = typo3Lib::transTypo3File($origin, false);
+					$infos[$langKey]['origin'] = typo3Lib::transTypo3File($origin, FALSE);
 				}
 			} catch (Exception $e) {
 				$infos[$langKey]['origin'] = sgLib::trimPath(PATH_site, $origin);
@@ -347,8 +330,7 @@ class tx_lfeditor_mod1_functions {
 		$langConsts = array_merge(array_keys($langData), $refConsts);
 
 		// generate tree information array
-		foreach ($langConsts as $constant)
-		{
+		foreach ($langConsts as $constant) {
 			// add root
 			$rootLabel = $GLOBALS['LANG']->getLL('function.const.treeview.root');
 			$tree[0][$rootLabel]['name'] = $rootLabel;
@@ -358,21 +340,17 @@ class tx_lfeditor_mod1_functions {
 			if (!in_array($constant, $refConsts)) {
 				$type = 2;
 			} // unknown
-			elseif (empty($langData[$constant]))
-			{
+			elseif (empty($langData[$constant])) {
 				$type = 1;
 			} // untranslated
 
 			$branches = explode($expToken, $constant);
 			$numBranches = count($branches);
-			for ($i = 0, $curDim = 1; $i < $numBranches; ++$i, ++$curDim)
-			{
+			for ($i = 0, $curDim = 1; $i < $numBranches; ++$i, ++$curDim) {
 				// get current absolute constant name
 				if (!$i) {
 					$curAbsName = $branches[$i];
-				}
-				else
-				{
+				} else {
 					$curAbsName = $expToken . $branches[$i];
 				}
 
@@ -387,9 +365,7 @@ class tx_lfeditor_mod1_functions {
 				// set parent
 				if ($i > 0) {
 					$parentAbsName = substr($curAbsName, 0, strrpos($curAbsName, $expToken));
-				}
-				else
-				{
+				} else {
 					$parentAbsName = $rootLabel;
 				}
 

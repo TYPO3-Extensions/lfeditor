@@ -66,7 +66,7 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 
 		// convert all language values from the original charset to utf-8
 		if ($GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] == 'utf-8') {
-			$this->localLang = typo3Lib::utf8($this->localLang, true, array('default'));
+			$this->localLang = typo3Lib::utf8($this->localLang, TRUE, array('default'));
 		}
 	}
 
@@ -109,7 +109,7 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 		}
 
 		return typo3Lib::fixFilePath(dirname($this->absFile) .
-				'/' . $this->nameLocalizedFile($langKey));
+			'/' . $this->nameLocalizedFile($langKey));
 	}
 
 	/**
@@ -121,10 +121,10 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 	 */
 	public function checkLocalizedFile($filename, $langKey) {
 		if (!preg_match('/^.*\.(' . $langKey . ')\.php$/', $filename)) {
-			return false;
+			return FALSE;
 		}
 
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -192,8 +192,7 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 		$content = "\t'$lang' => array (\n";
 		if (is_array($localLang)) {
 			ksort($localLang);
-			foreach ($localLang as $const => $value)
-			{
+			foreach ($localLang as $const => $value) {
 				$value = preg_replace("/([^\\\])'/", "$1\'", $value);
 				$value = str_replace("\r", '', str_replace("\n", '<br />', $value));
 				$content .= "\t\t'$const' => '$value',\n";
@@ -215,8 +214,7 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 		$content = '$LOCAL_LANG[\'' . $lang . '\'] = array (' . "\n";
 		if (is_array($localLang)) {
 			ksort($localLang);
-			foreach ($localLang as $const => $value)
-			{
+			foreach ($localLang as $const => $value) {
 				$value = preg_replace("/([^\\\])'/", "$1\'", $value);
 				$value = str_replace("\r", '', str_replace("\n", '<br />', $value));
 				$content .= "\t'$const' => '$value',\n";
@@ -235,7 +233,7 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 	protected function prepareFileContents() {
 		// convert all language values from utf-8 to the original charset
 		if ($GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] == 'utf-8') {
-			$this->localLang = typo3Lib::utf8($this->localLang, false, array('default'));
+			$this->localLang = typo3Lib::utf8($this->localLang, FALSE, array('default'));
 		}
 
 		// prepare Content
@@ -254,8 +252,7 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 				} else {
 					$mainFileContent .= "\t'$lang' => '',\n";
 				}
-			}
-			else {
+			} else {
 				$mainFileContent .= $this->getLangContent($this->localLang[$lang], $lang);
 			}
 		}

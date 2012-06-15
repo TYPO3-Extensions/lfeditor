@@ -156,13 +156,10 @@ abstract class tx_lfeditor_mod1_file {
 	public function getLocalLangData($langKey = '') {
 		if (empty($langKey)) {
 			return $this->localLang;
-		}
-		elseif (is_array($this->localLang[$langKey]))
-		{
+		} elseif (is_array($this->localLang[$langKey])) {
 			return $this->localLang[$langKey];
 		}
-		else
-		{
+		else {
 			return array();
 		}
 	}
@@ -176,12 +173,10 @@ abstract class tx_lfeditor_mod1_file {
 	 * @param boolean $forceDel set to true, if you want delete default values too
 	 * @return void
 	 */
-	public function setLocalLangData($constant, $value, $langKey, $forceDel = false) {
+	public function setLocalLangData($constant, $value, $langKey, $forceDel = FALSE) {
 		if (!empty($value) || (($langKey == 'default' && !$forceDel))) {
 			$this->localLang[$langKey][$constant] = $value;
-		}
-		elseif (isset($this->localLang[$langKey][$constant]))
-		{
+		} elseif (isset($this->localLang[$langKey][$constant])) {
 			unset($this->localLang[$langKey][$constant]);
 		}
 	}
@@ -195,9 +190,7 @@ abstract class tx_lfeditor_mod1_file {
 	public function getOriginLangData($langKey = '') {
 		if (empty($langKey)) {
 			return $this->originLang;
-		}
-		else
-		{
+		} else {
 			return $this->originLang[$langKey];
 		}
 	}
@@ -224,9 +217,7 @@ abstract class tx_lfeditor_mod1_file {
 	public function getMetaData($metaIndex = '') {
 		if (!empty($metaIndex)) {
 			return $this->meta[$metaIndex];
-		}
-		else
-		{
+		} else {
 			return $this->meta;
 		}
 	}
@@ -241,9 +232,7 @@ abstract class tx_lfeditor_mod1_file {
 	public function setMetaData($metaIndex, $value) {
 		if (!empty($value)) {
 			$this->meta[$metaIndex] = $value;
-		}
-		elseif (isset($this->meta[$metaIndex]))
-		{
+		} elseif (isset($this->meta[$metaIndex])) {
 			unset($this->meta[$metaIndex]);
 		}
 	}
@@ -259,16 +248,14 @@ abstract class tx_lfeditor_mod1_file {
 		$languageFiles = $this->prepareFileContents();
 
 		// check write permissions of all files
-		foreach ($languageFiles as $file => $content)
-		{
+		foreach ($languageFiles as $file => $content) {
 			if (!sgLib::checkWritePerms($file)) {
 				throw new LFException('failure.file.badPermissions');
 			}
 		}
 
 		// write files
-		foreach ($languageFiles as $file => $content)
-		{
+		foreach ($languageFiles as $file => $content) {
 			if (!t3lib_div::writeFile($file, $content)) {
 				throw new LFException('failure.file.notWritten');
 			}
