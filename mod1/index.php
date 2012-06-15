@@ -109,6 +109,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		$this->doc->form = '<form action="" method="post" name="mainForm">';
 
 		// include WYSIWIG, pmktextarea or normal textareas (with resize bar)
+		$modPath = t3lib_extMgm::extRelPath('lfeditor');
 		if ($this->MOD_SETTINGS['insertMode'] === 'tinyMCE') {
 			require(t3lib_extMgm::extPath('tinymce') . 'class.tinymce.php');
 			$tinyMCE = new tinyMCE();
@@ -124,10 +125,11 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 						lockW: "1"
 					};
 				</script>';
+		} else {
+			$this->doc->getPageRenderer()->addJsFile($modPath . 'mod1/textareaResize.js');
 		}
 
 		// JavaScript
-		$modPath = t3lib_extMgm::extRelPath('lfeditor');
 		$this->doc->JScode .= '
 			<script type="text/javascript">
 				var script_ended = 0;
@@ -143,7 +145,6 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				if (top.theMenu) top.theMenu.recentuid = ' . intval($this->id) . ';
 			</script>';
 
-		$this->doc->getPageRenderer()->addJsFile($modPath . 'mod1/textareaResize.js');
 		$this->doc->getPageRenderer()->addJsFile($modPath . 'mod1/tx_lfeditor_mod1.js');
 		$this->doc->getPageRenderer()->addCssFile($modPath . 'mod1/' . $this->extConfig['pathCSS']);
 
