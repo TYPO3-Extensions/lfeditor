@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2008 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,13 +26,7 @@
  * contains output methods of module 'lfeditor'
  *
  * @author Stefan Galinski <stefan.galinski@gmail.com>
- */
-
-/**
- * contains output methods of module 'lfeditor'
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package Typo3
+ * @package TYPO3
  * @subpackage tx_lfeditor
  */
 class tx_lfeditor_mod1_template {
@@ -237,7 +231,7 @@ class tx_lfeditor_mod1_template {
 			for ($tmp = 0, $lineSpace = 0; $tmp < $curDim; ++$tmp)
 			{
 				if ($numBranches[$tmp] > 1 && !$last[$tmp]) {
-					$cont .= '<img src="../res/images/line.gif" alt="line" ' .
+					$cont .= '<img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/line.gif" alt="line" ' .
 						'style="margin-left: ' . $lineSpace . 'px;" />';
 					$lineSpace = 0;
 				}
@@ -285,7 +279,7 @@ class tx_lfeditor_mod1_template {
 				// generate branch
 				$cont .= '<a href="javascript:openCloseTreeEntry(1,\'' . $myID . '\',' .
 					'\'pic' . $myID . '\',' . $bottom . ')">';
-				$cont .= '<img id="pic' . $myID . '" src="../res/images/tree' .
+				$cont .= '<img id="pic' . $myID . '" src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/tree' .
 					$pic . $picAdd . '.gif" ' . 'alt="tree' . $pic . $picAdd .
 					'" style="margin-left: ' . $lineSpace . 'px;margin-right: 5px;" />' . $name;
 				$cont .= '</a>';
@@ -303,7 +297,7 @@ class tx_lfeditor_mod1_template {
 					$name = '<span class="tx-lfeditor-goodMarkup">' . $name . '</span>';
 				}
 
-				$cont .= '<img src="../res/images/join' . $picAdd . '.gif" alt="join' . $picAdd . '" ' .
+				$cont .= '<img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/join' . $picAdd . '.gif" alt="join' . $picAdd . '" ' .
 					'style="margin-left: ' . $lineSpace . 'px; margin-right: 5px;" /> ';
 				$cont .= '<a href="#" title="' . $branches[$curBranch] . '" ' .
 					'onclick="submitRedirectForm(\'constant\',\'' . $branches[$curBranch] . '\');"> ' .
@@ -669,7 +663,7 @@ class tx_lfeditor_mod1_template {
 		$content .= '<th class="bgColor5">' . $GLOBALS['LANG']->getLL('ext.type') . '</th>';
 		$content .= '<th class="bgColor5">' . $GLOBALS['LANG']->getLL('lang.origin') . '</th>';
 		if ($flagSpecial) {
-			$content .= '<th id="tx-lfeditor-table-markup4"><img src="../res/images/mail.gif" alt="' .
+			$content .= '<th id="tx-lfeditor-table-markup4"><img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/mail.gif" alt="' .
 				$GLOBALS['LANG']->getLL('function.backupMgr.delete') . '" /></th>';
 			$char = substr($GLOBALS['LANG']->getLL('function.general.split.splitNormal'), 0, 1);
 			$content .= '<th id="tx-lfeditor-table-markup1">' . strtoupper($char) . '</th>';
@@ -987,7 +981,7 @@ class tx_lfeditor_mod1_template {
 		$content .= '<th id="tx-lfeditor-table-markup1" class="bgColor5">' .
 			'<a href="#" title="' . $GLOBALS['LANG']->getLL('function.backupMgr.deleteAll') . '" ' .
 			'onclick="submitBackupForm(\'\', \'\', 0, 0, 1, 0);">' .
-			'<img src="../res/images/garbage.gif" alt="' .
+			'<img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/garbage.gif" alt="' .
 			$GLOBALS['LANG']->getLL('function.backupMgr.delete') . '" /> </a> </th>';
 		$recover = strtoupper(substr($GLOBALS['LANG']->getLL('function.backupMgr.recover'), 0, 1));
 		$content .= '<th id="tx-lfeditor-table-markup2">' . $recover . '</th>';
@@ -1036,7 +1030,7 @@ class tx_lfeditor_mod1_template {
 				$name = $GLOBALS['LANG']->getLL('function.const.delete.delete');
 				$content .= '<td class="bgColor4"> <a href="#" title="' . $name . '" ' .
 					'onclick="submitBackupForm(\'' . $filename . '\', \'' . $langFile . '\', ' .
-					'1, 0, 0, 0);"> <img src="../res/images/garbage.gif" title="' . $name . '" ' .
+					'1, 0, 0, 0);"> <img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/garbage.gif" title="' . $name . '" ' .
 					'alt="' . $name . '" /> </a> </td>';
 
 				// restore/diff
@@ -1044,13 +1038,13 @@ class tx_lfeditor_mod1_template {
 					$name = $GLOBALS['LANG']->getLL('function.backupMgr.recover');
 					$content .= '<td class="bgColor4"> <a href="#" title="' . $name . '" ' .
 						'onclick="submitBackupForm(\'' . $filename . '\', \'' . $langFile . '\', ' .
-						'0, 1, 0, 0);"> <img src="../res/images/recover.gif" title="' . $name . '" ' .
+						'0, 1, 0, 0);"> <img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/recover.gif" title="' . $name . '" ' .
 						'alt="' . $name . '" /> </a> </td>';
 
 					$name = $GLOBALS['LANG']->getLL('function.backupMgr.diff.diff');
 					$content .= '<td class="bgColor4"> <a href="#" title="' . $name . '" ' .
 						'onclick="submitBackupForm(\'' . $filename . '\', \'' . $langFile . '\', ' .
-						'0, 0, 0, 1);"> <img src="../res/images/diff.gif" title="' . $name . '" ' .
+						'0, 0, 0, 1);"> <img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/diff.gif" title="' . $name . '" ' .
 						'alt="' . $name . '" /> </a> </td>';
 					$content .= '</tr>';
 				}

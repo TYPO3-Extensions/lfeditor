@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2008 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,22 +22,8 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Module for the 'lfeditor' extension.
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- */
-
-// default initialization
-unset($MCONF);
-require('conf.php');
-require($GLOBALS['BACK_PATH'] . 'init.php');
-require($GLOBALS['BACK_PATH'] . 'template.php');
-require_once(PATH_t3lib . 'class.t3lib_scbase.php');
-// This checks permissions and exits if the users has no permission for const.
 $GLOBALS['BE_USER']->modAccess($MCONF, 1);
 
-// include language file
 if (is_file(t3lib_extMgm::extPath('lfeditor') . 'mod1/locallang.xlf')) {
 	$GLOBALS['LANG']->includeLLFile('EXT:lfeditor/mod1/locallang.xlf');
 } elseif (is_file(t3lib_extMgm::extPath('lfeditor') . 'mod1/locallang.xml')) {
@@ -46,36 +32,21 @@ if (is_file(t3lib_extMgm::extPath('lfeditor') . 'mod1/locallang.xlf')) {
 	$GLOBALS['LANG']->includeLLFile('EXT:lfeditor/mod1/locallang.php');
 }
 
-/**#@+
-/** some needed classes and libraries */
-require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.tx_lfeditor_mod1_functions.php');
-require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.tx_lfeditor_mod1_template.php');
-require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.LFException.php');
-require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.sgLib.php');
-require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.typo3Lib.php');
-require_once(t3lib_extMgm::extPath('lfeditor') . 'res/zip/zip.lib.php');
-
-// search and include filetype classes
-$searchPath = t3lib_extMgm::extPath('lfeditor') . 'mod1/';
-if ($fhd = opendir($searchPath)) {
-	while ($file = readdir($fhd))
-	{
-		if (preg_match('/^class.tx_lfeditor_mod1_file_.+\.php$/', $file)) {
-			require_once($searchPath . $file);
-		}
-	}
-}
-/**#@-*/
+// still needed for TYPO3 4.5
+$lfeditorPath = t3lib_extMgm::extPath('lfeditor');
+require_once($lfeditorPath . 'mod1/class.typo3Lib.php');
+require_once($lfeditorPath . 'mod1/class.sgLib.php');
+require_once($lfeditorPath . 'mod1/class.LFException.php');
 
 // global variable
 /** @var boolean pmktextarea indicator */
-$PMKTEXTAREA = false;
+$PMKTEXTAREA = FALSE;
 
 /**
  * Module 'LFEditor' for the 'lfeditor' extension
  *
  * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package Typo3
+ * @package TYPO3
  * @subpackage tx_lfeditor
  */
 class tx_lfeditor_module1 extends t3lib_SCbase {
@@ -133,21 +104,19 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	public function main() {
 		$this->doc = t3lib_div::makeInstance('template');
 		$this->doc->backPath = $GLOBALS['BACK_PATH'];
-		$this->doc->setModuleTemplate(t3lib_extMgm::extRelPath('lfeditor') . 'templates/main_mod1.html');
+		$this->doc->setModuleTemplate(t3lib_extMgm::extPath('lfeditor') . 'templates/main_mod1.html');
 		$this->doc->docType = 'xhtml_trans';
 		$this->doc->form = '<form action="" method="post" name="mainForm">';
 
 		// include WYSIWIG, pmktextarea or normal textareas (with resize bar)
-		$this->doc->JScode = '<script type="text/javascript" src="textareaResize.js"></script>';
-		if ($this->MOD_SETTINGS['insertMode'] == 'tinyMCE') {
-			require($GLOBALS['BACK_PATH'] . t3lib_extMgm::extRelPath('tinymce') . 'class.tinymce.php');
-			$tinyMCE = new tinyMCE($this->extConfig['pathTinyMCEConfig']);
-			if ($tinyMCE->checkBrowser()) {
-				$this->doc->JScode = $tinyMCE->getJS();
-			}
+		if ($this->MOD_SETTINGS['insertMode'] === 'tinyMCE') {
+			require(t3lib_extMgm::extPath('tinymce') . 'class.tinymce.php');
+			$tinyMCE = new tinyMCE();
+			$tinyMCE->loadConfiguration($this->extConfig['pathTinyMCEConfig']);
+			$this->doc->JScode = $tinyMCE->getJS();
 
-		} elseif ($this->MOD_SETTINGS['insertMode'] == 'pmktextarea') {
-			$GLOBALS['PMKTEXTAREA'] = true;
+		} elseif ($this->MOD_SETTINGS['insertMode'] === 'pmktextarea') {
+			$GLOBALS['PMKTEXTAREA'] = TRUE;
 			$this->doc->JScode = '
 				<script type="text/javascript">
 					var ta_init = {
@@ -158,6 +127,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		}
 
 		// JavaScript
+		$modPath = t3lib_extMgm::extRelPath('lfeditor');
 		$this->doc->JScode .= '
 			<script type="text/javascript">
 				var script_ended = 0;
@@ -165,7 +135,6 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 					document.location = URL;
 				}
 				var treeHide = ' . intval($this->extConfig['treeHide']) . ';
-				' . file_get_contents('tx_lfeditor_mod1.js') . '
 			</script>';
 
 		$this->doc->postCode = '
@@ -173,7 +142,10 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				script_ended = 1;
 				if (top.theMenu) top.theMenu.recentuid = ' . intval($this->id) . ';
 			</script>';
-		$this->doc->JScode .= '<link rel="stylesheet" type="text/css" href="' . $this->extConfig['pathCSS'] . '" />';
+
+		$this->doc->getPageRenderer()->addJsFile($modPath . 'mod1/textareaResize.js');
+		$this->doc->getPageRenderer()->addJsFile($modPath . 'mod1/tx_lfeditor_mod1.js');
+		$this->doc->getPageRenderer()->addCssFile($modPath . 'mod1/' . $this->extConfig['pathCSS']);
 
 		// The page will show only if there is a valid page and if this page may be viewed by the user
 		$this->pageinfo = t3lib_BEfunc::readPageAccess($this->id, $this->perms_clause);
@@ -306,12 +278,13 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * @param bool $flagReadFile
 	 * @return void
 	 */
-	private function initFileObject($langFile, $extPath, $mode, $flagReadFile = true) {
+	private function initFileObject($langFile, $extPath, $mode, $flagReadFile = TRUE) {
 		// xll specific
 		try {
+			$typo3RelFile = '';
 			if ($mode == 'xll') {
 				try {
-					$typo3RelFile = typo3Lib::transTypo3File($extPath . '/' . $langFile, false);
+					$typo3RelFile = typo3Lib::transTypo3File($extPath . '/' . $langFile, FALSE);
 				} catch (Exception $e) {
 					$typo3RelFile = '';
 				}
@@ -326,7 +299,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 					$langFile = t3lib_div::shortMD5(md5(microtime())) . '.' .
 						sgLib::getFileExtension($langFile);
 					$extPath = $this->extConfig['pathXLLFiles'];
-					$flagReadFile = false;
+					$flagReadFile = FALSE;
 				}
 			}
 			$fileType = sgLib::getFileExtension($langFile);
@@ -336,12 +309,11 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// create file object
 		$className = 'tx_lfeditor_mod1_file_' . $mode . strtoupper($fileType);
-		if (!class_exists($className, false)) {
+		if (!class_exists($className)) {
 			throw new LFException('failure.langfile.unknownType');
 		}
 		$this->fileObj = t3lib_div::makeInstance($className);
 
-		// initialize class
 		try {
 			if ($mode == 'xll') {
 				$this->fileObj->init($langFile, $extPath, $typo3RelFile);
@@ -367,7 +339,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * @param boolean set to true if you want use informations from the file object
 	 * @return void
 	 */
-	private function initBackupObject($mode, $infos = null) {
+	private function initBackupObject($mode, $infos = NULL) {
 		// create backup and meta directory
 		$backupPath = $this->extConfig['pathBackup'];
 		$metaFile = $this->extConfig['metaFile'];
@@ -386,7 +358,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			if ($mode == 'xll') {
 				try {
 					$typo3RelFile = $this->fileObj->getVar('typo3RelFile');
-					$typo3AbsFile = typo3Lib::transTypo3File($typo3RelFile, true);
+					$typo3AbsFile = typo3Lib::transTypo3File($typo3RelFile, TRUE);
 				} catch (Exception $e) {
 					throw new LFException('failure.failure', 0, '(' . $e->getMessage() . ')');
 				}
@@ -731,7 +703,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				if (is_dir(PATH_site . typo3lib::pathL10n . $langKey)) {
 					// generate middle of the path between extension start and file
 					try {
-						$midPath = typo3Lib::transTypo3File($origin, false);
+						$midPath = typo3Lib::transTypo3File($origin, FALSE);
 						$midPath = substr($midPath, 4);
 						$midPath = substr($midPath, 0, strrpos($midPath, '/') + 1);
 
@@ -791,7 +763,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		// init new language file object (dont try to read file)
 		try {
 			$this->initFileObject($newFile, $this->convObj->getVar('absPath'),
-				$this->MOD_SETTINGS['wsList'], false);
+				$this->MOD_SETTINGS['wsList'], FALSE);
 		} catch (LFException $e) {
 			throw $e;
 		}
@@ -945,7 +917,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		// write modified language array
 		try {
 			$this->extConfig['execBackup'] = 0;
-			$this->execWrite($localLang, $meta, true);
+			$this->execWrite($localLang, $meta, TRUE);
 		} catch (LFException $e) {
 			throw $e;
 		}
@@ -970,7 +942,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	private function execBackup() {
 		// create backup object
 		try {
-			$this->initBackupObject($this->MOD_SETTINGS['wsList'], true);
+			$this->initBackupObject($this->MOD_SETTINGS['wsList'], TRUE);
 		} catch (LFException $e) {
 			throw $e;
 		}
@@ -984,7 +956,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// exec automatic deletion of backup files, if anzBackup greater zero
 		if ($this->extConfig['anzBackup'] <= 0) {
-			return true;
+			return TRUE;
 		}
 
 		// get difference information
@@ -993,7 +965,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		$dif = $rows - $this->extConfig['anzBackup'];
 
 		if ($dif <= 0) {
-			return true;
+			return TRUE;
 		}
 
 		// sort metaArray
@@ -1032,7 +1004,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * @param boolean set to true if you want delete default constants
 	 * @return void
 	 */
-	private function execWrite($modArray, $modMetaArray = array(), $forceDel = false) {
+	private function execWrite($modArray, $modMetaArray = array(), $forceDel = FALSE) {
 		// checks
 		if (!is_array($modArray)) {
 			throw new LFException('failure.file.notWritten');
@@ -1133,7 +1105,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		if (is_array($mailIt) && !$sendMail) {
 			// add mailIt pre selection
 			foreach ($infoArray as $langKey => $info) {
-				$infoArray[$langKey]['email'] = (isset($mailIt[$langKey]) ? true : false);
+				$infoArray[$langKey]['email'] = (isset($mailIt[$langKey]) ? TRUE : FALSE);
 			}
 
 			$email = tx_lfeditor_mod1_template::outputGeneralEmail($infoArray['default']['meta'], $numTextAreaRows);
@@ -1141,7 +1113,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		$fileType = $this->fileObj->getVar('fileType');
 		$content = $email . tx_lfeditor_mod1_template::outputGeneral($infoArray, $patternList,
-			$numTextAreaRows, ($this->fileObj->getVar('workspace') !== 'base' || $fileType === 'xlf' ? false : true));
+			$numTextAreaRows, ($this->fileObj->getVar('workspace') !== 'base' || $fileType === 'xlf' ? FALSE : TRUE));
 
 		return $content;
 	}
@@ -1175,14 +1147,14 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		// zip and mail selected languages
 		if (is_array($mailIt)) {
 			if (!$sendMail) {
-				return false;
+				return FALSE;
 			}
 
 			$zipFile = new zipfile();
 			foreach ($mailIt as $langKey => $in) {
 				$origin = $this->fileObj->getOriginLangData($langKey);
 				try {
-					$saveOrigin = typo3Lib::transTypo3File($origin, false);
+					$saveOrigin = typo3Lib::transTypo3File($origin, FALSE);
 					$saveOrigin = str_replace('EXT:', '', $saveOrigin);
 				} catch (Exception $e) {
 					$saveOrigin = substr($origin, strlen(PATH_site));
@@ -1253,7 +1225,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			throw $e;
 		}
 
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -1373,9 +1345,9 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		$content = tx_lfeditor_mod1_template::outputEditLangfile($constValues, $numSessionConsts,
 			$numLastPageConsts, $numConsts, $langList, $patternList,
 			// parallel edit mode
-			(($patternList != '###default###' && $patternList != $langList) ? true : false),
-			($numSessionConsts > $maxSiteConsts ? true : false), // display back button?
-			($numSessionConsts < $numConsts ? true : false), // display next button?
+			(($patternList != '###default###' && $patternList != $langList) ? TRUE : FALSE),
+			($numSessionConsts > $maxSiteConsts ? TRUE : FALSE), // display back button?
+			($numSessionConsts < $numConsts ? TRUE : FALSE), // display next button?
 			$numTextAreaRows);
 
 		return $content;
@@ -1569,7 +1541,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$newLang[$lang][$constant] = '';
 			}
 
-			$this->execWrite($newLang, array(), true);
+			$this->execWrite($newLang, array(), TRUE);
 		} catch (LFException $e) {
 			throw $e;
 		}
@@ -1621,7 +1593,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$newLang[$lang][$oldConst] = '';
 			}
 
-			$this->execWrite($newLang, array(), true);
+			$this->execWrite($newLang, array(), TRUE);
 		} catch (LFException $e) {
 			throw $e;
 		}
@@ -2227,11 +2199,11 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/index.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/index.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/index.php']) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/index.php']);
 }
 
-// make and call instance
+/** @var $SOBE tx_lfeditor_module1 */
 $SOBE = t3lib_div::makeInstance('tx_lfeditor_module1');
 $SOBE->main();
 $SOBE->printContent();
