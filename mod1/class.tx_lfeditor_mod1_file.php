@@ -46,7 +46,7 @@ abstract class tx_lfeditor_mod1_file {
 	/**#@-*/
 
 	/**#@+
-	/** @var string informations about some paths, current file type and workspace */
+	/** @var string information about some paths, current file type and workspace */
 	protected $absPath;
 	protected $relFile;
 	protected $absFile;
@@ -54,7 +54,7 @@ abstract class tx_lfeditor_mod1_file {
 	protected $workspace;
 	/**#@-*/
 
-	/** @var array header informations */
+	/** @var array header information */
 	protected $meta;
 
 	/**#@+
@@ -77,7 +77,7 @@ abstract class tx_lfeditor_mod1_file {
 	}
 
 	/**
-	 * sets informations
+	 * sets information
 	 *
 	 * structure:
 	 * $infos["absPath"] = absolute path to an extension or file
@@ -92,7 +92,7 @@ abstract class tx_lfeditor_mod1_file {
 	 * @return void
 	 */
 	public function setVar($informations) {
-		// path and file informations
+		// path and file information
 		if (!empty($informations['absPath'])) {
 			$this->absPath = typo3Lib::fixFilePath($informations['absPath'] . '/');
 		}
@@ -101,7 +101,7 @@ abstract class tx_lfeditor_mod1_file {
 		}
 		$this->absFile = $this->absPath . $this->relFile;
 
-		// filetype and workspace
+		// file type and workspace
 		if (!empty($informations['workspace'])) {
 			$this->workspace = $informations['workspace'];
 		}
@@ -264,8 +264,8 @@ abstract class tx_lfeditor_mod1_file {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file.php']) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file.php']);
 }
 
 ?>

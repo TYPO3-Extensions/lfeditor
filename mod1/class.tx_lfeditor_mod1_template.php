@@ -39,7 +39,7 @@ class tx_lfeditor_mod1_template {
 	 * $buttons[<someName>]['onClick'] = js ability
 	 * $buttons[<someName>]['type'] = submit or reset
 	 *
-	 * @param array button informations (see above)
+	 * @param array $buttons button informations (see above)
 	 * @return string buttons (HTML code)
 	 */
 	public static function outputAddButtons($buttons) {
@@ -62,7 +62,7 @@ class tx_lfeditor_mod1_template {
 	/**
 	 * generates output for deletion of constants
 	 *
-	 * @param string constant name
+	 * @param string $constant constant name
 	 * @return string output (HTML code)
 	 */
 	public static function outputDeleteConst($constant) {
@@ -95,7 +95,7 @@ class tx_lfeditor_mod1_template {
 	/**
 	 * generates output for renaming of constants
 	 *
-	 * @param string constant name
+	 * @param string $constant constant name
 	 * @return string output (HTML code)
 	 */
 	public static function outputRenameConst($constant) {
@@ -124,10 +124,10 @@ class tx_lfeditor_mod1_template {
 	/**
 	 * generates output for searching of constants
 	 *
-	 * @param string value of text field
-	 * @param array result array
-	 * @param string pre message string
-	 * @param boolean set to true if you want case-sensitive enabled by default
+	 * @param string $searchStr value of text field
+	 * @param array $resultArray result array
+	 * @param string $preMsg pre message string
+	 * @param boolean $checked set to true if you want case-sensitive enabled by default
 	 * @return string output (HTML code)
 	 */
 	public static function outputSearchConst($searchStr, $resultArray, $preMsg, $checked) {
@@ -177,7 +177,7 @@ class tx_lfeditor_mod1_template {
 	/**
 	 * generates form with token input field
 	 *
-	 * @param string current token
+	 * @param string $curToken current token
 	 * @return string input field (HTML code)
 	 */
 	public static function fieldSetToken($curToken) {
@@ -192,18 +192,20 @@ class tx_lfeditor_mod1_template {
 	/**
 	 * walks recursive through a tree array and generates the html code
 	 *
-	 * @param array tree
-	 * @param string content buffer (reference)
-	 * @param array id buffer to get all ids of each hidden element (reference)
-	 * @param boolean should the tree entries hidden or visible at startup
-	 * @param array previous branches of a dimension
-	 * @param array last element of each dimension
-	 * @param integer current rec level (dont touch)
-	 * @param integer maximum rec level (default 9999)
+	 * @param array $tree
+	 * @param string $content content buffer (reference)
+	 * @param array $myIDs id buffer to get all ids of each hidden element (reference)
+	 * @param boolean $treeHide should the tree entries hidden or visible at startup
+	 * @param array|string $parentBranch previous branches of a dimension
+	 * @param array $numBranches last element of each dimension
+	 * @param array|int $last current rec level (dont touch)
+	 * @param integer $curDim maximum rec level (default 9999)
+	 * @param int $maxDim
 	 * @return boolean always true
 	 */
 	public static function genTree($tree, &$content, &$myIDs, $treeHide, $parentBranch = '',
-								   $numBranches = array(), $last = array(), $curDim = 0, $maxDim = 9999) {
+		$numBranches = array(), $last = array(), $curDim = 0, $maxDim = 9999
+	) {
 		// prevent endless loops
 		if ($curDim >= $maxDim) {
 			return TRUE;
@@ -307,8 +309,8 @@ class tx_lfeditor_mod1_template {
 	/**
 	 * generates output for tree view of constants
 	 *
-	 * @param array tree (see above)
-	 * @param boolean should the tree entries hidden or visible at startup (default is true)
+	 * @param array $tree tree (see above)
+	 * @param boolean $treeHide should the tree entries hidden or visible at startup (default is true)
 	 * @return string output (HTML code)
 	 */
 	public static function outputTreeView($tree, $treeHide = TRUE) {
@@ -353,10 +355,10 @@ class tx_lfeditor_mod1_template {
 	/**
 	 * generates output for editing of constants
 	 *
-	 * @param array language shortcuts
-	 * @param string constant name
-	 * @param array language content array
-	 * @param integer amount of rows in textarea
+	 * @param array $langArray language shortcuts
+	 * @param string $constant constant name
+	 * @param array $localLang language content array
+	 * @param integer $textAreaRows amount of rows in textarea
 	 * @return string output (HTML code)
 	 */
 	public static function outputEditConst($langArray, $constant, $localLang, $textAreaRows) {
@@ -400,10 +402,10 @@ class tx_lfeditor_mod1_template {
 	/**
 	 * generates output for adding of constants
 	 *
-	 * @param array language shortcuts
-	 * @param string constant name
-	 * @param array default values
-	 * @param integer amount of rows in textarea
+	 * @param array $langArray language shortcuts
+	 * @param string $constant constant name
+	 * @param array $defValues default values
+	 * @param integer $textAreaRows amount of rows in textarea
 	 * @return string output (HTML code)
 	 */
 	public static function outputAddConst($langArray, $constant, $defValues, $textAreaRows) {
@@ -455,16 +457,16 @@ class tx_lfeditor_mod1_template {
 	 * $constValues[<constant>]['pattern'] = <value>
 	 * $constValues[<constant>]['default'] = <value>
 	 *
-	 * @param array needed constant values (see above)
-	 * @param integer current number of constants in this session
-	 * @param integer number of constants for this page
-	 * @param integer number of total amount of constants
-	 * @param string edit language name
-	 * @param string pattern language name
-	 * @param boolean set to true if you want the parallel editing mode
-	 * @param boolean set to true if you want a back button
-	 * @param boolean set to true if you want a next button
-	 * @param integer amount of rows in textarea
+	 * @param array $constValues needed constant values (see above)
+	 * @param integer $curConsts current number of constants in this session
+	 * @param integer $siteConsts number of constants for this page
+	 * @param integer $totalConsts number of total amount of constants
+	 * @param string $langName edit language name
+	 * @param string $patternName pattern language name
+	 * @param boolean $parallelEdit set to true if you want the parallel editing mode
+	 * @param boolean $buttonBack set to true if you want a back button
+	 * @param boolean $buttonNext set to true if you want a next button
+	 * @param integer $textAreaRows amount of rows in textarea
 	 * @return string output (HTML code)
 	 */
 	public static function outputEditLangfile($constValues, $curConsts, $siteConsts, $totalConsts,
@@ -575,8 +577,8 @@ class tx_lfeditor_mod1_template {
 	/**
 	 * generates output for email form
 	 *
-	 * @param array meta informations
-	 * @param integer amount of rows in textarea
+	 * @param array $metaArray meta informations
+	 * @param integer $textAreaRows amount of rows in textarea
 	 * @return string output (HTML code)
 	 */
 	public static function outputGeneralEmail($metaArray, $textAreaRows) {
@@ -629,14 +631,13 @@ class tx_lfeditor_mod1_template {
 	 * $infos[$langKey]['numUnknown'] == (integer) unknown constants
 	 * $infos[$langKey]['email'] == (boolean) mailIt pre selection
 	 *
-	 * @param array see above
-	 * @param string reference language
-	 * @param integer amount of rows in textarea
-	 * @param boolean set to true if you want some special options (splitting dialog, meta edit)
-	 * @param string $fileType
+	 * @param array $infos see above
+	 * @param string $refLang reference language
+	 * @param integer $textAreaRows amount of rows in textarea
+	 * @param boolean $flagSpecial set to true if you want some special options (splitting dialog, meta edit)
 	 * @return string output (HTML code)
 	 */
-	public static function outputGeneral($infos, $refLang, $textAreaRows, $flagSpecial = FALSE, $fileType = '') {
+	public static function outputGeneral($infos, $refLang, $textAreaRows, $flagSpecial = FALSE) {
 		$summary = $GLOBALS['LANG']->getLL('table.fileInfo');
 		$content = '<table id="tx-lfeditor-table" summary="' . $summary . '">';
 
@@ -834,18 +835,19 @@ class tx_lfeditor_mod1_template {
 	/**
 	 * generates output of a language diff
 	 *
-	 * @param array language content (difference between backup and origin)
-	 * @param array meta content (difference between backup and origin)
-	 * @param array original language content
-	 * @param array backup language content
-	 * @param array original origins of each language
-	 * @param array backup origins of each language
-	 * @param array original meta content
-	 * @param array backup meta content
+	 * @param array $diff language content (difference between backup and origin)
+	 * @param array $metaDiff meta content (difference between backup and origin)
+	 * @param array $origLang original language content
+	 * @param array $backupLang backup language content
+	 * @param array $origOriginLang original origins of each language
+	 * @param array $backupOriginLang backup origins of each language
+	 * @param array $origMeta original meta content
+	 * @param array $backupMeta backup meta content
 	 * @return string output (html code)
 	 */
 	public static function outputManageBackupsDiff($diff, $metaDiff, $origLang,
-												   $backupLang, $origOriginLang, $backupOriginLang, $origMeta, $backupMeta) {
+		$backupLang, $origOriginLang, $backupOriginLang, $origMeta, $backupMeta
+	) {
 		// begin fieldset
 		$content = '<fieldset class="tx-lfeditor-fieldset bgColor5">';
 		$content .= '<legend class="bgColor3">' .
@@ -926,8 +928,8 @@ class tx_lfeditor_mod1_template {
 	/**
 	 * generates output for management of backups
 	 *
-	 * @param array meta information data (only the extensions part)
-	 * @param string extension path (absolute)
+	 * @param array $metaArray meta information data (only the extensions part)
+	 * @param string $extPath extension path (absolute)
 	 * @return string output (HTML code)
 	 */
 	public static function outputManageBackups($metaArray, $extPath) {
@@ -965,7 +967,6 @@ class tx_lfeditor_mod1_template {
 
 		// table body
 		$content .= '<tbody>';
-		$i = 0;
 		$keys = array_keys($metaArray);
 		foreach ($keys as $langFile) {
 			foreach ($metaArray[$langFile] as $filename => $informations) {
@@ -1029,8 +1030,8 @@ class tx_lfeditor_mod1_template {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_template.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_template.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_template.php']) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_template.php']);
 }
 
 ?>

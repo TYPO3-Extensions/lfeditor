@@ -42,9 +42,9 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 	/**
 	 * extended init
 	 *
-	 * @param string name of the file (can be a path, if you need this (no check))
-	 * @param string path to the file
-	 * @param string relative typo3 path to an language file (i.e. EXT:lfeditor/mod1/locallang.xml)
+	 * @param string $file name of the file (can be a path, if you need this (no check))
+	 * @param string $path path to the file
+	 * @param string $typo3RelFile relative typo3 path to an language file (i.e. EXT:lfeditor/mod1/locallang.xml)
 	 * @return void
 	 */
 	public function init($file, $path, $typo3RelFile) {
@@ -123,8 +123,8 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 	/**
 	 * prepares the content of a language file
 	 *
-	 * @param array content of the given language
-	 * @param string language shortcut
+	 * @param array $localLang content of the given language
+	 * @param string $lang language shortcut
 	 * @return string language part of the main file
 	 */
 	private function getLangContent($localLang, $lang) {
@@ -169,8 +169,8 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllPHP.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllPHP.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllPHP.php']) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllPHP.php']);
 }
 
 ?>

@@ -57,9 +57,9 @@ class tx_lfeditor_mod1_file_backup extends tx_lfeditor_mod1_file {
 	 * extended init
 	 *
 	 * @throws LFException raised if the meta file cant be correctly readed
-	 * @param string name of the file (can be a path, if you need this (no check))
-	 * @param string path to the file
-	 * @param string absolute path to the meta file (includes filename)
+	 * @param string $file name of the file (can be a path, if you need this (no check))
+	 * @param string $path path to the file
+	 * @param string $metaFile absolute path to the meta file (includes filename)
 	 * @return void
 	 */
 	public function init($file, $path, $metaFile) {
@@ -112,8 +112,8 @@ class tx_lfeditor_mod1_file_backup extends tx_lfeditor_mod1_file {
 	/**
 	 * returns requested information
 	 *
-	 * @param string
-	 * @return void
+	 * @param string $info
+	 * @return mixed
 	 */
 	public function getVar($info) {
 		if ($info == 'metaFile') {
@@ -141,11 +141,11 @@ class tx_lfeditor_mod1_file_backup extends tx_lfeditor_mod1_file {
 	 * - 2 => only meta informations of given extension key and workspace
 	 * - 3 => only meta informations of given extension key, workspace and language file
 	 *
-	 * @param integer mode (see above)
-	 * @param string extension Name (default = $this->extName)
-	 * @param string workspace (default = $this->workspace)
-	 * @param string language file (default = $this->langFile)
-	 * @return array meta data
+	 * @param integer $mode
+	 * @param string $extName extension Name (default = $this->extName)
+	 * @param string $workspace (default = $this->workspace)
+	 * @param string $langFile language file (default = $this->langFile)
+	 * @return array
 	 */
 	public function getMetaInfos($mode = 0, $extName = '', $workspace = '', $langFile = '') {
 		$extName = empty($extName) ? $this->extName : $extName;
@@ -178,11 +178,11 @@ class tx_lfeditor_mod1_file_backup extends tx_lfeditor_mod1_file {
 	 * - 2 => only meta informations of given extension key and workspace
 	 * - 3 => only meta informations of given extension key, workspace and language file
 	 *
-	 * @param array meta informations
-	 * @param integer mode (see above)
-	 * @param string extension Name (default = $this->extName)
-	 * @param string workspace (default = $this->workspace)
-	 * @param string language file (default = $this->langFile)
+	 * @param array $metaArray meta informations
+	 * @param integer $mode
+	 * @param string $extName extension Name (default = $this->extName)
+	 * @param string $workspace (default = $this->workspace)
+	 * @param string $langFile language file (default = $this->langFile)
 	 * @return void
 	 */
 	private function setMetaInfos($metaArray, $mode = 0, $extName = '', $workspace = '', $langFile = '') {
@@ -287,14 +287,16 @@ class tx_lfeditor_mod1_file_backup extends tx_lfeditor_mod1_file {
 	/**
 	 * removes the meta information entry and the backup file
 	 *
-	 * @throws LFException raised if the backup or meta file cant be written
-	 * @param string file name
-	 * @param string extension Name (default = $this->extName)
-	 * @param string language file (default = $this->langFile)
+	 *
+	 * @param string $filename
+	 * @param string $extName (default = $this->extName)
+	 * @param string $langFile (default = $this->langFile)
+	 * @throws Exception|LFException
+	 * @throws LFException
 	 * @return void
 	 */
 	public function deleteSpecFile($filename, $extName = '', $langFile = '') {
-		// get needed meta informations
+		// get needed meta information
 		$extName = empty($extName) ? $this->extName : $extName;
 		$langFile = empty($langFile) ? $this->langFile : $langFile;
 		$metaArray = $this->getMetaInfos(3, $extName, '', $langFile);
@@ -477,8 +479,8 @@ class tx_lfeditor_mod1_file_backup extends tx_lfeditor_mod1_file {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_backup.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_backup.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_backup.php']) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_backup.php']);
 }
 
 ?>

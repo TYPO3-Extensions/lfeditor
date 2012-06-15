@@ -28,7 +28,7 @@
  * @author Stefan Galinski <stefan.galinski@gmail.com>
  */
 
-/** general filefunctions */
+/** general file functions */
 require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.tx_lfeditor_mod1_file_xll.php');
 
 /**
@@ -42,9 +42,9 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 	/**
 	 * extended init
 	 *
-	 * @param string name of the file (can be a path, if you need this (no check))
-	 * @param string path to the file
-	 * @param string relative typo3 path to an language file (i.e. EXT:lfeditor/mod1/locallang.xml)
+	 * @param string $file name of the file (can be a path, if you need this (no check))
+	 * @param string $path path to the file
+	 * @param string $typo3RelFile relative typo3 path to an language file (i.e. EXT:lfeditor/mod1/locallang.xml)
 	 * @return void
 	 */
 	public function init($file, $path, $typo3RelFile) {
@@ -55,7 +55,7 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 	/**
 	 * reads a language file
 	 *
-	 * @throws LFException raised if no language content couldnt fetched
+	 * @throws LFException raised if no language content could not fetched
 	 * @return array language content
 	 */
 	protected function readLLFile() {
@@ -76,6 +76,7 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 	/**
 	 * calls the parent function and convert all values from utf-8 to the original charset
 	 *
+	 * @throws LFException
 	 * @return void
 	 */
 	public function readFile() {
@@ -103,8 +104,8 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 	/**
 	 * converts the array to a xml string
 	 *
-	 * @param array php structure with data
-	 * @param string name of first tag
+	 * @param array $phpArray php structure with data
+	 * @param string $firstTag name of first tag
 	 * @return string xml content
 	 */
 	private function array2xml($phpArray, $firstTag) {
@@ -122,8 +123,8 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 	/**
 	 * prepares the content of a language file
 	 *
-	 * @param array content of the given language
-	 * @param string language shortcut
+	 * @param array $localLang content of the given language
+	 * @param string $lang language shortcut
 	 * @return array new xml array
 	 */
 	private function getLangContent($localLang, $lang) {
@@ -184,9 +185,9 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 	}
 }
 
-// Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllXML.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllXML.php']);
+// Default-Code for using XCLASS
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllXML.php']) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllXML.php']);
 }
 
 ?>

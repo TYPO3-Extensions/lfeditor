@@ -35,9 +35,9 @@ class sgLib {
 	/**
 	 * forces download of a file
 	 *
-	 * @param string download file or data string
-	 * @param string download filename
-	 * @param string type of file
+	 * @param string $file download file or data string
+	 * @param string $filename download filename
+	 * @param string $type type of file
 	 * @return void
 	 */
 	public static function download($file, $filename, $type = 'x-type/octtype') {
@@ -59,13 +59,13 @@ class sgLib {
 	 * sends email with php multibyte functions
 	 *
 	 * @throws Exception raised if something failed
-	 * @param string subject
-	 * @param string text
-	 * @param string from header
-	 * @param string email address
-	 * @param string file attachement name or data string (optional)
-	 * @param string send filename (optional)
-	 * @param string language (default == unicode)
+	 * @param string $subject subject
+	 * @param string $text text
+	 * @param string $fromAddress from header
+	 * @param string $toAddress email address
+	 * @param string $attachement file attachement name or data string (optional)
+	 * @param string $sendFileName send filename (optional)
+	 * @param string $mbLanguage language (default == unicode)
 	 * @return void
 	 */
 	public static function sendMail($subject, $text, $fromAddress, $toAddress,
@@ -131,9 +131,9 @@ class sgLib {
 	/**
 	 * trims some string from an given path
 	 *
-	 * @param string string part to delete
-	 * @param string some path
-	 * @param string some prefix for the new path
+	 * @param string $replace string part to delete
+	 * @param string $path some path
+	 * @param string $prefix some prefix for the new path
 	 * @return string new path
 	 */
 	public static function trimPath($replace, $path, $prefix = '') {
@@ -147,7 +147,7 @@ class sgLib {
 	/**
 	 * reads the extension of a given filename
 	 *
-	 * @param string filename
+	 * @param string $file filename
 	 * @return string extension of a given filename
 	 */
 	public static function getFileExtension($file) {
@@ -157,8 +157,8 @@ class sgLib {
 	/**
 	 * replaces the file extension in a given filename
 	 *
-	 * @param string new file extension
-	 * @param string filename
+	 * @param string $type new file extension
+	 * @param string $file filename
 	 * @return string new filename
 	 */
 	public static function setFileExtension($type, $file) {
@@ -168,7 +168,7 @@ class sgLib {
 	/**
 	 * checks write permission of a given file (checks directory permission if file doesnt exists)
 	 *
-	 * @param string file path
+	 * @param string $file file path
 	 * @return boolean true or false
 	 */
 	public static function checkWritePerms($file) {
@@ -187,7 +187,7 @@ class sgLib {
 	 * deletes given files
 	 *
 	 * @throws Exception raised, if some files cant be deleted (throwed after deletion of all)
-	 * @param array files
+	 * @param array $files files
 	 * @return void
 	 */
 	public static function deleteFiles($files) {
@@ -210,8 +210,8 @@ class sgLib {
 	 * creates a full path (all nonexistent directories will be created)
 	 *
 	 * @throws Exception raised if some path token cant be created
-	 * @param string full path
-	 * @param string protected path (i.e. /var/www -- needed for basedir restrictions)
+	 * @param string $path full path
+	 * @param string $protectArea protected path (i.e. /var/www -- needed for basedir restrictions)
 	 * @return void
 	 */
 	public static function createDir($path, $protectArea) {
@@ -235,7 +235,7 @@ class sgLib {
 	 * deletes a directory (all subdirectories and files will be deleted)
 	 *
 	 * @throws Exception raised if a file or directory cant be deleted
-	 * @param string full path
+	 * @param string $path full path
 	 * @return void
 	 */
 	public static function deleteDir($path) {
@@ -270,16 +270,16 @@ class sgLib {
 	 * searches defined files in a given path recursivly
 	 *
 	 * @throws Exception raised if the search directory cant be read
-	 * @param string search in this path
-	 * @param string optional: regular expression for files
-	 * @param integer optional: current path depth level (max 9)
+	 * @param string $path search in this path
+	 * @param string $searchRegex optional: regular expression for files
+	 * @param integer $pathDepth optional: current path depth level (max 9)
 	 * @return array
 	 */
 	public static function searchFiles($path, $searchRegex = '', $pathDepth = 0) {
 		// endless recursion protection
 		$fileArray = array();
 		if ($pathDepth >= 9) {
-			return;
+			return $fileArray;
 		}
 
 		// open directory
@@ -327,15 +327,15 @@ class sgLib {
 	 * @return array
 	 */
 	public static function getSystemLanguages() {
-		/** @var $instance t3lib_l10n_Locales */
-		if (t3lib_div::int_from_ver(TYPO3_version) >= 4006000) {
-			$instance = t3lib_div::makeInstance('t3lib_l10n_Locales');
-			$languages = $instance->getLocales();
+		if (class_exists('t3lib_l10n_Locales')) {
+			/** @var $locales t3lib_l10n_Locales */
+			$locales = t3lib_div::makeInstance('t3lib_l10n_Locales');
+			$availableLanguages = $locales->getLocales();
 		} else {
-			$languages = explode('|', TYPO3_languages);
+			$availableLanguages = explode('|', TYPO3_languages);
 		}
 
-		return $languages;
+		return $availableLanguages;
 	}
 }
 

@@ -42,8 +42,8 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 	/**
 	 * extended init
 	 *
-	 * @param string name of the file (can be a path, if you need this (no check))
-	 * @param string path to the file
+	 * @param string $file name of the file (can be a path, if you need this (no check))
+	 * @param string $path path to the file
 	 * @return void
 	 */
 	public function init($file, $path) {
@@ -115,8 +115,8 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 	/**
 	 * checks a filename, if its a localized file
 	 *
-	 * @param string filename
-	 * @param string language shortcut
+	 * @param string $filename filename
+	 * @param string $langKey language shortcut
 	 * @return boolean true(localized) or false
 	 */
 	public function checkLocalizedFile($filename, $langKey) {
@@ -184,8 +184,8 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 	/**
 	 * prepares the content of a language file
 	 *
-	 * @param array content of the given language
-	 * @param string language shortcut
+	 * @param array $localLang content of the given language
+	 * @param string $lang language shortcut
 	 * @return string language part of the main file
 	 */
 	private function getLangContent($localLang, $lang) {
@@ -206,8 +206,8 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 	/**
 	 * prepares the content of a localized language file
 	 *
-	 * @param array content of the given language
-	 * @param string language shortcut
+	 * @param array $localLang content of the given language
+	 * @param string $lang language shortcut
 	 * @return string language content
 	 */
 	private function getLangContentLoc($localLang, $lang) {
@@ -277,8 +277,8 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_basePHP.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_basePHP.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_basePHP.php']) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_basePHP.php']);
 }
 
 ?>

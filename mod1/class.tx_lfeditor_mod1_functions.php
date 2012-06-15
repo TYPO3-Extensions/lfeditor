@@ -45,7 +45,7 @@ class tx_lfeditor_mod1_functions {
 	 * Structure of file array:
 	 * $fileArray[textHeader] = further arrays with extension paths
 	 *
-	 * @param array see above
+	 * @param array $fileArray see above
 	 * @return array prepared array
 	 */
 	public static function prepareExtList($fileArray) {
@@ -90,9 +90,9 @@ class tx_lfeditor_mod1_functions {
 	 * 2 - only unloaded
 	 *
 	 * @throws Exception raised, if the given path cant be opened for reading
-	 * @param string path
-	 * @param integer optional: extension state to ignore (see above)
-	 * @param string optional: directories to ignore (regular expression; pcre with slashes)
+	 * @param string $path path
+	 * @param integer $state optional: extension state to ignore (see above)
+	 * @param string $extIgnoreRegExp optional: directories to ignore (regular expression; pcre with slashes)
 	 * @return array result of the search
 	 */
 	public static function searchExtensions($path, $state = 0, $extIgnoreRegExp = '') {
@@ -141,7 +141,7 @@ class tx_lfeditor_mod1_functions {
 	/**
 	 * checks and returns given languages or TYPO3 language list if the given content was empty
 	 *
-	 * @param array optional: some language shortcuts
+	 * @param array $languages optional: some language shortcuts
 	 * @return array language list
 	 */
 	public static function buildLangArray($languages = NULL) {
@@ -163,9 +163,9 @@ class tx_lfeditor_mod1_functions {
 	 * - only changes at the original (1)
 	 * - only changes at the backup (2)
 	 *
-	 * @param integer see above for available modes
-	 * @param array original language data
-	 * @param array backup language data
+	 * @param integer $diffType see above for available modes
+	 * @param array $origLang original language data
+	 * @param array $backupLocalLang backup language data
 	 * @return mixed generated diff
 	 */
 	public static function getBackupDiff($diffType, $origLang, $backupLocalLang) {
@@ -206,9 +206,9 @@ class tx_lfeditor_mod1_functions {
 	 * - only changes at the original (1)
 	 * - only changes at the backup (2)
 	 *
-	 * @param integer see above for available modes
-	 * @param array original meta data
-	 * @param array backup meta data
+	 * @param integer $diffType see above for available modes
+	 * @param array $origMeta original meta data
+	 * @param array $backupMeta backup meta data
 	 * @return mixed generated diff
 	 */
 	public static function getMetaDiff($diffType, $origMeta, $backupMeta) {
@@ -235,9 +235,9 @@ class tx_lfeditor_mod1_functions {
 	/**
 	 * generates a general information array
 	 *
-	 * @param string reference language
-	 * @param array language key array
-	 * @param object file object
+	 * @param string $refLang reference language
+	 * @param array $languages language key array
+	 * @param tx_lfeditor_mod1_file_basePHP $fileObj file object
 	 * @return array general information array
 	 * @see outputGeneral()
 	 */
@@ -316,9 +316,9 @@ class tx_lfeditor_mod1_functions {
 	 * tree[dimension][branch]['parent'] = parentOfBranch (absConstName)
 	 * tree[dimension][branch]['childs'] = amount of childrens
 	 *
-	 * @param array language data (only one language)
-	 * @param array reference data (only reference language)
-	 * @param string explode token
+	 * @param array $langData language data (only one language)
+	 * @param array $refLang reference data (only reference language)
+	 * @param string $expToken explode token
 	 * @return array tree information array
 	 */
 	public static function genTreeInfoArray($langData, $refLang, $expToken) {
@@ -380,8 +380,8 @@ class tx_lfeditor_mod1_functions {
 	/**
 	 * get best explode token of a given language data
 	 *
-	 * @param string current token
-	 * @param array some test language data
+	 * @param string $curToken current token
+	 * @param array $langData some test language data
 	 * @return string new token
 	 */
 	public static function getExplodeToken($curToken, $langData) {
@@ -423,8 +423,8 @@ class tx_lfeditor_mod1_functions {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_functions.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_functions.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_functions.php']) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_functions.php']);
 }
 
 ?>

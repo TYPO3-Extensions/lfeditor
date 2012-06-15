@@ -67,10 +67,9 @@ class LFException extends Exception {
 	/**
 	 * Constructor
 	 *
-	 * @param string error message (this message would be translated by TYPO3)
-	 * @param integer type of wrap (0 = error (default), 1 = notice)
-	 * @param string static message (appended at the localized string)
-	 * @return void
+	 * @param string $msg error message (this message would be translated by TYPO3)
+	 * @param integer $wrapType type of wrap (0 = error (default), 1 = notice)
+	 * @param string $staticMsg static message (appended at the localized string)
 	 */
 	public function __construct($msg, $wrapType = 0, $staticMsg = '') {
 		if (!empty($msg)) {
@@ -87,8 +86,8 @@ class LFException extends Exception {
 	/**
 	 * set the error wrap
 	 *
-	 * @param string error wrap
-	 * @param string notice wrap
+	 * @param string $errorWrap error wrap
+	 * @param string $noticeWrap notice wrap
 	 * @return void
 	 */
 	public static function setWrap($errorWrap, $noticeWrap) {
@@ -99,8 +98,8 @@ class LFException extends Exception {
 	/**
 	 * preparation of the error message
 	 *
-	 * @param string error message (this message would be translated)
-	 * @param integer type of wrap (0 = error (default), 1 = notice)
+	 * @param string $msg error message (this message would be translated)
+	 * @param integer $wrapType type of wrap (0 = error (default), 1 = notice)
 	 * @return string prepared message
 	 */
 	private function prepare($msg, $wrapType = 0) {

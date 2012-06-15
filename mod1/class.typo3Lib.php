@@ -72,8 +72,8 @@ class typo3Lib {
 	 * converts an absolute or relative typo3 style (EXT:) file path
 	 *
 	 * @throws Exception raised, if the conversion fails
-	 * @param string absolute file or an typo3 relative file (EXT:)
-	 * @param boolean generate to relative(false) or absolute file
+	 * @param string $file absolute file or an typo3 relative file (EXT:)
+	 * @param boolean $mode generate to relative(false) or absolute file
 	 * @return string converted file path
 	 */
 	public static function transTypo3File($file, $mode) {
@@ -113,7 +113,7 @@ class typo3Lib {
 	/**
 	 * generates portable file paths
 	 *
-	 * @param string file
+	 * @param string $file file
 	 * @return string fixed file
 	 */
 	public static function fixFilePath($file) {
@@ -124,8 +124,8 @@ class typo3Lib {
 	 * writes the localconf file
 	 *
 	 * @throws Exception raised if localconf is empty or cant be backuped
-	 * @param string line which should be added
-	 * @param string value of line
+	 * @param string $addLine line which should be added
+	 * @param string $value value of line
 	 * @return void
 	 */
 	public static function writeLocalconf($addLine, $value) {
@@ -137,6 +137,7 @@ class typo3Lib {
 			throw new Exception('localconf is empty...');
 		}
 		$lines = explode("\n", str_replace('?>', '', $lines));
+		/** @var $localConfObj t3lib_install */
 		$localConfObj = t3lib_div::makeInstance('t3lib_install');
 		$localConfObj->updateIdentity = 'LFEditor';
 
@@ -156,9 +157,9 @@ class typo3Lib {
 	/**
 	 * decodes or encodes all values in the given language array to utf-8
 	 *
-	 * @param array language content array
-	 * @param boolean to utf-8 (true) or to original charset (false)
-	 * @param array language keys to ignore
+	 * @param array $localLang language content array
+	 * @param boolean $mode to utf-8 (true) or to original charset (false)
+	 * @param array $ignoreKeys language keys to ignore
 	 * @return array decoded or encoded language content array
 	 */
 	public static function utf8($localLang, $mode, $ignoreKeys) {
@@ -168,6 +169,7 @@ class typo3Lib {
 		}
 
 		// get charset object
+		/** @var $csConvObj t3lib_cs */
 		$csConvObj = &$GLOBALS['LANG']->csConvObj;
 
 		// loop all possible languages
@@ -197,8 +199,8 @@ class typo3Lib {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.typo3Lib.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.typo3Lib.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.typo3Lib.php']) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.typo3Lib.php']);
 }
 
 ?>

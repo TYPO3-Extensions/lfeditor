@@ -272,6 +272,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * tx_lfeditor_mod1_file_<workspace><filetype>
 	 *
 	 * @throws LFException raised if the the object cant be generated or language file not read
+	 * @throws Exception|LFException
 	 * @param string $langFile
 	 * @param string $extPath
 	 * @param string $mode
@@ -331,8 +332,9 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * init backup object
 	 *
 	 * @throws LFException raised if directories cant be created or backup class instantiated
-	 * @param string workspace
-	 * @param boolean set to true if you want use informations from the file object
+	 * @throws Exception|LFException
+	 * @param string $mode workspace
+	 * @param boolean|array $infos set to true if you want use informations from the file object
 	 * @return void
 	 */
 	private function initBackupObject($mode, $infos = NULL) {
@@ -397,7 +399,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	/**
 	 * returns a generated Menu
 	 *
-	 * @param string contains the array key of the menu
+	 * @param string $key contains the array key of the menu
 	 * @return string generated Menu (HTML-Code)
 	 */
 	private function getFuncMenu($key) {
@@ -574,9 +576,9 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	/**
 	 * adds items to the MOD_MENU array. Used for the language menu selector
 	 *
-	 * @param array language data
-	 * @param string keyword of the menuBox
-	 * @param string optional default value (if you dont want a default let it empty)
+	 * @param array $langData language data
+	 * @param string $funcKey keyword of the menuBox
+	 * @param string $default optional default value (if you dont want a default let it empty)
 	 * @return void
 	 */
 	private function menuLangList($langData, $funcKey, $default = '') {
@@ -606,8 +608,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	/**
 	 * adds items to the MOD_MENU array. Used for the editConst-List
 	 *
-	 * @param array language data
-	 * @param string name of default entry
+	 * @param array $langData language data
+	 * @param string $default name of default entry
 	 * @return void
 	 */
 	private function menuConstList($langData, $default) {
@@ -641,6 +643,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * splits (with typo3 V4 l10n support) or merges a language file (inclusive backup)
 	 *
 	 * @throws LFException raised if file couldnt be splitted or merged (i.e. empty langModes)
+	 * @throws Exception|LFException
 	 * @param array language shortcuts and their mode (1 = splitNormal, 2 = splitL10n, 3 = merge)
 	 * @return void
 	 */
@@ -736,8 +739,9 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * converts language files between different formats
 	 *
 	 * @throws LFException raised if transforming or deletion of old files failed
-	 * @param string new file format
-	 * @param string new relative file
+	 * @throws Exception|LFException
+	 * @param string $type new file format
+	 * @param string $newFile new relative file
 	 * @return void
 	 */
 	private function execTransform($type, $newFile) {
@@ -802,7 +806,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * executes the deletion of backup files
 	 *
 	 * @throws LFException raised if a backup file couldnt be deleted
-	 * @param array files as key and the language file as value
+	 * @param array $delFiles files as key and the language file as value
 	 * @return void
 	 */
 	public function execBackupDelete($delFiles) {
@@ -820,6 +824,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * restores a backup file
 	 *
 	 * @throws LFException raised if some unneeded files couldnt be deleted
+	 * @throws Exception|LFException
 	 * @return void
 	 */
 	private function execBackupRestore() {
@@ -908,7 +913,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * exec the backup of files and deletes automatic old files
 	 *
 	 * @throws LFException raised if backup file cant written or unneeded files cant deleted
-	 * @return void
+	 * @return boolean
 	 */
 	private function execBackup() {
 		// create backup object
@@ -962,15 +967,18 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			}
 			throw $e;
 		}
+
+		return FALSE;
 	}
 
 	/**
 	 * executes writing of language files
 	 *
 	 * @throws LFException raised if file couldnt be written or some param criterias arent correct
-	 * @param array changes (constants with empty values will be deleted)
-	 * @param array meta changes (indexes with empty values will be deleted)
-	 * @param boolean set to true if you want delete default constants
+	 * @throws Exception|LFException
+	 * @param array $modArray changes (constants with empty values will be deleted)
+	 * @param array $modMetaArray meta changes (indexes with empty values will be deleted)
+	 * @param boolean $forceDel set to true if you want delete default constants
 	 * @return void
 	 */
 	private function execWrite($modArray, $modMetaArray = array(), $forceDel = FALSE) {
@@ -1087,6 +1095,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * code for all actions of function "general"
 	 *
 	 * @throws LFException raised if something failes
+	 * @throws Exception|LFException
 	 * @return boolean true or false (only false if some files should be mailed)
 	 */
 	private function actionFuncGeneral() {
@@ -1195,6 +1204,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	/**
 	 * code for output generation of function "langfile.edit"
 	 *
+	 * @throws LFException
 	 * @param array language array
 	 * @return string generated html content
 	 */
@@ -1390,8 +1400,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	/**
 	 * code for output generation of function "const.add"
 	 *
-	 * @param string name of adding constant
-	 * @param array default Values
+	 * @param string $constant name of adding constant
+	 * @param array $defValues default Values
 	 * @return string generated html content
 	 */
 	private function outputFuncConstAdd($constant, $defValues) {
@@ -1411,9 +1421,9 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * code for all actions of function "const.add"
 	 *
 	 * @throws LFException raised if constant is empty or already exists or writing of file failed
-	 * @param array language array
-	 * @param array new values of each language for the constant
-	 * @param string name of constant which should be added
+	 * @param array $langData language array
+	 * @param array $newLang new values of each language for the constant
+	 * @param string $constant name of constant which should be added
 	 * @return void
 	 */
 	private function actionFuncConstAdd($langData, &$newLang, &$constant) {
@@ -1605,8 +1615,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * code for output generation of function "const.treeview"
 	 *
 	 * @throws LFException raised if no language data was found in the selected language
-	 * @param array language array
-	 * @param string current explode Token
+	 * @param array $langData language array
+	 * @param string $curToken current explode Token
 	 * @return string generated html content
 	 */
 	private function outputFuncConstTreeview($langData, $curToken) {

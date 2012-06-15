@@ -54,13 +54,22 @@ abstract class tx_lfeditor_mod1_file_base extends tx_lfeditor_mod1_file {
 	/**
 	 * extended init
 	 *
-	 * @param string name of the file (can be a path, if you need this (no check))
-	 * @param string path to the file
+	 * @throws LFException
+	 * @param string $file name of the file (can be a path, if you need this (no check))
+	 * @param string $path path to the file
 	 * @return void
 	 */
 	public function init($file, $path) {
+		if (class_exists('t3lib_l10n_Locales')) {
+			/** @var $locales t3lib_l10n_Locales */
+			$locales = t3lib_div::makeInstance('t3lib_l10n_Locales');
+			$availableLanguages = implode('|', $locales->getLocales());
+		} else {
+			$availableLanguages = TYPO3_languages;
+		}
+
 		// localization files shouldnt be edited
-		if ($this->checkLocalizedFile(basename($file), TYPO3_languages)) {
+		if ($this->checkLocalizedFile(basename($file), $availableLanguages)) {
 			throw new LFException('failure.langfile.notSupported');
 		}
 
@@ -71,6 +80,7 @@ abstract class tx_lfeditor_mod1_file_base extends tx_lfeditor_mod1_file {
 	/**
 	 * reads the absolute language file with all localized sub files
 	 *
+	 * @throws LFException
 	 * @return void
 	 */
 	public function readFile() {
@@ -126,8 +136,8 @@ abstract class tx_lfeditor_mod1_file_base extends tx_lfeditor_mod1_file {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_base.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_base.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_base.php']) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_base.php']);
 }
 
 ?>

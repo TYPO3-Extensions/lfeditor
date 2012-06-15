@@ -48,9 +48,9 @@ abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
 	/**
 	 * extended init
 	 *
-	 * @param string name of the file (can be a path, if you need this (no check))
-	 * @param string path to the file
-	 * @param string relative typo3 path to an language file (i.e. EXT:lfeditor/mod1/locallang.xml)
+	 * @param string $file name of the file (can be a path, if you need this (no check))
+	 * @param string $path path to the file
+	 * @param string $typo3RelFile relative typo3 path to an language file (i.e. EXT:lfeditor/mod1/locallang.xml)
 	 * @return void
 	 */
 	public function init($file, $path, $typo3RelFile) {
@@ -65,7 +65,7 @@ abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
 	 * structure:
 	 * $infos["typo3RelFile"] = relative path with filename from "absPath"
 	 *
-	 * @param array informations (see above)
+	 * @param array $informations
 	 * @return void
 	 */
 	public function setVar($informations) {
@@ -79,8 +79,8 @@ abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
 	/**
 	 * returns requested information
 	 *
-	 * @param string
-	 * @return void
+	 * @param string $info
+	 * @return mixed
 	 */
 	public function getVar($info) {
 		if ($info == 'typo3RelFile') {
@@ -121,8 +121,9 @@ abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
 	/**
 	 * extends writing of language files for xll
 	 *
-	 * @throws LFException raised if parent method fails or the xll file cant be created
-	 * @return boolean always true
+	 * @throws Exception|LFException
+	 * @throws LFException
+	 * @return bool|void always true
 	 */
 	public function writeFile() {
 		// create xll directory
@@ -165,8 +166,8 @@ abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xll.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xll.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xll.php']) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xll.php']);
 }
 
 ?>
