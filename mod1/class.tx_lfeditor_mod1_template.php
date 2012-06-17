@@ -378,8 +378,7 @@ class tx_lfeditor_mod1_template {
 			$content .= '<legend class="bgColor3">' . $lang . '</legend>';
 
 			$textareaLanguage = ($lang === 'default' ? 'en' : $lang);
-			$content .= '<textarea class="tx-lfeditor-textarea ' .
-				(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
+			$content .= '<textarea class="tx-lfeditor-textarea" ' .
 				'rows="' . $textAreaRows . '" cols="80" ' .
 				'name="newLang[' . $lang . '][' . $constant . ']" lang="' . $textareaLanguage . '" x:lang="' . $textareaLanguage . '">';
 			$content .= preg_replace('/<br.*>/U', "\n", $localLang[$lang][$constant]);
@@ -429,8 +428,7 @@ class tx_lfeditor_mod1_template {
 			$content .= '<legend class="bgColor3">' . $lang . '</legend>';
 
 			$textareaLanguage = ($lang === 'default' ? 'en' : $lang);
-			$content .= '<textarea class="tx-lfeditor-textarea ' .
-				(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
+			$content .= '<textarea class="tx-lfeditor-textarea" ' .
 				'rows="' . $textAreaRows . '" cols="80" id="' . $lang . '" ' .
 				'name="newLang[' . $lang . ']" lang="' . $textareaLanguage . '" x:lang="' . $textareaLanguage . '">' .
 				$defValues[$lang] . '</textarea> </fieldset>';
@@ -503,8 +501,7 @@ class tx_lfeditor_mod1_template {
 
 			// add textarea with default value
 			$textareaLanguage = ($langName === 'default' ? 'en' : $langName);
-			$content .= '<textarea class="tx-lfeditor-textarea ' .
-				(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
+			$content .= '<textarea class="tx-lfeditor-textarea" ' .
 				'rows="' . $textAreaRows . '" cols="80" ' .
 				'name="newLang[' . $langName . '][' . $constant . ']" lang="' . $textareaLanguage . '" x:lang="' . $textareaLanguage . '">' .
 				preg_replace('/<br.*>/U', "\n", $values['edit']) . '</textarea>';
@@ -524,8 +521,7 @@ class tx_lfeditor_mod1_template {
 
 				// add textarea with default value
 				$textareaLanguage = ($langName === 'default' ? 'en' : $langName);
-				$content .= '<textarea class="tx-lfeditor-textarea ' .
-					(($GLOBALS['PMKTEXTAREA']) ? 'enable-tab' : '') . '" ' .
+				$content .= '<textarea class="tx-lfeditor-textarea" ' .
 					'rows="' . $textAreaRows . '" cols="80" ' .
 					'name="newLang[' . $patternName . '][' . $constant . ']" lang="' . $textareaLanguage . '" x:lang="' . $textareaLanguage . '">' .
 					preg_replace('/<br.*>/U', "\n", $values['pattern']) . '</textarea>';
@@ -605,8 +601,7 @@ class tx_lfeditor_mod1_template {
 			'name="mailItEmailSubject" />';
 
 		// email text
-		$content .= '<textarea class="tx-lfeditor-textarea ' .
-			($GLOBALS['PMKTEXTAREA'] ? 'enable-tab' : '') . '" ' . '
+		$content .= '<textarea class="tx-lfeditor-textarea" ' . '
 			rows="' . $textAreaRows . '" cols="80" ' .
 			'name="mailItEmailText">Dear ' . $metaArray['authorName'] . '</textarea>';
 
@@ -770,8 +765,7 @@ class tx_lfeditor_mod1_template {
 		$header = $GLOBALS['LANG']->getLL('function.general.metaInfo.desc');
 		$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' . $header . '</legend>';
 		$desc = $infos['default']['meta']['description'];
-		$content .= '<textarea class="tx-lfeditor-textarea ' .
-			($GLOBALS['PMKTEXTAREA'] ? 'enable-tab' : '') . '" ' .
+		$content .= '<textarea class="tx-lfeditor-textarea" ' .
 			'rows="' . $textAreaRows . '" cols="80" ' .
 			'name="meta[description]">' . preg_replace('/<br.*>/U', "\n", $desc) . '</textarea>';
 		$content .= '</fieldset> </fieldset>';

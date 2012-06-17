@@ -38,10 +38,6 @@ require_once($lfeditorPath . 'mod1/class.typo3Lib.php');
 require_once($lfeditorPath . 'mod1/class.sgLib.php');
 require_once($lfeditorPath . 'mod1/class.LFException.php');
 
-// global variable
-/** @var boolean pmktextarea indicator */
-$PMKTEXTAREA = FALSE;
-
 /**
  * Module 'LFEditor' for the 'lfeditor' extension
  *
@@ -113,23 +109,13 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		$this->menuInsertMode();
 		$insertModeMenu = $this->getFuncMenu('insertMode');
 
-		// include WYSIWIG, pmktextarea or normal textareas (with resize bar)
+		// include tinymce or normal textarea (with resize bar) script
 		$modPath = t3lib_extMgm::extRelPath('lfeditor');
 		if ($this->MOD_SETTINGS['insertMode'] === 'tinyMCE') {
 			require(t3lib_extMgm::extPath('tinymce') . 'class.tinymce.php');
 			$tinyMCE = new tinyMCE();
 			$tinyMCE->loadConfiguration($this->extConfig['pathTinyMCEConfig']);
 			$this->doc->JScode = $tinyMCE->getJS();
-
-		} elseif ($this->MOD_SETTINGS['insertMode'] === 'pmktextarea') {
-			$GLOBALS['PMKTEXTAREA'] = TRUE;
-			$this->doc->JScode = '
-				<script type="text/javascript">
-					var ta_init = {
-						linenumState: "0",
-						lockW: "1"
-					};
-				</script>';
 		} else {
 			$this->doc->getPageRenderer()->addJsFile($modPath . 'mod1/textareaResize.js');
 		}
@@ -548,9 +534,6 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	private function menuInsertMode() {
 		if (t3lib_extMgm::isLoaded('tinymce')) {
 			$switch['tinyMCE'] = $GLOBALS['LANG']->getLL('select.insertMode.tinyMCE');
-		}
-		if (t3lib_extMgm::isLoaded('pmktextarea')) {
-			$switch['pmktextarea'] = $GLOBALS['LANG']->getLL('select.insertMode.pmktextarea');
 		}
 		$switch['normal'] = $GLOBALS['LANG']->getLL('select.insertMode.normal');
 

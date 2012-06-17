@@ -135,6 +135,7 @@
 			<label index="workspace.base">global</label>
 			<label index="workspace.xll">local (only BE modules)</label>
 		</languageKey>
+		<languageKey index="af"></languageKey>
 		<languageKey index="ar"></languageKey>
 		<languageKey index="bs"></languageKey>
 		<languageKey index="bg"></languageKey>
