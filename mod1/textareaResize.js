@@ -20,11 +20,11 @@ TextAreaResizer.prototype = {
 	create: function() {
 		var elt = this.element;
 		if (elt.title != 'true') {
-			var thisRef = this; // for usage in events defintion
+			var thisRef = this; // for usage in events definition
 			var h = this.handle = document.createElement("hr");
 			h.className = 'handle-normal';
 
-			// tooltip dont work in every browser correct (eg. firefox no pagebreak)
+			// tooltip dont work in every browser correct (eg. firefox no page break)
 			if (typeof tooltip != 'undefined') {
 				h.title = '<ul><li>Click & drag to resize</li><li>Double-left-click to' +
 					'minimize/maximize</li><li>Right-click best-fit to window</li></ul>';
@@ -38,7 +38,7 @@ TextAreaResizer.prototype = {
 			}
 
 			// double click resizing
-			addEvent(h, 'dblclick', function(evt) {
+			addEvent(h, 'dblclick', function() {
 				thisRef.max(1);
 			}, false);
 
@@ -55,10 +55,10 @@ TextAreaResizer.prototype = {
 			}, false);
 
 			// class changing mechanism
-			addEvent(h, 'mouseover', function(evt) {
+			addEvent(h, 'mouseover', function() {
 				h.className = 'handle-highlight';
 			}, false);
-			addEvent(h, 'mouseout', this.handleHigh = function(evt) {
+			addEvent(h, 'mouseout', this.handleHigh = function() {
 				h.className = 'handle-normal';
 			}, false);
 
@@ -99,8 +99,8 @@ TextAreaResizer.prototype = {
 		addEvent(document, 'mousemove', this.dragMoveHdlr = function(evt) {
 			thisRef.dragMove(evt);
 		}, false);
-		addEvent(document, 'mouseup', this.dragStopHdlr = function(evt) {
-			thisRef.dragStop(evt);
+		addEvent(document, 'mouseup', this.dragStopHdlr = function() {
+			thisRef.dragStop();
 
 			// restore default cursor shape
 			document.getElementsByTagName('body')[0].style.cursor = 'default';
@@ -113,7 +113,7 @@ TextAreaResizer.prototype = {
 			// restore highlight handler
 			thisRef.handle.className = 'handle-normal';
 			addEvent(thisRef.handle, 'mouseout', thisRef.handleHigh =
-				function(evt) {
+				function() {
 					thisRef.handle.className = 'handle-normal';
 				}, false);
 		}, false);
@@ -124,7 +124,7 @@ TextAreaResizer.prototype = {
 		this.element.style.height = (height > 0 ? height : 0) + 'px';
 	},
 
-	dragStop: function(evt) {
+	dragStop: function() {
 		//this.element.style.borderStyle = 'solid';
 		removeEvent(document, 'mousemove', this.dragMoveHdlr, false);
 		removeEvent(document, 'mouseup', this.dragStopHdlr, false);
@@ -152,35 +152,24 @@ TextAreaResizer.prototype = {
 		}
 
 		if (mode == 2) {
-			str = '';
-			for (i = 0; i < parseInt(this.element.scrollWidth / 10); i++) {
+			var str = '';
+			for (var i = 0; i < parseInt(this.element.scrollWidth / 10); i++) {
 				str += '		';
 			}
 			this.element.value += str;
 
 			// IE Bug? Need to retrieve scrollWidth first to init it!
-			var dummy = this.element.scrollWidth;
+			var dummy = this.element.scrollWidth,
+				wrap = 0;
 			if (this.element.scrollWidth == this.element.clientWidth) {
 				wrap = 1;
-			}
-			else {
-				wrap = 0;
 			}
 			this.element.value = this.element.value.replace(str, '');
 
 			// IE Bug? Need to retrieve scrollHeight first to init it!
-			var dummy = this.element.scrollHeight;
+			dummy = this.element.scrollHeight;
 			var maxHeight = this.element.scrollHeight +
-				(checkIt('msie') ?
-					wrap ?
-						-6
-						: 9
-					: wrap ?
-					0
-					: this.element.scrollWidth > this.element.clientWidth ?
-					20
-					: 0
-					);
+				(checkIt('msie') ? wrap ? -6 : 9 : wrap ? 0 : this.element.scrollWidth > this.element.clientWidth ? 20 : 0);
 
 			if (maxHeight > winSize()[1]) {
 				maxHeight = winSize()[1] - (checkIt('msie') ? 60 : 90);
@@ -213,10 +202,7 @@ function winSize() {
 
 // safari, omniweb, opera, webtv, icab, msie
 function checkIt(string) {
-	var detect = navigator.userAgent.toLowerCase();
-	place = detect.indexOf(string) + 1;
-	thestring = string;
-	return place;
+	return navigator.userAgent.toLowerCase().indexOf(string) + 1;
 }
 
 function LFEtextarea_init() {
@@ -224,7 +210,7 @@ function LFEtextarea_init() {
 	// Somehow var i was being corrupted.
 	// Only when max(3) or max(2) called.
 	// Using z instead. Weird.
-	for (z = 0; z < textareas.length; z++) {
+	for (var z = 0; z < textareas.length; z++) {
 		new TextAreaResizer(textareas[z]);
 	}
 	// Re-init dom-tooltips (if available), so tooltips are shown for handles
@@ -239,6 +225,8 @@ if (typeof schedule != 'function') {
 		} else if (obj.attachEvent) {
 			return obj.attachEvent("on" + evType, fn);
 		}
+
+		return false;
 	}
 
 	function removeEvent(obj, evType, fn, useCapture) {
@@ -248,6 +236,8 @@ if (typeof schedule != 'function') {
 		} else if (obj.detachEvent) {
 			return obj.detachEvent('on' + evType, fn);
 		}
+
+		return false;
 	}
 
 	addEvent(window, 'load', function() {
