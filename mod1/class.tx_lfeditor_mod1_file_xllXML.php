@@ -29,7 +29,7 @@ require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.tx_lfeditor_mod1_fi
  * xll workspace class (xml)
  *
  * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package Typo3
+ * @package TYPO3
  * @subpackage tx_lfeditor
  */
 class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {

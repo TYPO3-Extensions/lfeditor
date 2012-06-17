@@ -26,7 +26,7 @@
  * adds a new error exception
  *
  * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package Typo3
+ * @package TYPO3
  * @subpackage tx_lfeditor
  */
 class LFException extends Exception {

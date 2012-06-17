@@ -26,7 +26,7 @@
  * includes special typo3 methods
  *
  * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package Typo3
+ * @package TYPO3
  * @subpackage tx_lfeditor
  */
 class typo3Lib {

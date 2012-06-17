@@ -26,7 +26,7 @@
  * contains functions for the 'lfeditor' extension
  *
  * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package Typo3
+ * @package TYPO3
  * @subpackage tx_lfeditor
  */
 class tx_lfeditor_mod1_functions {

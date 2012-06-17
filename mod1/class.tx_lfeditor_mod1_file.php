@@ -29,7 +29,7 @@ require_once(PATH_t3lib . 'class.t3lib_install.php');
  * include some general functions only usable for the 'lfeditor' module
  *
  * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package Typo3
+ * @package TYPO3
  * @subpackage tx_lfeditor
  */
 abstract class tx_lfeditor_mod1_file {
