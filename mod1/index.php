@@ -108,6 +108,11 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		$this->doc->docType = 'xhtml_trans';
 		$this->doc->form = '<form action="" method="post" name="mainForm">';
 
+			// must be set exactly here or the insert mode needs an additional page refresh
+		$functionMenu = $this->getFuncMenu('function');
+		$this->menuInsertMode();
+		$insertModeMenu = $this->getFuncMenu('insertMode');
+
 		// include WYSIWIG, pmktextarea or normal textareas (with resize bar)
 		$modPath = t3lib_extMgm::extRelPath('lfeditor');
 		if ($this->MOD_SETTINGS['insertMode'] === 'tinyMCE') {
@@ -129,7 +134,6 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			$this->doc->getPageRenderer()->addJsFile($modPath . 'mod1/textareaResize.js');
 		}
 
-		// JavaScript
 		$this->doc->JScode .= '
 			<script type="text/javascript">
 				var script_ended = 0;
@@ -154,10 +158,6 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		if ((!$this->id || !$access) && (!$GLOBALS['BE_USER']->user['uid'] || $this->id)) {
 			throw new LFException('failure.access.denied');
 		}
-
-		$functionMenu = $this->getFuncMenu('function');
-		$this->menuInsertMode();
-		$insertModeMenu = $this->getFuncMenu('insertMode');
 
 		try {
 			$moduleContent = $this->moduleContent();

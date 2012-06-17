@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <T3locallang>
 	<meta type="array">
-		<description>FileRef: EXT:lfeditor/mod1/locallang_mod.xml&lt;br /&gt;&lt;br /&gt; Special Thanks: Peter Klein --&amp;gt; danish translation&lt;br /&gt; Tapio Markula --&amp;gt; finnish translation</description>
+		<description>FileRef: EXT:lfeditor/mod1/locallang_mod.xml&lt;br /&gt;&lt;br /&gt;Special Thanks:&lt;br /&gt;Peter Klein --&gt; danish translation&lt;br /&gt;Tapio Markula --&gt; finnish translation</description>
 		<type>module</type>
 		<generator>LFEditor</generator>
 		<authorName>Stefan Galinski</authorName>
