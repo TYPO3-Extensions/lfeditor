@@ -160,7 +160,7 @@ class tx_lfeditor_mod1_template {
 			foreach ($data as $label => $value) {
 				$content .= '<dt>';
 				$content .= '<a href="#" title="' . $label . '" ' .
-					'onclick="submitRedirectForm(\'constant\',\'' . $label . '\');">' .
+					'onclick="submitRedirectForm(\'constant\', \'' . $label . '\');">' .
 					$label . '</a></dt>';
 				$content .= '<dd>' . htmlspecialchars($value) . '</dd>';
 			}
@@ -182,7 +182,7 @@ class tx_lfeditor_mod1_template {
 	 */
 	public static function fieldSetToken($curToken) {
 		$content = '<input type="text" size="1" maxlength="1" name="usedToken" ' .
-			'value="' . $curToken . '"> ';
+			'value="' . $curToken . '" /> ';
 		$content .= '<span class="tx-lfeditor-submit"> <button type="submit">' .
 			$GLOBALS['LANG']->getLL('select.explodeToken') . '</button> </span>';
 
@@ -249,7 +249,7 @@ class tx_lfeditor_mod1_template {
 				$picAdd = 'Bottom';
 			}
 
-			// childrens?
+			// children?
 			$name = $tree[$curDim][$branches[$curBranch]]['name'];
 			if ($tree[$curDim][$branches[$curBranch]]['type'] == 1) {
 				$name = '<span class="tx-lfeditor-badMarkup">' . $name . '</span>';
@@ -271,7 +271,7 @@ class tx_lfeditor_mod1_template {
 				}
 
 				// generate branch
-				$cont .= '<a href="javascript:openCloseTreeEntry(1,\'' . $myID . '\',' .
+				$cont .= '<a href="javascript:openCloseTreeEntry(\'' . t3lib_extMgm::extRelPath('lfeditor') . '\', \'' . $myID . '\',' .
 					'\'pic' . $myID . '\',' . $bottom . ')">';
 				$cont .= '<img id="pic' . $myID . '" src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/tree' .
 					$pic . $picAdd . '.gif" ' . 'alt="tree' . $pic . $picAdd .
@@ -292,7 +292,7 @@ class tx_lfeditor_mod1_template {
 				$cont .= '<img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/join' . $picAdd . '.gif" alt="join' . $picAdd . '" ' .
 					'style="margin-left: ' . $lineSpace . 'px; margin-right: 5px;" /> ';
 				$cont .= '<a href="#" title="' . $branches[$curBranch] . '" ' .
-					'onclick="submitRedirectForm(\'constant\',\'' . $branches[$curBranch] . '\');"> ' .
+					'onclick="submitRedirectForm(\'constant\', \'' . $branches[$curBranch] . '\');"> ' .
 					$name . '</a>';
 				$content .= '<dd>' . $cont . '</dd>';
 			}
@@ -328,8 +328,8 @@ class tx_lfeditor_mod1_template {
 			$GLOBALS['LANG']->getLL('function.const.treeview.specialMarkupHint') . '</p>';
 
 		// generate tree
-		unset($treeContent);
-		unset($myIDs);
+		$treeContent = '';
+		$myIDs = array();
 		tx_lfeditor_mod1_template::genTree($tree, $treeContent, $myIDs, $treeHide);
 
 		// get unhide/hide all feature
@@ -341,7 +341,7 @@ class tx_lfeditor_mod1_template {
 
 		// generate output
 		$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' .
-			'<a href="javascript:openCloseTreeEntry(0,' . $JSArgs . ');">' .
+			'<a href="javascript:openCloseTreeEntry(\'' . t3lib_extMgm::extRelPath('lfeditor') . '\', ' . $JSArgs . ');">' .
 			$GLOBALS['LANG']->getLL('function.const.treeview.hideUnhideAll') . '</a>' .
 			'</legend>' . $treeContent . '</fieldset>';
 		$content .= '</fieldset>';

@@ -33,26 +33,14 @@ function metaTypeCheck() {
 }
 
 /** args -- fieldID(id), picID(id), bottom(boolean) */
-function openCloseTreeEntry(autoHide, args) {
+function openCloseTreeEntry(prefix, args) {
 	var length = arguments.length;
 	var pic, curTreeHide;
 
-	if (!autoHide) {
-		if (!treeHide) {
-			treeHide = 1;
-		}
-		else {
-			treeHide = 0;
-		}
-	}
-	curTreeHide = treeHide;
-
 	for (var i = 1; i < length; i += 3) {
-		if (autoHide) {
-			curTreeHide = 0;
-			if (!document.getElementById(arguments[i]).style.display) {
-				curTreeHide = 1;
-			}
+		curTreeHide = 0;
+		if (!document.getElementById(arguments[i]).style.display) {
+			curTreeHide = 1;
 		}
 
 		if (curTreeHide) {
@@ -67,7 +55,7 @@ function openCloseTreeEntry(autoHide, args) {
 			pic = pic + 'Bottom';
 		}
 
-		document.getElementById(arguments[i + 1]).src = '../res/images/tree' + pic + '.gif';
+		document.getElementById(arguments[i + 1]).src = prefix + 'res/images/tree' + pic + '.gif';
 		document.getElementById(arguments[i + 1]).alt = 'tree' + pic;
 	}
 }

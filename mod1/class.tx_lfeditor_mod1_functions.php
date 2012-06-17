@@ -324,6 +324,7 @@ class tx_lfeditor_mod1_functions {
 		$langConsts = array_merge(array_keys($langData), $refConsts);
 
 		// generate tree information array
+		$curAbsName = '';
 		foreach ($langConsts as $constant) {
 			// add root
 			$rootLabel = $GLOBALS['LANG']->getLL('function.const.treeview.root');
@@ -345,7 +346,7 @@ class tx_lfeditor_mod1_functions {
 				if (!$i) {
 					$curAbsName = $branches[$i];
 				} else {
-					$curAbsName = $expToken . $branches[$i];
+					$curAbsName .= $expToken . $branches[$i];
 				}
 
 				if (isset($tree[$curDim][$curAbsName]['name'])) {

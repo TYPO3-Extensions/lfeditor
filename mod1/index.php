@@ -1115,7 +1115,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		// redirect
 		if (!empty($language)) {
 			header('Location: ' . t3lib_div::getIndpEnv('TYPO3_REQUEST_SCRIPT') .
-				'?SET[langList]=' . $language . '&SET[function]=const.treeview');
+				'?M=user_txlfeditorM1&SET[langList]=' . $language . '&SET[function]=const.treeview');
 		}
 
 		// zip and mail selected languages
@@ -1191,7 +1191,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$this->execTransform($transFile, $newFile);
 				if ($this->MOD_SETTINGS['wsList'] != 'xll') {
 					header('Location: ' . t3lib_div::getIndpEnv('TYPO3_REQUEST_SCRIPT') .
-						'?SET[langFileList]=' . $newFile);
+						'?M=user_txlfeditorM1&SET[langFileList]=' . $newFile);
 				}
 			}
 		} catch (LFException $e) {
@@ -1607,7 +1607,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		// redirect
 		if (!empty($constant)) {
 			header('Location: ' . t3lib_div::getIndpEnv('TYPO3_REQUEST_SCRIPT') .
-				'?SET[constList]=' . $constant . '&SET[function]=const.edit');
+				'?M=user_txlfeditorM1&SET[constList]=' . $constant . '&SET[function]=const.edit');
 		}
 	}
 
@@ -1649,7 +1649,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		// redirect
 		if (!empty($constant)) {
 			header('Location: ' . t3lib_div::getIndpEnv('TYPO3_REQUEST_SCRIPT') .
-				'?SET[constList]=' . $constant . '&SET[function]=const.edit');
+				'?M=user_txlfeditorM1&SET[constList]=' . $constant . '&SET[function]=const.edit');
 		}
 	}
 
