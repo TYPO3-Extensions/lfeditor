@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2008 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,12 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
-/**
- * xll workspace class (xml)
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- */
 
 /** general file functions */
 require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.tx_lfeditor_mod1_file_xll.php');
@@ -87,7 +81,7 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 		}
 
 		// convert all language values from utf-8 to the original charset
-		if ($GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] != 'utf-8') {
+		if (!typo3Lib::isTypo3BackendInUtf8Mode()) {
 			$this->localLang = typo3Lib::utf8($this->localLang, FALSE, array('default'));
 		}
 	}
@@ -167,7 +161,7 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 	 */
 	protected function prepareFileContents() {
 		// convert all language values to utf-8
-		if ($GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] != 'utf-8') {
+		if (!typo3Lib::isTypo3BackendInUtf8Mode()) {
 			$this->localLang = typo3Lib::utf8($this->localLang, TRUE, array('default'));
 		}
 

@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2008 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  The script is free software; you can redistribute it and/or modify

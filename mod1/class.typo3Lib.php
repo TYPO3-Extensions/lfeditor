@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2008 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,12 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
-/**
- * includes special typo3 methods
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- */
 
 /**
  * includes special typo3 methods
@@ -195,6 +189,22 @@ class typo3Lib {
 		}
 
 		return $localLang;
+	}
+
+	/**
+	 * Returns true if the TYPO3 backend is UTF-8 ready.
+	 *
+	 * @static
+	 * @return bool
+	 */
+	public static function isTypo3BackendInUtf8Mode() {
+		$isInUtf8Mode = FALSE;
+		$isTypo347 = (t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) >= 4007000);
+		if ($GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] === 'utf-8' || $isTypo347) {
+			$isInUtf8Mode = TRUE;
+		}
+
+		return$isInUtf8Mode;
 	}
 }
 

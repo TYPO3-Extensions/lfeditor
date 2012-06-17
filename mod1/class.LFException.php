@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2008 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script isnt part of any project. The script is
@@ -21,12 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
-/**
- * adds a new error exception
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- */
 
 /**
  * adds a new error exception

@@ -1020,7 +1020,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		// delete possible language files
 		$absFile = $this->fileObj->getVar('absFile');
 		$originLang = $this->fileObj->getOriginLangData();
-		unset($emptyFiles);
+		$emptyFiles = array();
 		foreach ($originLang as $lang => $origin) {
 			if ($origin == $absFile || !is_file($origin)) {
 				continue;
@@ -1034,7 +1034,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 
 		// delete all empty language files
 		try {
-			if (is_array($emptyFiles)) {
+			if (count($emptyFiles)) {
 				sgLib::deleteFiles($emptyFiles);
 			}
 		} catch (Exception $e) {
