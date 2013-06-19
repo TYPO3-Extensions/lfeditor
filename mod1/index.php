@@ -584,12 +584,14 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * @return void
 	 */
 	private function menuInsertMode() {
+		if (!t3lib_extMgm::isLoaded('tinymce')) {
+			return;
+		}
+
 		/** @var \TYPO3\CMS\Lang\LanguageService $lang */
 		$lang = $GLOBALS['LANG'];
 
-		if (t3lib_extMgm::isLoaded('tinymce')) {
-			$switch['tinyMCE'] = $lang->getLL('select.insertMode.tinyMCE');
-		}
+		$switch['tinyMCE'] = $lang->getLL('select.insertMode.tinyMCE');
 		$switch['normal'] = $lang->getLL('select.insertMode.normal');
 
 		$this->MOD_MENU = array('insertMode' => $switch);

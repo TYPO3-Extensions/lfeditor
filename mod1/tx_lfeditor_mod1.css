@@ -2,6 +2,10 @@
 	display: inline;
 }
 
+.docheader-funcmenu select {
+	margin-top: 4px;
+}
+
 #typo3-inner-docbody {
 	max-width: 900px;
 }
