@@ -1023,7 +1023,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	/**
 	 * executes writing of language files
 	 *
-	 * @throws LFException raised if file couldnt be written or some param criterias arent correct
+	 * @throws LFException raised if file could not be written or some param criterias are not correct
 	 * @throws Exception|LFException
 	 * @param array $modArray changes (constants with empty values will be deleted)
 	 * @param array $modMetaArray meta changes (indexes with empty values will be deleted)
@@ -1032,7 +1032,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 */
 	private function execWrite($modArray, $modMetaArray = array(), $forceDel = FALSE) {
 		// checks
-		if (!is_array($modArray) || !count($modArray)) {
+		if (!is_array($modArray)) {
 			throw new LFException('failure.file.notWritten');
 		}
 
