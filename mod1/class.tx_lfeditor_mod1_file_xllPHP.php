@@ -1,8 +1,9 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,15 +23,11 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/** general filefunctions */
+/** general file functions */
 require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.tx_lfeditor_mod1_file_xll.php');
 
 /**
  * xll workspace class (php)
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package TYPO3
- * @subpackage tx_lfeditor
  */
 class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 	/**
@@ -57,11 +54,13 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 			include($this->absFile);
 		}
 
-		if (!is_array($LOCAL_LANG)) {
-			throw new LFException('failure.search.noFileContent', 0, '(' . $file . ')');
+		/** @var array $LOCAL_LANG */
+		if (!is_array($LOCAL_LANG) || !count($LOCAL_LANG)) {
+			throw new LFException('failure.search.noFileContent', 0, '(' . $this->absFile . ')');
 		}
 
-		// set meta informations
+		// set meta information
+		/** @var array $LFMETA */
 		$this->meta = $LFMETA;
 
 		return $LOCAL_LANG;
@@ -73,7 +72,7 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 	 * @return string meta data for writing purposes
 	 */
 	private function prepareMeta() {
-		if (!is_array($this->meta)) {
+		if (!is_array($this->meta) || !count($this->meta)) {
 			return '';
 		}
 
@@ -123,7 +122,7 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 	 */
 	private function getLangContent($localLang, $lang) {
 		$content = "\t'$lang' => array (\n";
-		if (is_array($localLang)) {
+		if (is_array($localLang) && count($localLang)) {
 			ksort($localLang);
 			foreach ($localLang as $const => $value) {
 				$value = preg_replace("/([^\\\])'/", "$1\'", $value);
@@ -163,7 +162,10 @@ class tx_lfeditor_mod1_file_xllPHP extends tx_lfeditor_mod1_file_xll {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllPHP.php']) {
+if (defined(
+		'TYPO3_MODE'
+	) && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllPHP.php']
+) {
 	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllPHP.php']);
 }
 

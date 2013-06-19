@@ -1,8 +1,9 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,20 +25,15 @@
 
 /**
  * includes special typo3 methods
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package TYPO3
- * @subpackage tx_lfeditor
  */
 class typo3Lib {
-	/**#@+
-	/** @var string typo3 path informations */
 	const pathLocalExt = 'typo3conf/ext/';
-	const pathGlobalExt = 'typo3/ext/';
-	const pathSysExt = 'typo3/sysext/';
-	const pathL10n = 'typo3conf/l10n/';
 
-	/**#@-*/
+	const pathGlobalExt = 'typo3/ext/';
+
+	const pathSysExt = 'typo3/sysext/';
+
+	const pathL10n = 'typo3conf/l10n/';
 
 	/**
 	 * checks the file location type
@@ -50,14 +46,11 @@ class typo3Lib {
 			return 'local';
 		} elseif (strpos($file, typo3Lib::pathGlobalExt) !== FALSE) {
 			return 'global';
-		}
-		elseif (strpos($file, typo3Lib::pathSysExt) !== FALSE) {
+		} elseif (strpos($file, typo3Lib::pathSysExt) !== FALSE) {
 			return 'system';
-		}
-		elseif (strpos($file, typo3Lib::pathL10n) !== FALSE) {
+		} elseif (strpos($file, typo3Lib::pathL10n) !== FALSE) {
 			return 'l10n';
-		}
-		else {
+		} else {
 			return '';
 		}
 	}
@@ -135,7 +128,7 @@ class typo3Lib {
 		$localConfObj = t3lib_div::makeInstance('t3lib_install');
 		$localConfObj->updateIdentity = 'LFEditor';
 
-		// add informations
+		// add information
 		$localConfObj->setValueInLocalconfFile($lines, $addLine, $value);
 
 		// backup localconf
@@ -164,16 +157,18 @@ class typo3Lib {
 
 		// get charset object
 		/** @var $csConvObj t3lib_cs */
-		$csConvObj = &$GLOBALS['LANG']->csConvObj;
+		$csConvObj = & $GLOBALS['LANG']->csConvObj;
 
 		// loop all possible languages
 		foreach ($localLang as $langKey => $convContent) {
-			if (!is_array($convContent) || in_array($langKey, $ignoreKeys)) {
+			if (!is_array($convContent) || !count($convContent) || in_array($langKey, $ignoreKeys)) {
 				continue;
 			}
 
-			$origCharset = $csConvObj->parse_charset($csConvObj->charSetArray[$langKey] ?
-				$csConvObj->charSetArray[$langKey] : 'iso-8859-1');
+			$origCharset = $csConvObj->parse_charset(
+				$csConvObj->charSetArray[$langKey] ?
+					$csConvObj->charSetArray[$langKey] : 'iso-8859-1'
+			);
 
 			if ($csConvObj->charSetArray[$langKey] == 'utf-8') {
 				continue;
@@ -204,12 +199,15 @@ class typo3Lib {
 			$isInUtf8Mode = TRUE;
 		}
 
-		return$isInUtf8Mode;
+		return $isInUtf8Mode;
 	}
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.typo3Lib.php']) {
+if (defined(
+		'TYPO3_MODE'
+	) && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.typo3Lib.php']
+) {
 	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.typo3Lib.php']);
 }
 

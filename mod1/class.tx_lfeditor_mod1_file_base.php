@@ -1,8 +1,9 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,23 +28,34 @@ require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.tx_lfeditor_mod1_fi
 
 /**
  * base workspace class
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package TYPO3
- * @subpackage tx_lfeditor
  */
 abstract class tx_lfeditor_mod1_file_base extends tx_lfeditor_mod1_file {
-	/**#@+
-	/** abstract methods */
+	/**
+	 * @param string $content
+	 * @param string $lang
+	 * @return mixed
+	 */
 	abstract protected function getLocalizedFile($content, $lang);
 
+	/**
+	 * @param string $filename
+	 * @param string $langKey
+	 * @return mixed
+	 */
 	abstract protected function checkLocalizedFile($filename, $langKey);
 
+	/**
+	 * @param string $langKey
+	 * @return mixed
+	 */
 	abstract protected function nameLocalizedFile($langKey);
 
+	/**
+	 * @param string $file
+	 * @param string $langKey
+	 * @return mixed
+	 */
 	abstract protected function readLLFile($file, $langKey);
-
-	/**#@-*/
 
 	/**
 	 * extended init
@@ -62,7 +74,7 @@ abstract class tx_lfeditor_mod1_file_base extends tx_lfeditor_mod1_file {
 			$availableLanguages = TYPO3_languages;
 		}
 
-		// localization files shouldnt be edited
+		// localization files should not be edited
 		if ($this->checkLocalizedFile(basename($file), $availableLanguages)) {
 			throw new LFException('failure.langfile.notSupported');
 		}
@@ -87,9 +99,10 @@ abstract class tx_lfeditor_mod1_file_base extends tx_lfeditor_mod1_file {
 
 		// loop all languages
 		$languages = sgLib::getSystemLanguages();
+		$originLang = array();
 		foreach ($languages as $lang) {
 			$originLang[$lang] = $this->absFile;
-			if (is_array($localLang[$lang]) || $lang == 'default') {
+			if ((is_array($localLang[$lang]) && count($localLang[$lang])) || $lang == 'default') {
 				if (is_array($localLang[$lang]) && count($localLang[$lang])) {
 					ksort($localLang[$lang]);
 				}
@@ -119,7 +132,7 @@ abstract class tx_lfeditor_mod1_file_base extends tx_lfeditor_mod1_file {
 		}
 
 		// check
-		if (!is_array($localLang)) {
+		if (!is_array($localLang) || !count($localLang)) {
 			throw new LFException('failure.search.noFileContent');
 		}
 
@@ -130,7 +143,10 @@ abstract class tx_lfeditor_mod1_file_base extends tx_lfeditor_mod1_file {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_base.php']) {
+if (defined(
+		'TYPO3_MODE'
+	) && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_base.php']
+) {
 	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_base.php']);
 }
 

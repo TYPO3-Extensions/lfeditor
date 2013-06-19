@@ -1,8 +1,9 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,37 +28,59 @@ require_once(PATH_t3lib . 'class.t3lib_install.php');
 
 /**
  * include some general functions only usable for the 'lfeditor' module
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package TYPO3
- * @subpackage tx_lfeditor
  */
 abstract class tx_lfeditor_mod1_file {
-	/**#@+
-	/** @var array content of parsed files and origin of every language */
+	/**
+	 * @var array
+	 */
 	protected $localLang = array();
+
+	/**
+	 * @var array
+	 */
 	protected $originLang = array();
-	/**#@-*/
 
-	/**#@+
-	/** @var string information about some paths, current file type and workspace */
+	/**
+	 * @var string
+	 */
 	protected $absPath;
+
+	/**
+	 * @var string
+	 */
 	protected $relFile;
+
+	/**
+	 * @var string
+	 */
 	protected $absFile;
+
+	/**
+	 * @var string
+	 */
 	protected $fileType;
+
+	/**
+	 * @var string
+	 */
 	protected $workspace;
+
 	/**#@-*/
 
-	/** @var array header information */
+	/**
+	 * @var array
+	 */
 	protected $meta;
 
-	/**#@+
-	/** abstract methods */
+	/**
+	 * @return mixed
+	 */
 	abstract protected function prepareFileContents();
 
+	/**
+	 * @return mixed
+	 */
 	abstract protected function readFile();
-
-	/**#@-*/
 
 	/**
 	 * sets some variables
@@ -127,14 +150,11 @@ abstract class tx_lfeditor_mod1_file {
 			$value = $this->relFile;
 		} elseif ($info == 'absPath') {
 			$value = $this->absPath;
-		}
-		elseif ($info == 'absFile') {
+		} elseif ($info == 'absFile') {
 			$value = $this->absFile;
-		}
-		elseif ($info == 'fileType') {
+		} elseif ($info == 'fileType') {
 			$value = $this->fileType;
-		}
-		elseif ($info == 'workspace') {
+		} elseif ($info == 'workspace') {
 			$value = $this->workspace;
 		}
 
@@ -152,8 +172,7 @@ abstract class tx_lfeditor_mod1_file {
 			return $this->localLang;
 		} elseif (is_array($this->localLang[$langKey])) {
 			return $this->localLang[$langKey];
-		}
-		else {
+		} else {
 			return array();
 		}
 	}
@@ -258,7 +277,10 @@ abstract class tx_lfeditor_mod1_file {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file.php']) {
+if (defined(
+		'TYPO3_MODE'
+	) && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file.php']
+) {
 	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file.php']);
 }
 

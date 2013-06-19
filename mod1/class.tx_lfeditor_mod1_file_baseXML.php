@@ -1,8 +1,9 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,15 +23,11 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/** general filefunctions */
+/** general file functions */
 require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.tx_lfeditor_mod1_file_base.php');
 
 /**
  * base workspace class (xml)
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package TYPO3
- * @subpackage tx_lfeditor
  */
 class tx_lfeditor_mod1_file_baseXML extends tx_lfeditor_mod1_file_base {
 	/**
@@ -67,7 +64,7 @@ class tx_lfeditor_mod1_file_baseXML extends tx_lfeditor_mod1_file_base {
 	/**
 	 * reads a language file
 	 *
-	 * @throws LFException raised if the file havent contain valid llxml or xml isnt valid
+	 * @throws LFException raised if the file does not contain a valid llxml or xml is not valid
 	 * @param string language file
 	 * @param string language shortcut
 	 * @return array language content
@@ -81,7 +78,7 @@ class tx_lfeditor_mod1_file_baseXML extends tx_lfeditor_mod1_file_base {
 		$xmlContent = t3lib_div::xml2array(file_get_contents($file));
 
 		// check data
-		if (!is_array($xmlContent['data']) || !count($xmlContent['data'])) {
+		if (!is_array($xmlContent['data'])) {
 			throw new LFException('failure.search.noFileContent', 0, '(' . $file . ')');
 		}
 
@@ -179,7 +176,7 @@ class tx_lfeditor_mod1_file_baseXML extends tx_lfeditor_mod1_file_base {
 	 */
 	private function getLangContent($localLang, $lang) {
 		$content['data'][$lang] = '';
-		if (!is_array($localLang)) {
+		if (!is_array($localLang) || !count($localLang)) {
 			return $content;
 		}
 
@@ -198,7 +195,7 @@ class tx_lfeditor_mod1_file_baseXML extends tx_lfeditor_mod1_file_base {
 	 * @return array meta content
 	 */
 	private function prepareMeta() {
-		if (is_array($this->meta)) {
+		if (is_array($this->meta) && count($this->meta)) {
 			foreach ($this->meta as $label => $value) {
 				$this->meta[$label] = str_replace("\r", '', str_replace("\n", '<br />', $value));
 			}
@@ -230,8 +227,10 @@ class tx_lfeditor_mod1_file_baseXML extends tx_lfeditor_mod1_file_base {
 			if ($this->checkLocalizedFile(basename($this->originLang[$lang]), $lang)) {
 				if (is_array($this->localLang[$lang]) && count($this->localLang[$lang])) {
 					$languageFiles[$this->originLang[$lang]] .=
-						$this->array2xml($this->getLangContent($this->localLang[$lang], $lang),
-							'T3locallangExt');
+						$this->array2xml(
+							$this->getLangContent($this->localLang[$lang], $lang),
+							'T3locallangExt'
+						);
 
 					try {
 						$mainFileContent['data'][$lang] =
@@ -246,8 +245,10 @@ class tx_lfeditor_mod1_file_baseXML extends tx_lfeditor_mod1_file_base {
 				}
 
 			} else {
-				$mainFileContent = array_merge_recursive($mainFileContent,
-					$this->getLangContent($this->localLang[$lang], $lang));
+				$mainFileContent = array_merge_recursive(
+					$mainFileContent,
+					$this->getLangContent($this->localLang[$lang], $lang)
+				);
 			}
 		}
 
@@ -264,7 +265,10 @@ class tx_lfeditor_mod1_file_baseXML extends tx_lfeditor_mod1_file_base {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_baseXML.php']) {
+if (defined(
+		'TYPO3_MODE'
+	) && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_baseXML.php']
+) {
 	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_baseXML.php']);
 }
 

@@ -1,8 +1,9 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,10 +28,6 @@ require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.tx_lfeditor_mod1_fi
 
 /**
  * xll workspace class (xml)
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package TYPO3
- * @subpackage tx_lfeditor
  */
 class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 	/**
@@ -123,7 +120,7 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 	 */
 	private function getLangContent($localLang, $lang) {
 		$content['data'][$lang] = '';
-		if (!is_array($localLang)) {
+		if (!is_array($localLang) || !count($localLang)) {
 			return $content;
 		}
 
@@ -142,7 +139,7 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 	 * @return array meta content
 	 */
 	private function prepareMeta() {
-		if (is_array($this->meta)) {
+		if (is_array($this->meta) && count($this->meta)) {
 			foreach ($this->meta as $label => $value) {
 				$this->meta[$label] = str_replace("\r", '', str_replace("\n", '<br />', $value));
 			}
@@ -168,8 +165,10 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 		$mainFileContent = array('meta' => $this->prepareMeta());
 		$languages = sgLib::getSystemLanguages();
 		foreach ($languages as $langKey) {
-			$mainFileContent = array_merge_recursive($mainFileContent,
-				$this->getLangContent($this->localLang[$langKey], $langKey));
+			$mainFileContent = array_merge_recursive(
+				$mainFileContent,
+				$this->getLangContent($this->localLang[$langKey], $langKey)
+			);
 		}
 
 		// prepare Content for the main file
@@ -180,7 +179,10 @@ class tx_lfeditor_mod1_file_xllXML extends tx_lfeditor_mod1_file_xll {
 }
 
 // Default-Code for using XCLASS
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllXML.php']) {
+if (defined(
+		'TYPO3_MODE'
+	) && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllXML.php']
+) {
 	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xllXML.php']);
 }
 

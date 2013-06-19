@@ -1,4 +1,4 @@
-######################### general informations ####################
+######################### general information ####################
 
 # cat=basic; type=string; label=view languages: Please enter a list of languages that you want to edit (only the short name). Let this field empty if you want to view all languages (Warning: very long list!). Please note that the default language is always included.
 viewLanguages =
@@ -21,7 +21,7 @@ extIgnore = /^(CVS|.svn|.git|csh_)/
 # cat=basic; type=integer; label=maximal amount of backup files: Set this value to zero if you like to keep all files else all old files will be deleted unto the given amount.
 anzBackup = 5
 
-# cat=basic; type=integer; label=amount of rows in text area: Please enter the amoung of rows you want in a normal textarea. This feature isnt supported if you use tinyMCE.
+# cat=basic; type=integer; label=amount of rows in text area: Please enter the amount of rows you want in a normal textarea. This feature is not supported if you use tinyMCE.
 numTextAreaRows = 5
 
 # cat=basic; type=integer; label=constants per site in language file edit mode: Please enter the amount of constants per site in the language file edit mode. This value has no influence if you use parallel edit or not.

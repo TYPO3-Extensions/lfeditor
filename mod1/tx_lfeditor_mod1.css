@@ -21,7 +21,6 @@
 /* fieldset class (box) */
 fieldset.tx-lfeditor-fieldset, fieldset.tx-lfeditor-fieldset fieldset {
 	padding: 10px 5px 5px;
-	_padding-top: 20px;
 	margin-top: 5px;
 	margin-bottom: 10px;
 	border: 1px solid #AAA;
@@ -38,7 +37,6 @@ fieldset.tx-lfeditor-fleft {
 
 fieldset.tx-lfeditor-fright {
 	float: right;
-	_clear: both;
 }
 
 fieldset.tx-lfeditor-fieldset legend {
@@ -97,12 +95,12 @@ fieldset.tx-lfeditor-fieldset fieldset dd {
 }
 
 .tx-lfeditor-goodMarkup, .tx-lfeditor-success {
-	color: #339900;
+	color: #390;
 	font-weight: bold;
 }
 
 .tx-lfeditor-badMarkup, .tx-lfeditor-error, .tx-lfeditor-delConst {
-	color: #CC2200;
+	color: #C20;
 	font-weight: bold;
 }
 
@@ -119,11 +117,11 @@ fieldset.tx-lfeditor-fieldset fieldset dd {
 }
 
 #tx-lfeditor-table-markup1 {
-	background-color: #CC2200;
+	background-color: #C20;
 }
 
 #tx-lfeditor-table-markup2 {
-	background-color: #339900;
+	background-color: #390;
 }
 
 #tx-lfeditor-table-markup3 {
@@ -173,7 +171,6 @@ fieldset.tx-lfeditor-fieldset fieldset dd {
 }
 
 .tx-lfeditor-label, .tx-lfeditor-input {
-	/*margin-bottom: 11px;*/
 	display: inline-block;
 	vertical-align: top;
 }
@@ -209,8 +206,8 @@ fieldset.tx-lfeditor-fieldset fieldset dd {
 }
 
 .handle-normal {
-	color: #339900;
-	background: #339900;
+	color: #390;
+	background: #390;
 }
 
 .handle-highlight {

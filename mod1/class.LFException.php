@@ -1,11 +1,12 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
- *  This script isnt part of any project. The script is
+ *  This script is part of the TYPO3 project. The TYPO3 project is
  *  free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -24,19 +25,17 @@
 
 /**
  * adds a new error exception
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package TYPO3
- * @subpackage tx_lfeditor
  */
 class LFException extends Exception {
-	/**#@+
-	 * @var string status wraps (i.e. "<p>|</p>" (without quotes))
-	 * @see setWrap()
+	/**
+	 * @var string
 	 */
 	private static $errorWrap = '|';
+
+	/**
+	 * @var string
+	 */
 	private static $noticeWrap = '|';
-	/**#@-*/
 
 	/**
 	 * @var string
@@ -67,7 +66,9 @@ class LFException extends Exception {
 	 */
 	public function __construct($msg, $wrapType = 0, $staticMsg = '') {
 		if (!empty($msg)) {
-			$msg = $GLOBALS['LANG']->getLL($msg);
+			/** @var \TYPO3\CMS\Lang\LanguageService $lang */
+			$lang = $GLOBALS['LANG'];
+			$msg = $lang->getLL($msg);
 		}
 
 		if (empty($msg)) {

@@ -1,8 +1,9 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,15 +23,11 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/** general filefunctions */
+/** general file functions */
 require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.tx_lfeditor_mod1_file_base.php');
 
 /**
  * base workspace class (xlf)
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package TYPO3
- * @subpackage tx_lfeditor
  */
 class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 	/**
@@ -82,7 +79,7 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 		$xmlContent = json_decode(json_encode($xmlContent), TRUE);
 
 		// check data
-		if (!is_array($xmlContent['file']['body'])) {
+		if (!is_array($xmlContent['file']['body']) || !count($xmlContent['file']['body'])) {
 			throw new LFException('failure.search.noFileContent', 0, '(' . $file . ')');
 		}
 
@@ -250,7 +247,9 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 			$body = '<body>' . "\n";
 			foreach ($phpArray['data'] as $constant => $value) {
 				$approved = ($targetLanguage !== 'default' ? ' approved="yes"' : '');
-				$body .= "\t\t" . '<trans-unit id="' . htmlspecialchars($constant) . '"' . $approved . ' xml:space="preserve">' . "\n";
+				$body .= "\t\t" . '<trans-unit id="' . htmlspecialchars(
+						$constant
+					) . '"' . $approved . ' xml:space="preserve">' . "\n";
 				if ($targetLanguage !== 'default') {
 					$body .= "\t\t\t" . '<source>' . htmlspecialchars($defaultLanguage[$constant]) . '</source>' . "\n";
 					$body .= "\t\t\t" . '<target>' . htmlspecialchars($value) . '</target>' . "\n";
@@ -274,7 +273,7 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 	 */
 	private function getLangContent($localLang) {
 		$content = array();
-		if (!is_array($localLang)) {
+		if (!is_array($localLang) || !count($localLang)) {
 			return $content;
 		}
 
@@ -292,7 +291,7 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 	 * @return array meta content
 	 */
 	private function prepareMeta() {
-		if (is_array($this->meta)) {
+		if (is_array($this->meta) && count($this->meta)) {
 			foreach ($this->meta as $label => $value) {
 				$this->meta[$label] = str_replace("\r", '', str_replace("\n", '<br />', $value));
 			}
@@ -352,7 +351,10 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_baseXLF.php']) {
+if (defined(
+		'TYPO3_MODE'
+	) && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_baseXLF.php']
+) {
 	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_baseXLF.php']);
 }
 

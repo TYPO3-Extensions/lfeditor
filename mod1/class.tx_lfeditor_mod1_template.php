@@ -1,8 +1,9 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,10 +25,6 @@
 
 /**
  * contains output methods of module 'lfeditor'
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package TYPO3
- * @subpackage tx_lfeditor
  */
 class tx_lfeditor_mod1_template {
 	/**
@@ -39,7 +36,7 @@ class tx_lfeditor_mod1_template {
 	 * $buttons[<someName>]['onClick'] = js ability
 	 * $buttons[<someName>]['type'] = submit or reset
 	 *
-	 * @param array $buttons button informations (see above)
+	 * @param array $buttons button information (see above)
 	 * @return string buttons (HTML code)
 	 */
 	public static function outputAddButtons($buttons) {
@@ -69,21 +66,24 @@ class tx_lfeditor_mod1_template {
 		// generate hidden field
 		$content = '<input type="hidden" name="submit" value="1" />';
 
+		/** @var \TYPO3\CMS\Lang\LanguageService $lang */
+		$lang = $GLOBALS['LANG'];
+
 		// del-question
-		$content .= $GLOBALS['LANG']->getLL('function.const.delete.question');
+		$content .= $lang->getLL('function.const.delete.question');
 		$content .= '<p class="tx-lfeditor-delConst">' . $constant . '</p>';
 
 		// checkbox
 		$content .= '<p><input id="delAllLang" type="checkbox" name="delAllLang" ' .
 			'value="1" checked="checked">';
 		$content .= '<label for="delAllLang"> ' .
-			$GLOBALS['LANG']->getLL('function.const.delete.inAllLanguages') . '</label> </p>';
+			$lang->getLL('function.const.delete.inAllLanguages') . '</label> </p>';
 
 		// submit and reset
 		$buttons = array(
 			'submit' => array(
 				'css' => 'tx-lfeditor-buttonSubmit',
-				'value' => $GLOBALS['LANG']->getLL('button.delete'),
+				'value' => $lang->getLL('button.delete'),
 				'type' => 'submit'
 			),
 		);
@@ -102,17 +102,20 @@ class tx_lfeditor_mod1_template {
 		// generate hidden field
 		$content = '<input type="hidden" name="submit" value="1" />';
 
+		/** @var \TYPO3\CMS\Lang\LanguageService $lang */
+		$lang = $GLOBALS['LANG'];
+
 		// del-question
-		$content .= '<p>' . $GLOBALS['LANG']->getLL('function.const.rename.hint') . '</p> <br />';
+		$content .= '<p>' . $lang->getLL('function.const.rename.hint') . '</p> <br />';
 		$content .= '<p><input type="text" name="newConst" value="' . $constant . '" /> ';
-		$content .= '<strong>' . $GLOBALS['LANG']->getLL('function.const.rename.newName') .
+		$content .= '<strong>' . $lang->getLL('function.const.rename.newName') .
 			'</strong></p>';
 
 		// submit and reset
 		$buttons = array(
 			'submit' => array(
 				'css' => 'tx-lfeditor-buttonSubmit',
-				'value' => $GLOBALS['LANG']->getLL('button.rename'),
+				'value' => $lang->getLL('button.rename'),
 				'type' => 'submit'
 			),
 		);
@@ -131,21 +134,24 @@ class tx_lfeditor_mod1_template {
 	 * @return string output (HTML code)
 	 */
 	public static function outputSearchConst($searchStr, $resultArray, $preMsg, $checked) {
+		/** @var \TYPO3\CMS\Lang\LanguageService $lang */
+		$lang = $GLOBALS['LANG'];
+
 		// input dialog
 		$checked = $checked ? 'checked="checked"' : '';
 		$content = '<p id="tx-lfeditor-caseSensitiveBox"style="margin-bottom: 5px;">' .
 			'<input type="checkbox" name="caseSensitive" value="1" ' .
 			'onchange="lfe_processFormData(xajax.getFormValues(\'mainForm\'))" ' .
 			'name="caseSensitive" value="1" ' . $checked . '/> ' .
-			$GLOBALS['LANG']->getLL('function.search.caseSensitiveCheckbox') . '</p>';
+			$lang->getLL('function.search.caseSensitiveCheckbox') . '</p>';
 		$content .= '<p><input type="text" name="searchStr" size="30" value="' . $searchStr . '" /> ';
 		$content .= '<span class="tx-lfeditor-submit">' . '<button type="submit">' .
-			$GLOBALS['LANG']->getLL('button.search') . '</button></span></p>';
+			$lang->getLL('button.search') . '</button></span></p>';
 
 		// display result array
 		$content .= '<fieldset class="tx-lfeditor-fieldset bgColor5">';
 		$content .= '<legend class="bgColor3">' .
-			$GLOBALS['LANG']->getLL('function.const.search.result') . '</legend>';
+			$lang->getLL('function.const.search.result') . '</legend>';
 
 		// static message
 		if (!empty($preMsg)) {
@@ -181,10 +187,13 @@ class tx_lfeditor_mod1_template {
 	 * @return string input field (HTML code)
 	 */
 	public static function fieldSetToken($curToken) {
+		/** @var \TYPO3\CMS\Lang\LanguageService $lang */
+		$lang = $GLOBALS['LANG'];
+
 		$content = '<input type="text" size="1" maxlength="1" name="usedToken" ' .
 			'value="' . $curToken . '" /> ';
 		$content .= '<span class="tx-lfeditor-submit"> <button type="submit">' .
-			$GLOBALS['LANG']->getLL('select.explodeToken') . '</button> </span>';
+			$lang->getLL('select.explodeToken') . '</button> </span>';
 
 		return $content;
 	}
@@ -203,7 +212,8 @@ class tx_lfeditor_mod1_template {
 	 * @param int $maxDim
 	 * @return boolean always true
 	 */
-	public static function genTree($tree, &$content, &$myIDs, $treeHide, $parentBranch = '',
+	public static function genTree(
+		$tree, &$content, &$myIDs, $treeHide, $parentBranch = '',
 		$numBranches = array(), $last = array(), $curDim = 0, $maxDim = 9999
 	) {
 		// prevent endless loops
@@ -271,7 +281,9 @@ class tx_lfeditor_mod1_template {
 				}
 
 				// generate branch
-				$cont .= '<a href="javascript:openCloseTreeEntry(\'' . t3lib_extMgm::extRelPath('lfeditor') . '\', \'' . $myID . '\',' .
+				$cont .= '<a href="javascript:openCloseTreeEntry(\'' . t3lib_extMgm::extRelPath(
+						'lfeditor'
+					) . '\', \'' . $myID . '\',' .
 					'\'pic' . $myID . '\',' . $bottom . ')">';
 				$cont .= '<img id="pic' . $myID . '" src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/tree' .
 					$pic . $picAdd . '.gif" ' . 'alt="tree' . $pic . $picAdd .
@@ -281,15 +293,19 @@ class tx_lfeditor_mod1_template {
 				$content .= '<dt>' . $cont . '</dt>';
 				$content .= '<dd><dl class="tx-lfeditor-treeview" ' . $style . ' id="' . $myID . '">';
 
-				tx_lfeditor_mod1_template::genTree($tree, $content, $myIDs, TRUE,
-					$branches[$curBranch], $numBranches, $last, $curDim + 1);
+				tx_lfeditor_mod1_template::genTree(
+					$tree, $content, $myIDs, TRUE,
+					$branches[$curBranch], $numBranches, $last, $curDim + 1
+				);
 				$content .= '</dl></dd>';
 			} else {
 				if ($name == $tree[$curDim][$branches[$curBranch]]['name']) {
 					$name = '<span class="tx-lfeditor-goodMarkup">' . $name . '</span>';
 				}
 
-				$cont .= '<img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/join' . $picAdd . '.gif" alt="join' . $picAdd . '" ' .
+				$cont .= '<img src="' . t3lib_extMgm::extRelPath(
+						'lfeditor'
+					) . 'res/images/join' . $picAdd . '.gif" alt="join' . $picAdd . '" ' .
 					'style="margin-left: ' . $lineSpace . 'px; margin-right: 5px;" /> ';
 				$cont .= '<a href="#" title="' . $branches[$curBranch] . '" ' .
 					'onclick="submitRedirectForm(\'constant\', \'' . $branches[$curBranch] . '\');"> ' .
@@ -314,18 +330,21 @@ class tx_lfeditor_mod1_template {
 	 * @return string output (HTML code)
 	 */
 	public static function outputTreeView($tree, $treeHide = TRUE) {
+		/** @var \TYPO3\CMS\Lang\LanguageService $lang */
+		$lang = $GLOBALS['LANG'];
+
 		// display result array
 		$content = '<fieldset class="tx-lfeditor-fieldset bgColor5">';
 		$content .= '<legend class="bgColor3">' .
-			$GLOBALS['LANG']->getLL('function.const.treeview.treeview') . '</legend>';
+			$lang->getLL('function.const.treeview.treeview') . '</legend>';
 
 		// hint
 		$content .= '<p class="tx-lfeditor-goodMarkup"> xyz -- ' .
-			$GLOBALS['LANG']->getLL('function.const.treeview.goodMarkupHint') . '</p>';
+			$lang->getLL('function.const.treeview.goodMarkupHint') . '</p>';
 		$content .= '<p class="tx-lfeditor-badMarkup"> xyz -- ' .
-			$GLOBALS['LANG']->getLL('function.const.treeview.badMarkupHint') . '</p>';
+			$lang->getLL('function.const.treeview.badMarkupHint') . '</p>';
 		$content .= '<p class="tx-lfeditor-specialMarkup"> xyz -- ' .
-			$GLOBALS['LANG']->getLL('function.const.treeview.specialMarkupHint') . '</p>';
+			$lang->getLL('function.const.treeview.specialMarkupHint') . '</p>';
 
 		// generate tree
 		$treeContent = '';
@@ -341,8 +360,10 @@ class tx_lfeditor_mod1_template {
 
 		// generate output
 		$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' .
-			'<a href="javascript:openCloseTreeEntry(\'' . t3lib_extMgm::extRelPath('lfeditor') . '\', ' . $JSArgs . ');">' .
-			$GLOBALS['LANG']->getLL('function.const.treeview.hideUnhideAll') . '</a>' .
+			'<a href="javascript:openCloseTreeEntry(\'' . t3lib_extMgm::extRelPath(
+				'lfeditor'
+			) . '\', ' . $JSArgs . ');">' .
+			$lang->getLL('function.const.treeview.hideUnhideAll') . '</a>' .
 			'</legend>' . $treeContent . '</fieldset>';
 		$content .= '</fieldset>';
 
@@ -364,6 +385,9 @@ class tx_lfeditor_mod1_template {
 	public static function outputEditConst($langArray, $constant, $localLang, $textAreaRows) {
 		// additional hidden form values
 		$content = '<input type="hidden" name="submit" value="1" />';
+
+		/** @var \TYPO3\CMS\Lang\LanguageService $langInstance */
+		$langInstance = $GLOBALS['LANG'];
 
 		// generate form
 		$k = 0;
@@ -389,7 +413,7 @@ class tx_lfeditor_mod1_template {
 		$buttons = array(
 			'submit' => array(
 				'css' => 'tx-lfeditor-buttonSubmit',
-				'value' => $GLOBALS['LANG']->getLL('button.save'),
+				'value' => $langInstance->getLL('button.save'),
 				'type' => 'submit'
 			),
 		);
@@ -408,9 +432,12 @@ class tx_lfeditor_mod1_template {
 	 * @return string output (HTML code)
 	 */
 	public static function outputAddConst($langArray, $constant, $defValues, $textAreaRows) {
+		/** @var \TYPO3\CMS\Lang\LanguageService $langInstance */
+		$langInstance = $GLOBALS['LANG'];
+
 		// constant name field
 		$content = '<p><input type="text" name="nameOfConst" value="' . $constant . '" /> ';
-		$content .= '<strong>' . $GLOBALS['LANG']->getLL('function.const.add.name') . '</strong></p>';
+		$content .= '<strong>' . $langInstance->getLL('function.const.add.name') . '</strong></p>';
 
 		// additional hidden form values
 		$content .= '<input type="hidden" name="submit" value="1" />';
@@ -438,7 +465,7 @@ class tx_lfeditor_mod1_template {
 		$buttons = array(
 			'submit' => array(
 				'css' => 'tx-lfeditor-buttonSubmit',
-				'value' => $GLOBALS['LANG']->getLL('button.save'),
+				'value' => $langInstance->getLL('button.save'),
 				'type' => 'submit'
 			),
 		);
@@ -467,9 +494,14 @@ class tx_lfeditor_mod1_template {
 	 * @param integer $textAreaRows amount of rows in textarea
 	 * @return string output (HTML code)
 	 */
-	public static function outputEditLangfile($constValues, $curConsts, $siteConsts, $totalConsts,
-											  $langName, $patternName, $parallelEdit, $buttonBack, $buttonNext, $textAreaRows) {
-		// informations
+	public static function outputEditLangfile(
+		$constValues, $curConsts, $siteConsts, $totalConsts,
+		$langName, $patternName, $parallelEdit, $buttonBack, $buttonNext, $textAreaRows
+	) {
+		/** @var \TYPO3\CMS\Lang\LanguageService $lang */
+		$lang = $GLOBALS['LANG'];
+
+		// information
 		$content = '<p><span id="tx-lfeditor-numberCur">' . $curConsts . '</span> / ' .
 			'<span id="tx-lfeditor-numberOf">' . $totalConsts . '</span></p>';
 
@@ -540,7 +572,7 @@ class tx_lfeditor_mod1_template {
 		if ($buttonBack) {
 			$buttons['back'] = array(
 				'css' => 'tx-lfeditor-buttonSessionBack',
-				'value' => $GLOBALS['LANG']->getLL('button.session.back'),
+				'value' => $lang->getLL('button.session.back'),
 				'onClick' => 'submitSessionLangFileEdit(1);',
 				'type' => 'submit',
 			);
@@ -548,20 +580,20 @@ class tx_lfeditor_mod1_template {
 		if ($buttonNext) {
 			$buttons['next'] = array(
 				'css' => 'tx-lfeditor-buttonSessionNext',
-				'value' => $GLOBALS['LANG']->getLL('button.session.next'),
+				'value' => $lang->getLL('button.session.next'),
 				'onClick' => 'submitSessionLangFileEdit(2);',
 				'type' => 'submit',
 			);
 		}
 		$buttons['submit'] = array(
 			'css' => 'tx-lfeditor-buttonSubmit',
-			'value' => $GLOBALS['LANG']->getLL('button.save'),
+			'value' => $lang->getLL('button.save'),
 			'onClick' => 'submitSessionLangFileEdit(3, 0);',
 			'type' => 'submit',
 		);
 		$buttons['cancel'] = array(
 			'css' => 'tx-lfeditor-buttonCancel',
-			'value' => $GLOBALS['LANG']->getLL('button.cancel'),
+			'value' => $lang->getLL('button.cancel'),
 			'onClick' => 'submitSessionLangFileEdit(-1);',
 			'type' => 'submit',
 		);
@@ -573,29 +605,32 @@ class tx_lfeditor_mod1_template {
 	/**
 	 * generates output for email form
 	 *
-	 * @param array $metaArray meta informations
+	 * @param array $metaArray meta information
 	 * @param integer $textAreaRows amount of rows in textarea
 	 * @return string output (HTML code)
 	 */
 	public static function outputGeneralEmail($metaArray, $textAreaRows) {
-		$header = $GLOBALS['LANG']->getLL('function.general.mail.form');
+		/** @var \TYPO3\CMS\Lang\LanguageService $lang */
+		$lang = $GLOBALS['LANG'];
+
+		$header = $lang->getLL('function.general.mail.form');
 		$content = '<fieldset class="tx-lfeditor-fieldset bgColor5 tx-lfeditor-fleft">';
 		$content .= '<legend class="bgColor3">' . $header . '</legend>';
 
 		// to email address
-		$label = $GLOBALS['LANG']->getLL('function.general.mail.toAddress');
+		$label = $lang->getLL('function.general.mail.toAddress');
 		$content .= '<label for="toEmail" class="tx-lfeditor-label">' . $label . '</label>';
 		$content .= '<input type="text" id="toEmail"  class="tx-lfeditor-input"' .
 			'name="mailItEmailToAddress" value="' . $metaArray['authorEmail'] . '" />';
 
 		// from email address
-		$label = $GLOBALS['LANG']->getLL('function.general.mail.fromAddress');
+		$label = $lang->getLL('function.general.mail.fromAddress');
 		$content .= '<label for="fromEmail" class="tx-lfeditor-label">' . $label . '</label>';
 		$content .= '<input type="text" id="fromEmail"  class="tx-lfeditor-input"' .
 			'name="mailItEmailFromAddress" />';
 
 		// email subject
-		$label = $GLOBALS['LANG']->getLL('function.general.mail.subject');
+		$label = $lang->getLL('function.general.mail.subject');
 		$content .= '<label for="subject" class="tx-lfeditor-label">' . $label . '</label>';
 		$content .= '<input type="text" id="subject"  class="tx-lfeditor-input"' .
 			'name="mailItEmailSubject" />';
@@ -618,7 +653,7 @@ class tx_lfeditor_mod1_template {
 	 *
 	 * Structure of $infos:
 	 * $infos[$langKey]['origin'] == (array) language origins (relTypo3File)
-	 * $infos[$langKey]['meta'] == (array) meta informations (only default needed)
+	 * $infos[$langKey]['meta'] == (array) meta information (only default needed)
 	 * $infos[$langKey]['type'] == (string) location type (translated string)
 	 * $infos[$langKey]['type2'] == (string) language type (merged|l10n|splitted)
 	 * $infos[$langKey]['numTranslated'] == (integer) translated constants
@@ -633,23 +668,28 @@ class tx_lfeditor_mod1_template {
 	 * @return string output (HTML code)
 	 */
 	public static function outputGeneral($infos, $refLang, $textAreaRows, $flagSpecial = FALSE) {
-		$summary = $GLOBALS['LANG']->getLL('table.fileInfo');
+		/** @var \TYPO3\CMS\Lang\LanguageService $lang */
+		$lang = $GLOBALS['LANG'];
+
+		$summary = $lang->getLL('table.fileInfo');
 		$content = '<table id="tx-lfeditor-table" summary="' . $summary . '">';
 
 		// table header
 		$content .= '<thead><tr>';
-		$content .= '<th class="bgColor5">' . $GLOBALS['LANG']->getLL('lang.shortcut') . '</th>';
-		$content .= '<th class="bgColor5">' . $GLOBALS['LANG']->getLL('lang.state') . '</th>';
-		$content .= '<th class="bgColor5">' . $GLOBALS['LANG']->getLL('ext.type') . '</th>';
-		$content .= '<th class="bgColor5">' . $GLOBALS['LANG']->getLL('lang.origin') . '</th>';
+		$content .= '<th class="bgColor5">' . $lang->getLL('lang.shortcut') . '</th>';
+		$content .= '<th class="bgColor5">' . $lang->getLL('lang.state') . '</th>';
+		$content .= '<th class="bgColor5">' . $lang->getLL('ext.type') . '</th>';
+		$content .= '<th class="bgColor5">' . $lang->getLL('lang.origin') . '</th>';
 		if ($flagSpecial) {
-			$content .= '<th id="tx-lfeditor-table-markup4"><img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/mail.gif" alt="' .
-				$GLOBALS['LANG']->getLL('function.backupMgr.delete') . '" /></th>';
-			$char = substr($GLOBALS['LANG']->getLL('function.general.split.splitNormal'), 0, 1);
+			$content .= '<th id="tx-lfeditor-table-markup4"><img src="' . t3lib_extMgm::extRelPath(
+					'lfeditor'
+				) . 'res/images/mail.gif" alt="' .
+				$lang->getLL('function.backupMgr.delete') . '" /></th>';
+			$char = substr($lang->getLL('function.general.split.splitNormal'), 0, 1);
 			$content .= '<th id="tx-lfeditor-table-markup1">' . strtoupper($char) . '</th>';
-			$char = substr($GLOBALS['LANG']->getLL('function.general.split.splitL10n'), 0, 1);
+			$char = substr($lang->getLL('function.general.split.splitL10n'), 0, 1);
 			$content .= '<th id="tx-lfeditor-table-markup2">' . strtoupper($char) . '</th>';
-			$char = substr($GLOBALS['LANG']->getLL('function.general.split.merge'), 0, 1);
+			$char = substr($lang->getLL('function.general.split.merge'), 0, 1);
 			$content .= '<th id="tx-lfeditor-table-markup3">' . strtoupper($char) . '</th>';
 		}
 		$content .= '</tr></thead>';
@@ -670,10 +710,10 @@ class tx_lfeditor_mod1_template {
 
 			if ($info['numTranslated'] >= $infos[$refLang]['numTranslated']) {
 				$content .= '<td class="bgColor4"><span class="tx-lfeditor-goodMarkup">' .
-					$GLOBALS['LANG']->getLL('lang.complete') . '</span><br />' . $constInfo . '</td>';
+					$lang->getLL('lang.complete') . '</span><br />' . $constInfo . '</td>';
 			} else {
 				$content .= '<td class="bgColor4"><span class="tx-lfeditor-badMarkup">' .
-					$GLOBALS['LANG']->getLL('lang.incomplete') . '</span><br />' . $constInfo . '</td>';
+					$lang->getLL('lang.incomplete') . '</span><br />' . $constInfo . '</td>';
 			}
 
 			// type and origin
@@ -718,12 +758,12 @@ class tx_lfeditor_mod1_template {
 		$content .= '</tbody></table>';
 
 		// generate meta handling fieldset dialog
-		$header = $GLOBALS['LANG']->getLL('function.general.metaInfo.metaInfo');
+		$header = $lang->getLL('function.general.metaInfo.metaInfo');
 		$content .= '<fieldset class="tx-lfeditor-fieldset bgColor5 tx-lfeditor-fleft">';
 		$content .= '<legend class="bgColor3">' . $header . '</legend>';
 
 		// type and csh table
-		$header = $GLOBALS['LANG']->getLL('function.general.metaInfo.type');
+		$header = $lang->getLL('function.general.metaInfo.type');
 		$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' . $header . '</legend>';
 		$content .= '<div><select id="metaType" name="meta[type]" onchange="metaTypeCheck();">';
 
@@ -739,22 +779,22 @@ class tx_lfeditor_mod1_template {
 		}
 		$content .= '</select>';
 
-		$content .= $GLOBALS['LANG']->getLL('function.general.metaInfo.cshTable') . '&nbsp;';
+		$content .= $lang->getLL('function.general.metaInfo.cshTable') . '&nbsp;';
 		$disabled = $infos['default']['meta']['type'] == 'CSH' ? '' : 'disabled="disabled"';
 		$content .= '<input type="text" class="tx-lfeditor-input" ' . $disabled . ' id="metaCSHTable" name="meta[csh_table]"' .
 			'value="' . $infos['default']['meta']['csh_table'] . '" /></div>';
 		$content .= '</fieldset>';
 
 		// author
-		$header = $GLOBALS['LANG']->getLL('function.general.metaInfo.author');
+		$header = $lang->getLL('function.general.metaInfo.author');
 		$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' . $header . '</legend>';
-		$label = $GLOBALS['LANG']->getLL('function.general.metaInfo.author.name');
+		$label = $lang->getLL('function.general.metaInfo.author.name');
 		$value = $infos['default']['meta']['authorName'];
 		$content .= '<div><label for="name" class="tx-lfeditor-label">' . $label . '</label>';
 		$content .= '<input type="text" id="name" class="tx-lfeditor-input" ' .
 			'name="meta[authorName]" value="' . $value . '" /></div>';
 
-		$label = $GLOBALS['LANG']->getLL('function.general.metaInfo.author.email');
+		$label = $lang->getLL('function.general.metaInfo.author.email');
 		$value = $infos['default']['meta']['authorEmail'];
 		$content .= '<div><label for="email" class="tx-lfeditor-label">' . $label . '</label>';
 		$content .= '<input type="text" id="email" class="tx-lfeditor-input" ' .
@@ -762,7 +802,7 @@ class tx_lfeditor_mod1_template {
 		$content .= '</fieldset>';
 
 		// description
-		$header = $GLOBALS['LANG']->getLL('function.general.metaInfo.desc');
+		$header = $lang->getLL('function.general.metaInfo.desc');
 		$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' . $header . '</legend>';
 		$desc = $infos['default']['meta']['description'];
 		$content .= '<textarea class="tx-lfeditor-textarea" ' .
@@ -771,35 +811,35 @@ class tx_lfeditor_mod1_template {
 		$content .= '</fieldset> </fieldset>';
 
 		// options dialog
-		$header = $GLOBALS['LANG']->getLL('function.general.options');
+		$header = $lang->getLL('function.general.options');
 		$content .= '<fieldset class="tx-lfeditor-fieldset bgColor5 tx-lfeditor-fright">';
 		$content .= '<legend class="bgColor3">' . $header . '</legend>';
 
 		// split/merge options
 		if ($flagSpecial) {
 			$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' .
-				$GLOBALS['LANG']->getLL('function.general.split.split') . '</legend>';
-			$value = $GLOBALS['LANG']->getLL('function.general.split.splitNormal');
+				$lang->getLL('function.general.split.split') . '</legend>';
+			$value = $lang->getLL('function.general.split.splitNormal');
 			$content .= '<p> <input type="radio" name="splitFile" id="splitNormal" value="1" /> ' .
 				'<label for="splitNormal">' . $value . '</label></p>';
-			$value = $GLOBALS['LANG']->getLL('function.general.split.splitL10n');
+			$value = $lang->getLL('function.general.split.splitL10n');
 			$content .= '<p> <input type="radio" name="splitFile" id="splitL10n" value="2" /> ' .
 				'<label for="splitL10n">' . $value . '</label></p>';
-			$value = $GLOBALS['LANG']->getLL('function.general.split.merge');
+			$value = $lang->getLL('function.general.split.merge');
 			$content .= '<p> <input type="radio" name="splitFile" id="merge" value="3" /> ' .
 				'<label for="merge">' . $value . '</label></p>';
 			$content .= '</fieldset>';
 		}
 
 		// transform options
-		$header = $GLOBALS['LANG']->getLL('function.general.transform.transform');
+		$header = $lang->getLL('function.general.transform.transform');
 		$content .= '<fieldset class="bgColor4"><legend class="bgColor3">' . $header . '</legend>';
 		$content .= '<p> <input type="radio" name="transFile" id="xlf" value="xlf" /> ' .
 			'<label for="xlf">XLF</label></p>';
-		$value = $GLOBALS['LANG']->getLL('function.general.transform.xml');
+		$value = $lang->getLL('function.general.transform.xml');
 		$content .= '<p> <input type="radio" name="transFile" id="xml" value="xml" /> ' .
 			'<label for="xml">' . $value . '</label></p>';
-		$value = $GLOBALS['LANG']->getLL('function.general.transform.php');
+		$value = $lang->getLL('function.general.transform.php');
 		$content .= '<p> <input type="radio" name="transFile" id="php" value="php" /> ' .
 			'<label for="php">' . $value . '</label></p>';
 		$content .= '</fieldset> </fieldset>';
@@ -808,12 +848,12 @@ class tx_lfeditor_mod1_template {
 		$buttons = array(
 			'submit' => array(
 				'css' => 'tx-lfeditor-buttonSubmit',
-				'value' => $GLOBALS['LANG']->getLL('button.save'),
+				'value' => $lang->getLL('button.save'),
 				'type' => 'submit'
 			),
 			'reset' => array(
 				'css' => 'tx-lfeditor-buttonReset',
-				'value' => $GLOBALS['LANG']->getLL('button.reset'),
+				'value' => $lang->getLL('button.reset'),
 				'type' => 'reset'
 			),
 		);
@@ -839,24 +879,28 @@ class tx_lfeditor_mod1_template {
 	 * @param array $backupMeta backup meta content
 	 * @return string output (html code)
 	 */
-	public static function outputManageBackupsDiff($diff, $metaDiff, $origLang,
+	public static function outputManageBackupsDiff(
+		$diff, $metaDiff, $origLang,
 		$backupLang, $origOriginLang, $backupOriginLang, $origMeta, $backupMeta
 	) {
+		/** @var \TYPO3\CMS\Lang\LanguageService $lang */
+		$lang = $GLOBALS['LANG'];
+
 		// begin fieldset
 		$content = '<fieldset class="tx-lfeditor-fieldset bgColor5">';
 		$content .= '<legend class="bgColor3">' .
-			$GLOBALS['LANG']->getLL('function.backupMgr.diff.diff') . '</legend>';
+			$lang->getLL('function.backupMgr.diff.diff') . '</legend>';
 
 		// hint
 		$content .= '<p class="tx-lfeditor-goodMarkup"> xyz -- ' .
-			$GLOBALS['LANG']->getLL('function.backupMgr.diff.goodMarkupHint') . '</p>';
+			$lang->getLL('function.backupMgr.diff.goodMarkupHint') . '</p>';
 		$content .= '<p class="tx-lfeditor-badMarkup"> xyz -- ' .
-			$GLOBALS['LANG']->getLL('function.backupMgr.diff.badMarkupHint') . '</p>';
+			$lang->getLL('function.backupMgr.diff.badMarkupHint') . '</p>';
 
 		// meta entry
 		if (count($metaDiff)) {
 			$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' .
-				$GLOBALS['LANG']->getLL('function.backupMgr.diff.meta') . '</legend> <dl>';
+				$lang->getLL('function.backupMgr.diff.meta') . '</legend> <dl>';
 			foreach ($metaDiff as $label => $value) {
 				$value = htmlspecialchars($value);
 
@@ -866,8 +910,7 @@ class tx_lfeditor_mod1_template {
 				} elseif (!isset($origMeta[$label])) // constant lost
 				{
 					$content .= '<dt class="tx-lfeditor-badMarkup">' . $label . '</dt>';
-				}
-				else // constant normal
+				} else // constant normal
 				{
 					$content .= '<dt>' . $label . '</dt>';
 				}
@@ -885,13 +928,13 @@ class tx_lfeditor_mod1_template {
 			// get state
 			if ($backupOriginLang[$langKey] != $backupOriginLang['default']) {
 				try {
-					$state = $GLOBALS['LANG']->getLL('lang.splitted') . ' -- ';
+					$state = $lang->getLL('lang.splitted') . ' -- ';
 					$state .= typo3Lib::transTypo3File($backupOriginLang[$langKey], FALSE);
 				} catch (Exception $e) {
 					$state = $backupOriginLang[$langKey];
 				}
 			} else {
-				$state = $GLOBALS['LANG']->getLL('lang.merged');
+				$state = $lang->getLL('lang.merged');
 			}
 
 			$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' .
@@ -905,8 +948,7 @@ class tx_lfeditor_mod1_template {
 				} elseif (!isset($origLang[$langKey][$label])) // constant lost
 				{
 					$content .= '<dt class="tx-lfeditor-badMarkup">' . $label . '</dt>';
-				}
-				else // constant normal
+				} else // constant normal
 				{
 					$content .= '<dt>' . $label . '</dt>';
 				}
@@ -936,26 +978,29 @@ class tx_lfeditor_mod1_template {
 		$content .= '<input type="hidden" name="file" value="" />';
 		$content .= '<input type="hidden" name="langFile" value="" />';
 
+		/** @var \TYPO3\CMS\Lang\LanguageService $lang */
+		$lang = $GLOBALS['LANG'];
+
 		// begin table
 		$content .= '<table id="tx-lfeditor-table" ' .
-			'summary="' . $GLOBALS['LANG']->getLL('table.backups') . '">';
+			'summary="' . $lang->getLL('table.backups') . '">';
 
 		// table header
 		$content .= '<thead><tr>';
 		$content .= '<th class="bgColor5"> ' .
-			$GLOBALS['LANG']->getLL('function.backupMgr.date') . ' </th>';
+			$lang->getLL('function.backupMgr.date') . ' </th>';
 		$content .= '<th class="bgColor5"> ' .
-			$GLOBALS['LANG']->getLL('function.backupMgr.state') . ' </th>';
+			$lang->getLL('function.backupMgr.state') . ' </th>';
 		$content .= '<th class="bgColor5"> ' .
-			$GLOBALS['LANG']->getLL('lang.file.file') . ' </th>';
+			$lang->getLL('lang.file.file') . ' </th>';
 		$content .= '<th id="tx-lfeditor-table-markup1" class="bgColor5">' .
-			'<a href="#" title="' . $GLOBALS['LANG']->getLL('function.backupMgr.deleteAll') . '" ' .
+			'<a href="#" title="' . $lang->getLL('function.backupMgr.deleteAll') . '" ' .
 			'onclick="submitBackupForm(\'\', \'\', 0, 0, 1, 0);">' .
 			'<img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/garbage.gif" alt="' .
-			$GLOBALS['LANG']->getLL('function.backupMgr.delete') . '" /> </a> </th>';
-		$recover = strtoupper(substr($GLOBALS['LANG']->getLL('function.backupMgr.recover'), 0, 1));
+			$lang->getLL('function.backupMgr.delete') . '" /> </a> </th>';
+		$recover = strtoupper(substr($lang->getLL('function.backupMgr.recover'), 0, 1));
 		$content .= '<th id="tx-lfeditor-table-markup2">' . $recover . '</th>';
-		$diff = strtoupper(substr($GLOBALS['LANG']->getLL('function.backupMgr.diff.diff'), 0, 1));
+		$diff = strtoupper(substr($lang->getLL('function.backupMgr.diff.diff'), 0, 1));
 		$content .= '<th id="tx-lfeditor-table-markup3">' . $diff . '</th>';
 		$content .= '</tr></thead>';
 
@@ -974,15 +1019,14 @@ class tx_lfeditor_mod1_template {
 				$stateBool = FALSE;
 				if (!is_file($file)) {
 					$state = '<td class="tx-lfeditor-badMarkup bgColor4">' .
-						$GLOBALS['LANG']->getLL('function.backupMgr.missing') . '</td>';
+						$lang->getLL('function.backupMgr.missing') . '</td>';
 				} elseif (!is_file($origFile)) {
 					$state = '<td class="tx-lfeditor-badMarkup bgColor4">' .
-						$GLOBALS['LANG']->getLL('lang.file.missing') . '</td>';
-				}
-				else {
+						$lang->getLL('lang.file.missing') . '</td>';
+				} else {
 					$stateBool = TRUE;
 					$state = '<td class="tx-lfeditor-goodMarkup bgColor4">' .
-						$GLOBALS['LANG']->getLL('function.backupMgr.ok') . '</td>';
+						$lang->getLL('function.backupMgr.ok') . '</td>';
 				}
 
 				// generate row
@@ -992,24 +1036,30 @@ class tx_lfeditor_mod1_template {
 				$content .= '<td class="bgColor4">' . $langFile . '</td>';
 
 				// delete
-				$name = $GLOBALS['LANG']->getLL('function.const.delete.delete');
+				$name = $lang->getLL('function.const.delete.delete');
 				$content .= '<td class="bgColor4"> <a href="#" title="' . $name . '" ' .
 					'onclick="submitBackupForm(\'' . $filename . '\', \'' . $langFile . '\', ' .
-					'1, 0, 0, 0);"> <img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/garbage.gif" title="' . $name . '" ' .
+					'1, 0, 0, 0);"> <img src="' . t3lib_extMgm::extRelPath(
+						'lfeditor'
+					) . 'res/images/garbage.gif" title="' . $name . '" ' .
 					'alt="' . $name . '" /> </a> </td>';
 
 				// restore/diff
 				if ($stateBool) {
-					$name = $GLOBALS['LANG']->getLL('function.backupMgr.recover');
+					$name = $lang->getLL('function.backupMgr.recover');
 					$content .= '<td class="bgColor4"> <a href="#" title="' . $name . '" ' .
 						'onclick="submitBackupForm(\'' . $filename . '\', \'' . $langFile . '\', ' .
-						'0, 1, 0, 0);"> <img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/recover.gif" title="' . $name . '" ' .
+						'0, 1, 0, 0);"> <img src="' . t3lib_extMgm::extRelPath(
+							'lfeditor'
+						) . 'res/images/recover.gif" title="' . $name . '" ' .
 						'alt="' . $name . '" /> </a> </td>';
 
-					$name = $GLOBALS['LANG']->getLL('function.backupMgr.diff.diff');
+					$name = $lang->getLL('function.backupMgr.diff.diff');
 					$content .= '<td class="bgColor4"> <a href="#" title="' . $name . '" ' .
 						'onclick="submitBackupForm(\'' . $filename . '\', \'' . $langFile . '\', ' .
-						'0, 0, 0, 1);"> <img src="' . t3lib_extMgm::extRelPath('lfeditor') . 'res/images/diff.gif" title="' . $name . '" ' .
+						'0, 0, 0, 1);"> <img src="' . t3lib_extMgm::extRelPath(
+							'lfeditor'
+						) . 'res/images/diff.gif" title="' . $name . '" ' .
 						'alt="' . $name . '" /> </a> </td>';
 					$content .= '</tr>';
 				} else {
@@ -1024,7 +1074,10 @@ class tx_lfeditor_mod1_template {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_template.php']) {
+if (defined(
+		'TYPO3_MODE'
+	) && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_template.php']
+) {
 	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_template.php']);
 }
 

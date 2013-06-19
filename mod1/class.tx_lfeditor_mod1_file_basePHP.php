@@ -1,8 +1,9 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,15 +23,11 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/** general filefunctions */
+/** general file functions */
 require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.tx_lfeditor_mod1_file_base.php');
 
 /**
  * base workspace class (php)
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package TYPO3
- * @subpackage tx_lfeditor
  */
 class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 	/**
@@ -67,7 +64,7 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 	/**
 	 * reads a language file
 	 *
-	 * @throws LFException raised if the file dont contain a locallang array
+	 * @throws LFException raised if the file does not contain a locallang array
 	 * @param string language file
 	 * @param string language shortcut (not used)
 	 * @return array language content
@@ -79,10 +76,12 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 
 		include($file);
 
-		if (!is_array($LOCAL_LANG)) {
+		/** @var array $LOCAL_LANG */
+		if (!is_array($LOCAL_LANG) || !count($LOCAL_LANG)) {
 			throw new LFException('failure.search.noFileContent', 0, '(' . $file . ')');
 		}
 
+		/** @var array $LFMETA */
 		if ($langKey == 'default') {
 			$this->meta = $LFMETA;
 		}
@@ -102,8 +101,10 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 			return '';
 		}
 
-		return typo3Lib::fixFilePath(dirname($this->absFile) .
-			'/' . $this->nameLocalizedFile($langKey));
+		return typo3Lib::fixFilePath(
+			dirname($this->absFile) .
+			'/' . $this->nameLocalizedFile($langKey)
+		);
 	}
 
 	/**
@@ -137,7 +138,7 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 	 * @return string meta data for writing purposes
 	 */
 	private function prepareMeta() {
-		if (!is_array($this->meta)) {
+		if (!is_array($this->meta) || !count($this->meta)) {
 			return '';
 		}
 
@@ -184,7 +185,7 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 	 */
 	private function getLangContent($localLang, $lang) {
 		$content = "\t'$lang' => array (\n";
-		if (is_array($localLang)) {
+		if (is_array($localLang) && count($localLang)) {
 			ksort($localLang);
 			foreach ($localLang as $const => $value) {
 				$value = preg_replace("/([^\\\])'/", "$1\'", $value);
@@ -206,7 +207,7 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 	 */
 	private function getLangContentLoc($localLang, $lang) {
 		$content = '$LOCAL_LANG[\'' . $lang . '\'] = array (' . "\n";
-		if (is_array($localLang)) {
+		if (is_array($localLang) && count($localLang)) {
 			ksort($localLang);
 			foreach ($localLang as $const => $value) {
 				$value = preg_replace("/([^\\\])'/", "$1\'", $value);
@@ -271,7 +272,10 @@ class tx_lfeditor_mod1_file_basePHP extends tx_lfeditor_mod1_file_base {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_basePHP.php']) {
+if (defined(
+		'TYPO3_MODE'
+	) && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_basePHP.php']
+) {
 	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_basePHP.php']);
 }
 

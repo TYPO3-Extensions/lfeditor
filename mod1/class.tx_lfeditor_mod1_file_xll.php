@@ -1,8 +1,9 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,21 +23,21 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/** general filefunctions */
+/** general file functions */
 require_once(t3lib_extMgm::extPath('lfeditor') . 'mod1/class.tx_lfeditor_mod1_file.php');
 
 /**
  * xll workspace class
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package TYPO3
- * @subpackage tx_lfeditor
  */
 abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
-	/** @var string relative typo3 path to a language file (i.e. EXT:lfeditor/mod1/locallang.xml) */
+	/**
+	 * @var string
+	 */
 	protected $typo3RelFile;
 
-	/** abstract methods */
+	/**
+	 * @return mixed
+	 */
 	abstract protected function readLLFile();
 
 	/**
@@ -54,7 +55,7 @@ abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
 	}
 
 	/**
-	 * sets informations
+	 * sets information
 	 *
 	 * structure:
 	 * $infos["typo3RelFile"] = relative path with filename from "absPath"
@@ -87,7 +88,7 @@ abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
 	/**
 	 * reads the absolute file
 	 *
-	 * @throws LFException raised if no language content couldnt fetched
+	 * @throws LFException raised if no language content could not fetched
 	 * @return void
 	 */
 	public function readFile() {
@@ -100,9 +101,10 @@ abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
 
 		// set origin array and sort language contents
 		$languages = sgLib::getSystemLanguages();
+		$originLang = array();
 		foreach ($languages as $lang) {
 			$originLang[$lang] = $this->absFile;
-			if (is_array($localLang[$lang])) {
+			if (is_array($localLang[$lang]) && count($localLang[$lang])) {
 				ksort($localLang[$lang]);
 			}
 		}
@@ -160,7 +162,10 @@ abstract class tx_lfeditor_mod1_file_xll extends tx_lfeditor_mod1_file {
 }
 
 // Default-Code for using XCLASS (dont touch)
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xll.php']) {
+if (defined(
+		'TYPO3_MODE'
+	) && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xll.php']
+) {
 	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/lfeditor/mod1/class.tx_lfeditor_mod1_file_xll.php']);
 }
 

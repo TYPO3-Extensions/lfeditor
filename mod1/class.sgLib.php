@@ -1,8 +1,9 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2005-2012 Stefan Galinski (stefan.galinski@gmail.com)
+ *  (c) Stefan Galinski (stefan.galinski@gmail.com)
  *  All rights reserved
  *
  *  The script is free software; you can redistribute it and/or modify
@@ -23,9 +24,6 @@
 
 /**
  * personal library with lots of useful methods
- *
- * @author Stefan Galinski <stefan.galinski@gmail.com>
- * @package sgLib
  */
 class sgLib {
 	###############################
@@ -63,24 +61,30 @@ class sgLib {
 	 * @param string $text text
 	 * @param string $fromAddress from header
 	 * @param string $toAddress email address
-	 * @param string $attachement file attachement name or data string (optional)
+	 * @param string $attachement file attachment name or data string (optional)
 	 * @param string $sendFileName send filename (optional)
 	 * @param string $mbLanguage language (default == unicode)
 	 * @return void
 	 */
-	public static function sendMail($subject, $text, $fromAddress, $toAddress,
-									$attachement = '', $sendFileName = '', $mbLanguage = 'uni') {
+	public static function sendMail(
+		$subject, $text, $fromAddress, $toAddress,
+		$attachement = '', $sendFileName = '', $mbLanguage = 'uni'
+	) {
 		// checks
 		if (!preg_match('/(@.*@)|(\.\.)|(@\.)|(\.@)|(^\.)/', $toAddress) &&
-			!preg_match('/^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3}|[0-9]{1,3})(\]?)$/',
-				$toAddress)
+			!preg_match(
+				'/^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3}|[0-9]{1,3})(\]?)$/',
+				$toAddress
+			)
 		) {
 			throw new Exception('email address isnt valid: ' . $toAddress);
 		}
 
 		if (!preg_match('/(@.*@)|(\.\.)|(@\.)|(\.@)|(^\.)/', $fromAddress) &&
-			!preg_match('/^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3}|[0-9]{1,3})(\]?)$/',
-				$fromAddress)
+			!preg_match(
+				'/^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3}|[0-9]{1,3})(\]?)$/',
+				$fromAddress
+			)
 		) {
 			throw new Exception('email address isnt valid: ' . $fromAddress);
 		}
@@ -166,7 +170,7 @@ class sgLib {
 	}
 
 	/**
-	 * checks write permission of a given file (checks directory permission if file doesnt exists)
+	 * checks write permission of a given file (checks directory permission if file does not exists)
 	 *
 	 * @param string $file file path
 	 * @return boolean true or false
@@ -186,7 +190,7 @@ class sgLib {
 	/**
 	 * deletes given files
 	 *
-	 * @throws Exception raised, if some files cant be deleted (throwed after deletion of all)
+	 * @throws Exception raised, if some files cant be deleted (thrown after deletion of all)
 	 * @param array $files files
 	 * @return void
 	 */
@@ -267,7 +271,7 @@ class sgLib {
 	}
 
 	/**
-	 * searches defined files in a given path recursivly
+	 * searches defined files in a given path recursively
 	 *
 	 * @throws Exception raised if the search directory cant be read
 	 * @param string $path search in this path
@@ -287,7 +291,7 @@ class sgLib {
 			throw new Exception('directory "' . $path . '" cant be read');
 		}
 
-		// iterate thru the directory entries
+		// iterate through the directory entries
 		while ($file = readdir($fhd)) {
 			$filePath = $path . '/' . $file;
 
