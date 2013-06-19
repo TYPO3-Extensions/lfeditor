@@ -330,6 +330,7 @@ class sgLib {
 		if (class_exists('t3lib_l10n_Locales')) {
 			/** @var $locales t3lib_l10n_Locales */
 			$locales = t3lib_div::makeInstance('t3lib_l10n_Locales');
+			$locales->initialize();
 			$availableLanguages = $locales->getLocales();
 		} else {
 			$availableLanguages = explode('|', TYPO3_languages);
