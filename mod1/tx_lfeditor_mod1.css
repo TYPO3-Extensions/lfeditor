@@ -1,3 +1,7 @@
+.docheader-funcmenu {
+	display: inline;
+}
+
 #typo3-inner-docbody {
 	max-width: 900px;
 }

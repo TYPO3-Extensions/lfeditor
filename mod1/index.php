@@ -564,6 +564,10 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * @return void
 	 */
 	private function menuWorkspaceList() {
+		if (t3lib_div::compat_version('6.0')) {
+			return;
+		}
+
 		/** @var \TYPO3\CMS\Lang\LanguageService $lang */
 		$lang = $GLOBALS['LANG'];
 
