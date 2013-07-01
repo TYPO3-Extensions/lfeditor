@@ -286,6 +286,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * @return void
 	 */
 	private function initFileObject($langFile, $extPath, $mode, $flagReadFile = TRUE) {
+		$mode = ($mode ? : 'base');
+
 		// xll specific
 		try {
 			$typo3RelFile = '';
@@ -346,6 +348,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * @return void
 	 */
 	private function initBackupObject($mode, $infos = NULL) {
+		$mode = ($mode ? : 'base');
+
 		// create backup and meta directory
 		$backupPath = $this->extConfig['pathBackup'];
 		$metaFile = $this->extConfig['metaFile'];
