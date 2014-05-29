@@ -30,7 +30,7 @@ numSiteConsts = 6
 # cat=basic; type=boolean; label=Set to true if you want to hide the tree branches at start of the tree page.
 treeHide = 1
 
-# cat=basic; type=boolean; label=Set to true if you want that the date in a XLF file should be updated to now.
+# cat=basic; type=boolean; label=Set this value to true, if you want the editor to change the date in XLF files on each change.
 changeXlfDate = 1
 
 ######################### enable features #######################

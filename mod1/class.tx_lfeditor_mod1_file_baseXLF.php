@@ -225,8 +225,8 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 		$targetLanguage = htmlspecialchars($targetLanguage);
 		$targetLanguageAttribute = ($targetLanguage !== 'default' ? ' target-language="' . $targetLanguage . '"' : '');
 
-		$changeXLFDate = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['lfeditor'])['changeXlfDate'];
-		$date = ($changeXLFDate ? gmdate('Y-m-d\TH:i:s\Z') : $this->meta['@attributes']['date']);
+		$changeXlfDate = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['lfeditor'])['changeXlfDate'];
+		$date = ($changeXlfDate ? gmdate('Y-m-d\TH:i:s\Z') : $this->meta['@attributes']['date']);
 
 		$xmlString = $this->getXMLHeader() . '<xliff version="1.0">
 	<file source-language="en"' . $targetLanguageAttribute . ' datatype="plaintext" original="messages" date="' . $date . '">
