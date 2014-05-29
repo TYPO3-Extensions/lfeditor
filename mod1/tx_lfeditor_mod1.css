@@ -4,10 +4,11 @@
 
 .docheader-funcmenu select {
 	margin-top: 4px;
+	color: black;
 }
 
 #typo3-inner-docbody {
-	max-width: 900px;
+	max-width: 920px;
 }
 
 #typo3-inner-docbody input[type=text] {
@@ -35,7 +36,7 @@ fieldset.tx-lfeditor-fieldset, fieldset.tx-lfeditor-fieldset fieldset {
 }
 
 fieldset.tx-lfeditor-fleft, fieldset.tx-lfeditor-fright {
-	width: 47%;
+	width: 46%;
 }
 
 fieldset.tx-lfeditor-fleft {
@@ -52,6 +53,15 @@ fieldset.tx-lfeditor-fieldset legend {
 	padding-right: 5px;
 	font-weight: bold;
 	border: 1px solid #AAA;
+}
+
+fieldset.tx-lfeditor-fieldset p,
+fieldset.tx-lfeditor-fieldset p input {
+	margin: 0;
+}
+
+#typo3-inner-docbody fieldset.tx-lfeditor-fieldset p label {
+	vertical-align: middle;
 }
 
 fieldset.tx-lfeditor-fieldset fieldset dt {
@@ -149,6 +159,10 @@ fieldset.tx-lfeditor-fieldset fieldset dd {
 	margin-bottom: 5px;
 }
 
+#tx-lfeditor-caseSensitiveBox input {
+	margin: 0;
+}
+
 .tx-lfeditor-defaultTranslation {
 	padding-left: 5px;
 	padding-right: 5px;
@@ -157,6 +171,7 @@ fieldset.tx-lfeditor-fieldset fieldset dd {
 }
 
 .tx-lfeditor-textarea {
+	margin: 0;
 	width: 420px;
 }
 

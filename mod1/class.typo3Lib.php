@@ -118,6 +118,9 @@ class typo3Lib {
 	public static function writeLocalconf($addLine, $value) {
 		$localconf = PATH_typo3conf . 'localconf.php';
 
+		/** t3lib_install */
+		require_once(PATH_t3lib . 'class.t3lib_install.php');
+
 		// get current content
 		$lines = file_get_contents($localconf);
 		if (empty($lines)) {

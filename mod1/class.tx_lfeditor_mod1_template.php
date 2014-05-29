@@ -158,15 +158,19 @@ class tx_lfeditor_mod1_template {
 			$content .= '<fieldset class="bgColor4">' . $preMsg . '</fieldset>';
 		}
 
+		// Generate the module token for TYPO3 6.2
+		$token = self::generateModuleToken();
+
 		// generate result content
 		$content .= '<input type="hidden" name="constant" value="" />';
 		foreach ($resultArray as $langKey => $data) {
 			$content .= '<fieldset class="bgColor4"> <legend class="bgColor3">' .
 				$langKey . '</legend> <dl>';
 			foreach ($data as $label => $value) {
+
 				$content .= '<dt>';
 				$content .= '<a href="#" title="' . $label . '" ' .
-					'onclick="submitRedirectForm(\'constant\', \'' . $label . '\');">' .
+					'onclick="submitRedirectForm(\'constant\', \'' . $label . '\',\'' . $token . '\');">' .
 					$label . '</a></dt>';
 				$content .= '<dd>' . htmlspecialchars($value) . '</dd>';
 			}
@@ -225,6 +229,9 @@ class tx_lfeditor_mod1_template {
 		if (!$curDim) {
 			$content .= '<dl class="tx-lfeditor-treeview">';
 		}
+
+		// Generate the module token for TYPO3 6.2
+		$token = self::generateModuleToken();
 
 		// recursive loop
 		$branches = array_keys($tree[$curDim]);
@@ -308,8 +315,8 @@ class tx_lfeditor_mod1_template {
 					) . 'res/images/join' . $picAdd . '.gif" alt="join' . $picAdd . '" ' .
 					'style="margin-left: ' . $lineSpace . 'px; margin-right: 5px;" /> ';
 				$cont .= '<a href="#" title="' . $branches[$curBranch] . '" ' .
-					'onclick="submitRedirectForm(\'constant\', \'' . $branches[$curBranch] . '\');"> ' .
-					$name . '</a>';
+					'onclick="submitRedirectForm(\'constant\', \'' . $branches[$curBranch] . '\',
+					\'' . $token . '\');"> ' . $name . '</a>';
 				$content .= '<dd>' . $cont . '</dd>';
 			}
 		}
@@ -405,7 +412,10 @@ class tx_lfeditor_mod1_template {
 			$content .= '<textarea class="tx-lfeditor-textarea" ' .
 				'rows="' . $textAreaRows . '" cols="80" ' .
 				'name="newLang[' . $lang . '][' . $constant . ']" lang="' . $textareaLanguage . '" x:lang="' . $textareaLanguage . '">';
-			$content .= preg_replace('/<br.*>/U', "\n", $localLang[$lang][$constant]);
+
+			if ($localLang[$lang]) {
+				$content .= preg_replace('/<br.*>/U', "\n", $localLang[$lang][$constant]);
+			}
 			$content .= '</textarea> </fieldset>';
 		}
 
@@ -694,12 +704,15 @@ class tx_lfeditor_mod1_template {
 		}
 		$content .= '</tr></thead>';
 
+		// Generate the module token for TYPO3 6.2
+		$token = self::generateModuleToken();
+
 		// table data
 		$content .= '<tbody>';
 		foreach ($infos as $langKey => $info) {
 			// language shortcut
 			$content .= '<tr><td class="bgColor4"><a href="#" title="' . $langKey . '" ' .
-				'onclick="submitRedirectForm(\'language\',\'' . $langKey . '\');">' .
+				'onclick="submitRedirectForm(\'language\',\'' . $langKey . '\', \'' . $token . '\');">' .
 				$langKey . '</a></td>';
 
 			// state and constant information
@@ -1070,6 +1083,22 @@ class tx_lfeditor_mod1_template {
 		$content .= '</tbody></table>';
 
 		return $content;
+	}
+
+	/**
+	 * Generates and returns a module token for the form moduleCall and the action user_txlfeditorM1
+	 *
+	 * @return string
+	 */
+	protected static function generateModuleToken() {
+		$token = '';
+		if (t3lib_div::compat_version('6.2')) {
+			$token = '\u0026moduleToken=' . \TYPO3\CMS\Core\FormProtection\FormProtectionFactory::get()->generateToken(
+				'moduleCall', 'user_txlfeditorM1'
+			);
+		}
+
+		return $token;
 	}
 }
 

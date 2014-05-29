@@ -23,9 +23,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/** t3lib_install */
-require_once(PATH_t3lib . 'class.t3lib_install.php');
-
 /**
  * include some general functions only usable for the 'lfeditor' module
  */

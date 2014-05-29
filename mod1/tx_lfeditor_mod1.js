@@ -8,8 +8,8 @@ function submitBackupForm(filename, langFile, del, restore, deleteAll, origDiff)
 	document.mainForm.submit();
 }
 
-function submitRedirectForm(label, value) {
-	document.mainForm.elements[label].value = value;
+function submitRedirectForm(label, value, token) {
+	document.mainForm.elements[label].value = value + token;
 	document.mainForm.submit();
 }
 
