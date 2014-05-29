@@ -1612,6 +1612,14 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		$oldConst = $this->MOD_SETTINGS['constList'];
 		$newConst = t3lib_div::_POST('newConst');
 
+		if ($oldConst === $newConst) {
+			throw new LFException('failure.langfile.noChange');
+		}
+
+		if (!empty($langData['default'][$newConst])) {
+			throw new LFException('failure.langfile.constExists');
+		}
+
 		// write new language file
 		try {
 			// get languages
@@ -1620,7 +1628,10 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 			// build modArray
 			$newLang = array();
 			foreach ($langArray as $lang) {
-				$newLang[$lang][$newConst] = $langData[$lang][$oldConst];
+				if (isset($langData[$lang][$oldConst])) {
+					$newLang[$lang][$newConst] = $langData[$lang][$oldConst];
+				}
+
 				$newLang[$lang][$oldConst] = '';
 			}
 

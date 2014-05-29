@@ -33,6 +33,7 @@
 			<label index="failure.file.badPermissions">Joillakin kielitiedostoilla on riittämättömät käyttöoikeudet (esim. kirjoitusoikeus puuttuu)!</label>
 			<label index="failure.file.notWritten">Tiedostoon ei voinut kirjoittaa!</label>
 			<label index="failure.langfile.constExists">Tämä vakio on jo olemassa.</label>
+			<label index="failure.langfile.noChange">Vakiona ei muutettu.</label>
 			<label index="failure.langfile.notDeleted">Kielitiedostoa ei voinut poistaa!</label>
 			<label index="failure.langfile.notSplittedOrMerged">Tiedostoa ei voinut yhdistää tai jakaa!</label>
 			<label index="failure.langfile.notSupported">Tiedostotyyppiä ei tueta (esim. lokalisaatiotiedostot)!</label>

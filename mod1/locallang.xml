@@ -40,6 +40,7 @@
 			<label index="failure.file.badPermissions">Some language files have unsufficient permissions (i.e. write permission)!</label>
 			<label index="failure.file.notWritten">The file couldn't be written!</label>
 			<label index="failure.langfile.constExists">This constant already exists.</label>
+			<label index="failure.langfile.noChange">The constant was not changed.</label>
 			<label index="failure.langfile.notDeleted">The language file couldn't be deleted!</label>
 			<label index="failure.langfile.notSplittedOrMerged">The files couldn't be splitted or merged!</label>
 			<label index="failure.langfile.notSupported">This file type isn't supported (i.e. localization files)!</label>

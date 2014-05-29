@@ -33,6 +33,7 @@
 			<label index="failure.file.badPermissions">Nogle sprogfiler har ikke de nødvendige rettigheder! (f.eks. skrive rettigheder)</label>
 			<label index="failure.file.notWritten">Filen kunne ikke gemmes.</label>
 			<label index="failure.langfile.constExists">Konstanten eksisterer allerede!</label>
+			<label index="failure.langfile.noChange">Den konstante blev ikke ændret.</label>
 			<label index="failure.langfile.notDeleted">Sprogfilen kunne ikke slettes.</label>
 			<label index="failure.langfile.notSplittedOrMerged">Filen kunne ikke deles/samles.</label>
 			<label index="failure.langfile.notSupported">Denne extension understøtter ikke filer af denne type (f.eks. localization filer).</label>

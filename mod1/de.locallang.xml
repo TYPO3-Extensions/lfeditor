@@ -33,6 +33,7 @@
 			<label index="failure.file.badPermissions">Einige Sprachdateien haben ungenügende Rechte (z.B. Schreibberechtigung)!</label>
 			<label index="failure.file.notWritten">Die Datei konnte nicht geschrieben werden!</label>
 			<label index="failure.langfile.constExists">Die Konstante existiert bereits.</label>
+			<label index="failure.langfile.noChange">Die Konstante wurde nicht verändert.</label>
 			<label index="failure.langfile.notDeleted">Die Sprachdatei konnte nicht gelöscht werden!</label>
 			<label index="failure.langfile.notSplittedOrMerged">Die Dateien konnten nicht aufgeteilt oder zusammengefügt werden!</label>
 			<label index="failure.langfile.notSupported">Dieser Dateityp wird nicht unterstützt (z.B. Lokalisierungsdateien)!</label>
