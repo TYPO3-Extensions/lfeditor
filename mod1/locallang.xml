@@ -123,6 +123,7 @@
 			<label index="select.constantType">select constant type</label>
 			<label index="select.explodeToken">Select explode token</label>
 			<label index="select.extensionAndWorkspace">select extension and workspace</label>
+			<label index="select.extension">select extension</label>
 			<label index="select.insertMode.normal">normal insert mode</label>
 			<label index="select.insertMode.pmktextarea">enhanced insert mode</label>
 			<label index="select.insertMode.tinyMCE">tinyMCE</label>

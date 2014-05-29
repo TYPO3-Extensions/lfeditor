@@ -116,6 +116,7 @@
 			<label index="select.constantType">wähle Art der Konstanten</label>
 			<label index="select.explodeToken">Explode-Character</label>
 			<label index="select.extensionAndWorkspace">wähle Extension und Workspace</label>
+			<label index="select.extension">wähle Extension</label>
 			<label index="select.insertMode.normal">normaler Eingabemodus</label>
 			<label index="select.insertMode.pmktextarea">verbesserter Eingabemodus</label>
 			<label index="select.insertMode.tinyMCE">tinyMCE</label>

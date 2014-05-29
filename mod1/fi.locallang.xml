@@ -116,6 +116,7 @@
 			<label index="select.constantType">valitse vakion tyyppi</label>
 			<label index="select.explodeToken">Valitse jakomerkintä (explode token)</label>
 			<label index="select.extensionAndWorkspace">valitse lisäosa ja työtila</label>
+			<label index="select.extension">valitse lisäosa</label>
 			<label index="select.insertMode.normal">normaali syöttömoodi</label>
 			<label index="select.insertMode.pmktextarea">kehittynyt syöttömoodi</label>
 			<label index="select.insertMode.tinyMCE">tinyMCE</label>

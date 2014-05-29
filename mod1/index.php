@@ -1890,6 +1890,10 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		try {
 			// generate extension and workspace list
 			$name = 'select.extensionAndWorkspace';
+			if (t3lib_div::compat_version('6.0')) {
+				$name = 'select.extension';
+			}
+
 			$name = tx_lfeditor_mod1_functions::prepareSectionName($name);
 			$moduleContent .= $this->doc->section($name, '', 0, 1);
 			$this->menuExtList();
