@@ -86,6 +86,7 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 		if ($langKey === 'default') {
 			$this->meta = $xmlContent['file']['header'];
 		}
+		$this->meta['@attributes'] = $xmlContent['file']['@attributes'];
 
 		return $xmlContent['file']['body'];
 	}
@@ -223,7 +224,10 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 	private function array2xml($phpArray, $targetLanguage, $defaultLanguage) {
 		$targetLanguage = htmlspecialchars($targetLanguage);
 		$targetLanguageAttribute = ($targetLanguage !== 'default' ? ' target-language="' . $targetLanguage . '"' : '');
-		$date = gmdate('Y-m-d\TH:i:s\Z');
+
+		$changeXLFDate = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['lfeditor'])['changeXlfDate'];
+		$date = ($changeXLFDate ? gmdate('Y-m-d\TH:i:s\Z') : $this->meta['@attributes']['date']);
+
 		$xmlString = $this->getXMLHeader() . '<xliff version="1.0">
 	<file source-language="en"' . $targetLanguageAttribute . ' datatype="plaintext" original="messages" date="' . $date . '">
 		###HEADER###
@@ -300,7 +304,10 @@ class tx_lfeditor_mod1_file_baseXLF extends tx_lfeditor_mod1_file_base {
 		// add generator string
 		$this->meta['generator'] = 'LFEditor';
 
-		return $this->meta;
+		$metadata = $this->meta;
+		unset($metadata['@attributes']);
+
+		return $metadata;
 	}
 
 	/**

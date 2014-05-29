@@ -30,6 +30,9 @@ numSiteConsts = 6
 # cat=basic; type=boolean; label=Set to true if you want to hide the tree branches at start of the tree page.
 treeHide = 1
 
+# cat=basic; type=boolean; label=Set to true if you want that the date in a XLF file should be updated to now.
+changeXlfDate = 1
+
 ######################### enable features #######################
 
 # cat=basic/enable; type=boolean; label=enable backup: Set to true if you want enable the backup management (highly recommended)
