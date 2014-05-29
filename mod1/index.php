@@ -595,8 +595,8 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		/** @var \TYPO3\CMS\Lang\LanguageService $lang */
 		$lang = $GLOBALS['LANG'];
 
-		$switch['tinyMCE'] = $lang->getLL('select.insertMode.tinyMCE');
 		$switch['normal'] = $lang->getLL('select.insertMode.normal');
+		$switch['tinyMCE'] = $lang->getLL('select.insertMode.tinyMCE');
 
 		$this->MOD_MENU = array('insertMode' => $switch);
 		parent::menuConfig();
