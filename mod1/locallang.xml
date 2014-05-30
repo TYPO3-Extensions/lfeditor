@@ -36,6 +36,7 @@
 			<label index="failure.backup.noFiles">It couldnt any backup files be found!</label>
 			<label index="failure.backup.notDeleted">The backup file couldnt be deleted!</label>
 			<label index="failure.backup.notRead">The backup file couldnt be read!</label>
+			<label index="failure.config.invalidLanguage">The following languages are not supported by TYPO3 and should be added. &lt;br /&gt;(http://wiki.typo3.org/TYPO3_4.6#User-Defined_Languages)</label>
 			<label index="failure.failure">Error!</label>
 			<label index="failure.file.badPermissions">Some language files have unsufficient permissions (i.e. write permission)!</label>
 			<label index="failure.file.notWritten">The file couldn't be written!</label>
@@ -122,8 +123,8 @@
 			<label index="select.constant">select constant</label>
 			<label index="select.constantType">select constant type</label>
 			<label index="select.explodeToken">Select explode token</label>
-			<label index="select.extensionAndWorkspace">select extension and workspace</label>
 			<label index="select.extension">select extension</label>
+			<label index="select.extensionAndWorkspace">select extension and workspace</label>
 			<label index="select.insertMode.normal">normal insert mode</label>
 			<label index="select.insertMode.pmktextarea">enhanced insert mode</label>
 			<label index="select.insertMode.tinyMCE">tinyMCE</label>

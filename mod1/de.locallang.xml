@@ -29,6 +29,7 @@
 			<label index="failure.backup.noFiles">Es konnten keine Backup-Dateien gefunden werden!</label>
 			<label index="failure.backup.notDeleted">Die Backup-Datei konnte nicht gelöscht werden!</label>
 			<label index="failure.backup.notRead">Die Backup-Datei konnte nicht gelesen werden!</label>
+			<label index="failure.config.invalidLanguage">Die nachfolgenden Sprachen werden nicht von TYPO3 unterstüzt und müssen hinzugefügt werden. &lt;br /&gt;(http://wiki.typo3.org/TYPO3_4.6#User-Defined_Languages)</label>
 			<label index="failure.failure">Fehler!</label>
 			<label index="failure.file.badPermissions">Einige Sprachdateien haben ungenügende Rechte (z.B. Schreibberechtigung)!</label>
 			<label index="failure.file.notWritten">Die Datei konnte nicht geschrieben werden!</label>
@@ -115,8 +116,8 @@
 			<label index="select.constant">wähle Konstante</label>
 			<label index="select.constantType">wähle Art der Konstanten</label>
 			<label index="select.explodeToken">Explode-Character</label>
-			<label index="select.extensionAndWorkspace">wähle Extension und Workspace</label>
 			<label index="select.extension">wähle Extension</label>
+			<label index="select.extensionAndWorkspace">wähle Extension und Workspace</label>
 			<label index="select.insertMode.normal">normaler Eingabemodus</label>
 			<label index="select.insertMode.pmktextarea">verbesserter Eingabemodus</label>
 			<label index="select.insertMode.tinyMCE">tinyMCE</label>

@@ -80,6 +80,11 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 */
 	private $backupObj;
 
+	/**
+	 * @var string
+	 */
+	private $invalidLanguages = '';
+
 	#######################################
 	############ main functions ###########
 	#######################################
@@ -158,6 +163,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		} catch (LFException $e) {
 			$moduleContent = $e->getGeneratedContent() . $e->getMessage();
 		}
+
 
 		// setting up the buttons and markers
 		$docHeaderButtons = $this->getButtons();
@@ -259,7 +265,28 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 		if (!empty($this->extConfig['viewLanguages'])) {
 			$langs = explode(',', $this->extConfig['viewLanguages']);
 			unset($this->extConfig['viewLanguages']);
+
+			$availableLanguages = array();
+			if (t3lib_div::compat_version('6.0')) {
+				/** @var TYPO3\CMS\Core\Localization\Locales $locales */
+				$locales = t3lib_div::makeInstance('TYPO3\CMS\Core\Localization\Locales');
+				$availableLanguages = $locales->getLanguages();
+			} else {
+				$languages = preg_split('|', TYPO3_languages);
+				foreach ($languages as $language) {
+					$availableLanguages[$language] = TRUE;
+				}
+			}
+
 			foreach ($langs as $lang) {
+				if (!isset($availableLanguages[$lang])) {
+					if ($this->invalidLanguages === '') {
+						$this->invalidLanguages = $lang;
+					} else {
+						$this->invalidLanguages .= ', ' . $lang;
+					}
+				}
+
 				if ($lang != 'default') {
 					$this->extConfig['viewLanguages'][] = $lang;
 				}
@@ -1157,6 +1184,7 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 	 * @return boolean true or false (only false if some files should be mailed)
 	 */
 	private function actionFuncGeneral() {
+
 		// get vars
 		$splitFile = t3lib_div::_POST('splitFile');
 		$transFile = t3lib_div::_POST('transFile');
@@ -2249,6 +2277,15 @@ class tx_lfeditor_module1 extends t3lib_SCbase {
 				$sectName = 'function.backupMgr.backupMgr';
 				$sectName = tx_lfeditor_mod1_functions::prepareSectionName($sectName);
 				break;
+		}
+
+		try {
+			// Checks if any invalid language was found by the preparation of the config and returns an exception.
+			if ($this->invalidLanguages !== '') {
+				throw new LFException('failure.config.invalidLanguage', 0, "<br /><br />" . $this->invalidLanguages);
+			}
+		} catch (LFException $e) {
+			$preContent .= $e->getMessage();
 		}
 
 		// save generated content
