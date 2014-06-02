@@ -27,7 +27,7 @@ $EM_CONF[$_EXTKEY] = array(
 					  * backups, recovering and diff view',
 	'category' => 'module',
 	'shy' => 0,
-	'version' => '2.11.0',
+	'version' => '2.11.1',
 	'doNotLoadInFE' => 1,
 	'dependencies' => '',
 	'conflicts' => '',
